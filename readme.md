@@ -1,7 +1,8 @@
-# Lumen PHP Framework
+# cool1024 web code
 
+## run app
 `php -S 0.0.0.0:80 -t public`
 
-##数据库迁移
+## refresh database
 1. 删除所有表 & 迁移
 `php artisan migrate:refresh`
