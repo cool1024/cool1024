@@ -12,7 +12,7 @@
  */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return redirect('/home/index.html');
 });
 
 $router->get('/randomkey', function () {
