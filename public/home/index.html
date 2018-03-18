@@ -62,70 +62,12 @@
     <div class="container">
         <div class="row">
             <main class="col-md-8 main-content">
-                <div style="width: 100%;background-color:white;padding:0px 5px;padding-top:5px;margin-bottom:20px;">
-                    <img data-src="holder.js/100%x400" alt="..." style="width: 100%;">
-                    <p class="text-left" style="padding:0px 5px;text-indent: 2em;">
-                        <span>
-                            <small>本站正在进行维护，所有功能暂时无法使用，抱歉咯~~ &nbsp&nbsp我将：1.优化网站样式，适应移动端阅读；2.整理笔记，分类，便于查找；3：部分开放访客功能，介于网络混乱，维护困难，本人基本是不希望开启留言功能的；最后，说一句“新年快乐！”</small>
-                        </span>
-                    </p>
-                    <p class="text-right text-muted" style="padding:0px 5px;">
-                        <small>2017-01-16</small>
-                    </p>
+                <div id="home_article_pad">
+                    <!--article list-->
                 </div>
-                <div style="width: 100%;background-color:white;padding:0px 5px;padding-top:5px;margin-bottom:20px;">
-                    <img data-src="holder.js/100%x400" alt="..." src="img/box-image/snap.png" style="width: 100%;">
-                    <p class="text-left" style="padding:0px 5px;text-indent: 2em;">
-                        <small>Snap.svg可以让你在网页上轻松绘制SVG图像，制作SVG动画也是得心应手，适当的与Canvas结合，可以做出许多不可思议的东东哦~~&nbsp&nbspSVG（可缩放矢量图形）是我最喜欢的矢量图像了！</small>
-                    </p>
-                    <p class="text-right text-muted" style="padding:0px 5px;">
-                        <small>2017-01-15</small>
-                    </p>
-                </div>
-                <div style="width: 100%;background-color:white;padding:0px 5px;padding-top:5px;margin-bottom:20px;">
-                    <img data-src="holder.js/100%x400" alt="..." src="img/box-image/message.jpg" style="width: 100%;">
-                    <p class="text-left" style="padding:0px 5px;text-indent: 2em;">
-                        <small>新的一年，希望大家可以获得更多快乐，希望我们可以一直可爱下去~~</small>
-                    </p>
-                    <p class="text-right text-muted" style="padding:0px 5px;">
-                        <small>最后编辑日期：2017-01-15</small>
-                    </p>
-                </div>
-                <ul class="pagination pagination-minimal">
-                    <li class="previous">
-                        <a href="#fakelink" class="fui-arrow-left"></a>
-                    </li>
-                    <li class="active">
-                        <a href="#fakelink">1</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">2</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">3</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">4</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">5</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">6</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">7</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">8</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">9</a>
-                    </li>
-                    <li>
-                        <a href="#fakelink">10</a>
-                    </li>
-                    <li class="pagination-dropdown dropup">
+                <ul class="pagination pagination-minimal" id="pagination">
+                    <!--pagination list-->
+                    <!-- <li class="pagination-dropdown dropup">
                         <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fui-triangle-up"></i>
                         </a>
@@ -140,25 +82,15 @@
                                 <a href="#fakelink">40–50</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="next">
-                        <a href="#fakelink" class="fui-arrow-right"></a>
-                    </li>
+                    </li> -->
                 </ul>
             </main>
             <aside class="col-md-4">
                 <div class="panel" style="border-radius: 0;">
                     <div class="panel-heading">KeyWord</div>
                     <div class="divider"></div>
-                    <div class="panel-body">
-                        <button class="btn btn-success" style="margin-bottom:10px;">Snap.svg</button>
-                        <button class="btn btn-default" style="margin-bottom:10px;">Canvas</button>
-                        <button class="btn btn-primary" style="margin-bottom:10px;">AngularJS</button>
-                        <button class="btn btn-info" style="margin-bottom:10px;">ZipJS</button>
-                        <button class="btn btn-warning" style="margin-bottom:10px;">Go Language</button>
-                        <button class="btn btn-danger" style="margin-bottom:10px;">Nginx</button>
-                        <button class="btn btn-success" style="margin-bottom:10px;">PHP</button>
-                        <button class="btn btn-default" style="margin-bottom:10px;">Ubuntu</button>
+                    <div class="panel-body" id="home_label_pad">
+                        <!--article label list-->
                     </div>
                 </div>
                 <div class="panel" style="border-radius: 0;">
@@ -211,6 +143,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- <script src="source/vendor/flat-ui/dist/js/vendor/video.js"></script> -->
     <script src="source/vendor/flat-ui/dist/js/flat-ui.min.js"></script>
+    <script src="src/build/home.js"></script>
 </body>
 
 </html>
