@@ -13,17 +13,17 @@ use App\Api\Contracts\ApiContract;
 | and give it the Closure to call when that URI is requested.
 |
  */
+
+// 添加文章标签
 $router->post('/article/label/add', 'ArticleController@addArticleLabel');
+// 删除文章标签
 $router->delete('/article/label/delete', 'ArticleController@deleteArticleLabel');
+// 获取所有文章标签
 $router->get('/article/label/list', 'ArticleController@articleLabels');
 
+// 添加文章
 $router->post('/article/add', 'ArticleController@addArticle');
+// 删除文章
 $router->delete('/article/delete', 'ArticleController@deleteArticle');
+// 获取文章列表，分页
 $router->get('/article/list', 'ArticleController@articles');
-
-$router->post('/tools-ui/upload', function (FileContract $file, ApiContract $api) {
-    return [
-        'uploaded' => 1,
-        'url' => 'http://127.0.0.1/' . $file->saveFileByMd5('upload', 'upload')
-    ];
-});

@@ -59,9 +59,13 @@ $app->singleton(
 |
  */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
+// $app->routeMiddleware([
+//     'format' => 'App\Core\Middlewares\FormatMiddleware',
 // ]);
+
+$app->middleware([
+    App\Core\Middlewares\FormatMiddleware::class
+]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
@@ -85,6 +89,12 @@ $app->register(App\Api\Providers\HttpServiceProvider::class);
 $app->register(App\Api\Providers\FileServiceProvider::class);
 $app->register(App\Api\Providers\ApiServiceProvider::class);
 
+// 引入文件分析器
+require __DIR__ . '/analyse.php';
+
+// 引入注册文件导入器
+require __DIR__ . '/register.php';
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -96,8 +106,9 @@ $app->register(App\Api\Providers\ApiServiceProvider::class);
 |
  */
 
-$app->router->group([], function ($router) {
-    require __DIR__ . '/../routes/web.php';
+$app->router->group([], function ($router) use ($router_groups) {
+    require __DIR__ . '/router.php';
+    require __DIR__ . '/router-load.php';
 });
 
 return $app;
