@@ -1,6 +1,7 @@
 <?php
 
 use App\Api\Contracts\ApiContract;
+use App\Api\Contracts\FileContract;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,5 @@ $router->get('format/view', function (ApiContract $api) {
 
  // 使用文件服务上传文件
 $router->post('upload', function (FileContract $file, ApiContract $api) {
-    return $api->datas($file->saveFileByMd5('upload', 'upload'));
+    return $api->datas($file->saveFileByMd5('file', 'upload'));
 });

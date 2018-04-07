@@ -15,7 +15,7 @@ class ToolTest extends TestCase
      */
     public function testUpload()
     {
-        $this->call('POST', 'webblog/tools-ui/upload', [], [], ['file' => UploadedFile::fake()->image(md5(time()) . '.jpg')]);
+        $this->call('POST', 'tooltest/upload', [], [], ['file' => UploadedFile::fake()->image(md5(time()) . '.jpg')]);
         $this->createHtml(__FUNCTION__);
         $this->assertResponseOk();
         $apiData = json_decode($this->response->getContent(), true);
