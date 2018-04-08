@@ -21,8 +21,22 @@ class ApiService implements ApiContract
         if ($params['result']) {
             return $params['datas'];
         } else {
-            // header('Content-Type:application/json');
-            exit(json_encode($params));
+            abort(201, json_encode($params));
         }
+    }
+
+    public function createMessage($create_obj)
+    {
+        return $this->create_message($create_obj);
+    }
+
+    public function getMessage($datas)
+    {
+        return $this->message(true, 'get datas success', $datas);
+    }
+
+    public function deleteMessage($result)
+    {
+        return $this->delete_message($result);
     }
 }

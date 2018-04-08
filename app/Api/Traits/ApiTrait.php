@@ -156,7 +156,7 @@ trait ApiTrait
     {
         return !isset($create_obj) ? $this->error($error) : $this->datas($create_obj, $success);
     }
-
+    
     //return delete message
     public function delete_message($delete_result, $success = "delete success", $error = "delete error")
     {
@@ -168,5 +168,4 @@ trait ApiTrait
     {
         return empty($update_result) ? $this->error($error) : $this->success($success);
     }
-
 }

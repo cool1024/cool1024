@@ -9,5 +9,9 @@ class AccessCompanyManager extends Model
 {
     use SearchTrait;
 
-    protected $guarded = ['password'];
+    protected $table = 'access_company_manager';
+
+    protected $hidden = ['password'];
+
+    protected $guarded = [];
 }

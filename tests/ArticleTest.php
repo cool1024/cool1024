@@ -13,7 +13,7 @@ class ArticleTest extends TestCase
      *
      * @return array
      */
-    public function testAddArticleLabel()
+    public function testInsertCompany()
     {
         $params = [
             'article_label_name' => $this->faker->name,

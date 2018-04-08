@@ -24,6 +24,4 @@ class Company
     {
         return AccessCompanyManager::create($this->params);
     }
-
-    public function 
 }
