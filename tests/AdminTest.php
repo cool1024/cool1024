@@ -74,6 +74,7 @@ class AdminTest extends TestCase
         $response = json_decode($this->response->getContent(), true);
         $this->log('info', __class__ . '::' . __FUNCTION__, [$response]);
         $this->assertEquals($response['result'], true);
+        return $params;
     }
 
     /**
@@ -84,6 +85,25 @@ class AdminTest extends TestCase
     public function testDeleteCompany(array $stack)
     {
         $this->delete('admin/company/delete?company_id=' . $stack['id']);
+        $this->createHtml(__FUNCTION__);
+        $this->assertResponseOk();
+        $response = json_decode($this->response->getContent(), true);
+        $this->log('info', __class__ . '::' . __FUNCTION__, [$response]);
+        $this->assertEquals($response['result'], true);
+    }
+
+    /**
+     * 测试公司信息分页查询
+     *
+     */
+    public function testSearchCompany()
+    {
+        $search_params = [
+            'limit' => $this->faker->randomDigit,
+            'offset' => $this->faker->randomDigit,
+        ];
+        $url_params = http_build_query($search_params);
+        $this->get('admin/company/search?' . $url_params);
         $this->createHtml(__FUNCTION__);
         $this->assertResponseOk();
         $response = json_decode($this->response->getContent(), true);

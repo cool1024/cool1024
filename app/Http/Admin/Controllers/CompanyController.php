@@ -64,7 +64,7 @@ class CompanyController extends Controller
     {
 
         $required = [
-            'company_id:integer'
+            'id:integer'
         ];
 
         $expected = [
@@ -88,7 +88,7 @@ class CompanyController extends Controller
             $params['password'] = Crypt::encryptString($params['password']);
         }
 
-        return $this->api->getMessage(AccessCompanyManager::findOrFail($params['company_id'])->update($params));
+        return $this->api->updateMessage(AccessCompanyManager::findOrFail($params['id'])->update($params));
     }
 
     /**
@@ -103,5 +103,20 @@ class CompanyController extends Controller
 
         $params = $this->api->checkParams($required);
         return $this->api->deleteMessage(AccessCompanyManager::findOrFail($params['company_id'])->delete());
+    }
+
+    /**
+     * 公司列表-分页
+     */
+    public function searchCompany()
+    {
+        $required = [
+            'limit:integer',
+            'offset:integer',
+        ];
+
+        $params = $this->api->checkParams($required);
+        $search_result = with(new AccessCompanyManager)->search($params);
+        return $this->api->searchMessage($search_result);
     }
 }

@@ -39,4 +39,14 @@ class ApiService implements ApiContract
     {
         return $this->delete_message($result);
     }
+
+    public function updateMessage($result)
+    {
+        return $this->success(empty($result) ? '没有需要更新的数据～' : '数据更新成功～');
+    }
+
+    public function searchMessage($result)
+    {
+        return $this->paginate($result);
+    }
 }
