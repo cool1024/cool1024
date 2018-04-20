@@ -32,10 +32,10 @@ class CompanyController extends Controller
             'company_manager_mobile:min:4|max:30',
             'company_manager_email:email',
             'company_description:max:500',
-            'company_logo:max:100',
+            'company_logo:max:500',
         ];
 
-        $params = $this->api->checkParams($required, $expected);
+        $params = $this->api->camelCaseParams($required, $expected);
 
         $params['password'] = Crypt::encryptString($params['password']);
 
@@ -52,7 +52,7 @@ class CompanyController extends Controller
             'company_id:integer'
         ];
 
-        $params = $this->api->checkParams($required);
+        $params = $this->api->camelCaseParams($required);
 
         return $this->api->getMessage(AccessCompanyManager::findOrFail($params['company_id']));
     }
@@ -75,10 +75,10 @@ class CompanyController extends Controller
             'company_manager_mobile:min:4|max:30',
             'company_manager_email:email',
             'company_description:max:500',
-            'company_logo:max:100',
+            'company_logo:max:500',
         ];
 
-        $params = $this->api->checkParams($required, $expected);
+        $params = $this->api->camelCaseParams($required, $expected);
 
         if (count($params) <= 1) {
             return $this->api->error('lost update params');
@@ -101,7 +101,7 @@ class CompanyController extends Controller
             'company_id:integer'
         ];
 
-        $params = $this->api->checkParams($required);
+        $params = $this->api->camelCaseParams($required);
         return $this->api->deleteMessage(AccessCompanyManager::findOrFail($params['company_id'])->delete());
     }
 
@@ -115,7 +115,7 @@ class CompanyController extends Controller
             'offset:integer',
         ];
 
-        $params = $this->api->checkParams($required);
+        $params = $this->api->camelCaseParams($required);
         $search_result = with(new AccessCompanyManager)->search($params);
         return $this->api->searchMessage($search_result);
     }

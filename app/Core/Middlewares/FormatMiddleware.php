@@ -14,7 +14,7 @@ class FormatMiddleware
             return $response;
         }
 
-        // 格式化响应数据下划线装小驼峰
+        // 格式化响应数据下划线转小驼峰
         $datas = $response->getContent();
         $datas = json_decode($datas, true);
         $datas = $this->camelCase($datas);

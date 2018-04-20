@@ -13,7 +13,27 @@ class ApiService implements ApiContract
     {
     }
 
-    function checkParams($params = [], $exp = [], $formate = [], $message = [])
+    public function camelCaseParams($params = [], $exp = [])
+    {
+        foreach ($params as $key => $param) {
+            $params[$key] = $this->convertUnderline($param, false);
+        }
+
+        foreach ($exp as $key => $param) {
+            $exp[$key] = $this->convertUnderline($param, false);
+        }
+
+        $params = $this->checkParams($params, $exp);
+        $temp = [];
+
+        foreach ($params as $key => $value) {
+            $temp_key = strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '_', $key));
+            $temp[$temp_key] = $value;
+        }
+        return $temp;
+    }
+
+    public function checkParams($params = [], $exp = [], $formate = [], $message = [])
     {
 
         $params = $this->getParams($params, $exp, $formate, $message);
@@ -22,7 +42,15 @@ class ApiService implements ApiContract
             return $params['datas'];
         } else {
             abort(201, json_encode($params));
+            return;
         }
+    }
+
+    private function convertUnderline($str, $ucfirst = true)
+    {
+        $str = ucwords(str_replace('_', ' ', $str));
+        $str = str_replace(' ', '', lcfirst($str));
+        return $ucfirst ? ucfirst($str) : $str;
     }
 
     public function createMessage($create_obj)

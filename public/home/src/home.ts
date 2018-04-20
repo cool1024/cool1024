@@ -16,6 +16,7 @@ class HomeController extends PageServiceController implements PageController, Pa
 
     onInit() {
         const requests = [];
+        this.page.limit = 2;
         requests.push(this.request.get('/webblog/article/label/list').skipWhile(apiRes => apiRes.result === false)
             .do(res => {
                 const labels = <ArticleLabel[]>res.datas;
@@ -58,19 +59,19 @@ class HomeController extends PageServiceController implements PageController, Pa
     }
 
     private getLabelDom(label: ArticleLabel): string {
-        return `<button class="btn btn-link" data-id="${label.id}">${label.article_label_name}</button>`;
+        return `<button class="btn btn-link" data-id="${label.id}">${label.articleLabelName}</button>`;
     }
 
     private getArticleDom(article: Article): string {
         return `<div style="width: 100%;background-color:white;padding:0px 5px;padding-top:5px;margin-bottom:20px;">
-                    <img data-src="holder.js/100%x400" src="${article.article_thumb}" alt="..." style="width: 100%;">
+                    <img data-src="holder.js/100%x400" src="${article.articleThumb}" alt="..." style="width: 100%;">
                     <p class="text-left" style="padding:0px 5px;text-indent: 2em;">
                         <span>
-                            <small>${article.article_content}</small>
+                            <small>${article.articleContent}</small>
                         </span>
                     </p>
                     <p class="text-right text-muted" style="padding:0px 5px;">
-                        <small>${article.updated_at}</small>
+                        <small>${article.updatedAt}</small>
                     </p>
                 </div>`;
     }

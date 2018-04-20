@@ -45,8 +45,8 @@ class ArticleController extends Controller
     {
         $params = $this->api->checkParams(['offset:integer', 'limit:integer'], ['article_label_ids', 'created_at']);
         $search_params = [
-            // ['whereIn', 'article_label_id', '$article_label_ids'],
-            // ['whereDate', 'created_at', '<=', '$created_at'],
+            ['whereIn', 'article_label_id', '$article_label_ids'],
+            ['whereDate', 'created_at', '<=', '$created_at'],
             ['with', 'articleLabel']
         ];
         $format_ops = [

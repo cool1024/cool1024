@@ -2,6 +2,7 @@
 
 use App\Api\Contracts\FileContract;
 use App\Api\Contracts\ApiContract;
+use App\Http\WebBlog\Models\Article;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,9 @@ $router->post('/article/add', 'ArticleController@addArticle');
 $router->delete('/article/delete', 'ArticleController@deleteArticle');
 // 获取文章列表，分页
 $router->get('/article/list', 'ArticleController@articles');
+
+$router->get('/test', function () {
+    // return Article::find(3);
+    // return Article::find(3)->articleLabel;
+    return Article::with('articleLabel')->find(3);
+});

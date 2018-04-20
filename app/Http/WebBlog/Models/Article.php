@@ -16,6 +16,6 @@ class Article extends Model
      */
     public function articleLabel()
     {
-        return $this->belongsTo('App\Http\WebBlog\Models');
+        return $this->belongsTo('App\Http\WebBlog\Models\ArticleLabel');
     }
 }

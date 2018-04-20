@@ -20,7 +20,7 @@ class CreateAccessCompanyManager extends Migration
             $table->string('company_manager_email', 100);
             $table->string('company_name', 100);
             $table->string('company_description', 100);
-            $table->string('company_logo', 100);
+            $table->string('company_logo', 200);
             $table->unsignedTinyInteger('is_active');
             $table->string('password', 255);
             $table->timestamps();

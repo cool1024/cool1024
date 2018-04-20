@@ -49,11 +49,11 @@ export class Pagination {
 
         return `
         <li class="previous">
-            <a href="#fakelink" onclick="Page.prevPage()" class="fui-arrow-left"></a>
+            <a onclick="Page.prevPage()" class="fui-arrow-left"></a>
         </li>
         ${lis}
         <li class="next">
-            <a href="#fakelink" onclick="Page.nextPage()" class="fui-arrow-right"></a>
+            <a onclick="Page.nextPage()" class="fui-arrow-right"></a>
         </li>`;
     }
 }

@@ -14,6 +14,9 @@ interface ApiContract
     //try to get all request params
     public function all();
 
+    // 尝试获取请求参数且自动转换小驼峰
+    public function camelCaseParams($params = [], $exp = []);
+
     //try to get some param and auto exit
     public function checkParams($params = [], $exp = [], $formate = [], $message = []);
 

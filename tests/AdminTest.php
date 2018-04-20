@@ -15,14 +15,14 @@ class AdminTest extends TestCase
     public function testInsertCompany()
     {
         $params = [
-            'company_manager_account' => str_random(8),
-            'company_name' => $this->faker->company,
-            'is_active' => 0,
+            'companyManagerAccount' => str_random(8),
+            'companyName' => $this->faker->company,
+            'isActive' => 0,
             'password' => '123456789',
-            'company_manager_mobile' => $this->faker->phoneNumber,
-            'company_manager_email' => $this->faker->email,
-            'company_description' => $this->faker->paragraph,
-            'company_logo' => $this->faker->imageUrl(200, 200),
+            'companyManagerMobile' => $this->faker->phoneNumber,
+            'companyManagerEmail' => $this->faker->email,
+            'companyDescription' => $this->faker->paragraph,
+            'companyLogo' => $this->faker->imageUrl(200, 200),
         ];
         $this->post('admin/company/insert', $params);
         $this->createHtml(__FUNCTION__);
@@ -40,7 +40,7 @@ class AdminTest extends TestCase
      */
     public function testGetCompany(array $stack)
     {
-        $this->get('admin/company/get?company_id=' . $stack['id']);
+        $this->get('admin/company/get?companyId=' . $stack['id']);
         $this->createHtml(__FUNCTION__);
         $this->assertResponseOk();
         $response = json_decode($this->response->getContent(), true);
@@ -59,14 +59,14 @@ class AdminTest extends TestCase
 
         $params = [
             'id' => $stack['id'],
-            'company_manager_account' => str_random(8),
-            'company_name' => $this->faker->company,
-            'is_active' => 0,
-            'password' => 'abcdefgh',
-            'company_manager_mobile' => $this->faker->phoneNumber,
-            'company_manager_email' => $this->faker->email,
-            'company_description' => $this->faker->paragraph,
-            'company_logo' => $this->faker->imageUrl(200, 200),
+            'companyManagerAccount' => str_random(8),
+            'companyName' => $this->faker->company,
+            'isActive' => 0,
+            'password' => '123456789',
+            'companyManagerMobile' => $this->faker->phoneNumber,
+            'companyManagerEmail' => $this->faker->email,
+            'companyDescription' => $this->faker->paragraph,
+            'companyLogo' => $this->faker->imageUrl(200, 200),
         ];
         $this->put('admin/company/update', $params);
         $this->createHtml(__FUNCTION__);
@@ -84,7 +84,7 @@ class AdminTest extends TestCase
      */
     public function testDeleteCompany(array $stack)
     {
-        $this->delete('admin/company/delete?company_id=' . $stack['id']);
+        $this->delete('admin/company/delete?companyId=' . $stack['id']);
         $this->createHtml(__FUNCTION__);
         $this->assertResponseOk();
         $response = json_decode($this->response->getContent(), true);

@@ -36,5 +36,6 @@ $router->get('format/view', function (ApiContract $api) {
 
  // 使用文件服务上传文件
 $router->post('upload', function (FileContract $file, ApiContract $api) {
-    return $api->datas($file->saveFileByMd5('file', 'upload'));
+    return ['uploaded' => 1, 'url' => 'http://127.0.0.1/' . $file->saveFileByMd5('upload', 'upload')];
+    // return $api->datas($file->saveFileByMd5('file', 'upload'));
 });
