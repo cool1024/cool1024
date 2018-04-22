@@ -18,7 +18,7 @@ use App\Sdk\OssSdk;
 $router->get('oss/access/image', function (ApiContract $api) {
 
     // 示例化OssSdk
-    $oss = new OssSdk('LTAIyF7hIj4LbaUA', 'Brr1rKq8kj6c2q5HA2WThQB5iSiJAa', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
+    $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
 
     // 生成文件保存地址
     $file_path = 'upload/' . date('Ymdhis') . uniqid();

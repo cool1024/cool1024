@@ -6,3 +6,7 @@
 ## refresh database
 1. 删除所有表 & 迁移
 `php artisan migrate:refresh`
+
+## phpunit
+1. 测试指定方法
+`phpunit --filter AdminTest::testInsertCompany`

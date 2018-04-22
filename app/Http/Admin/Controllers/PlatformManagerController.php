@@ -26,7 +26,6 @@ class PlatformManagerController extends Controller
             'platform_manager_account:min:4|max:30',
             'password:min:4|max:30',
             'is_active:boolean',
-            'password:min:4|max:20',
         ];
 
         $expected = [
@@ -103,7 +102,7 @@ class PlatformManagerController extends Controller
         ];
 
         $params = $this->api->camelCaseParams($required);
-        return $this->api->deleteMessage(AccessPlatformManager::findOrFail($params['company_id'])->delete());
+        return $this->api->deleteMessage(AccessPlatformManager::findOrFail($params['platform_manager_id'])->delete());
     }
 
     /**
