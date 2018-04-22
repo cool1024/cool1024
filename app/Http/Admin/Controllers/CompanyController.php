@@ -37,6 +37,12 @@ class CompanyController extends Controller
 
         $params = $this->api->camelCaseParams($required, $expected);
 
+        $compay = AccessCompanyManager::where('company_manager_account', $params['company_manager_account'])->first();
+
+        if (isset($compay)) {
+            return $this->api->error('账号已经被注册');
+        }
+
         $params['password'] = Crypt::encryptString($params['password']);
 
         return $this->api->createMessage(AccessCompanyManager::create($params));
@@ -115,8 +121,28 @@ class CompanyController extends Controller
             'offset:integer',
         ];
 
-        $params = $this->api->camelCaseParams($required);
-        $search_result = with(new AccessCompanyManager)->search($params);
+        $expected = [
+            'start:date',
+            'end:date',
+            'name:max:100',
+            'account:max:30',
+        ];
+
+        $params = $this->api->camelCaseParams($required, $expected);
+
+        $search_params = [
+            ['whereDate', 'created_at', '>=', '$start'],
+            ['whereDate', 'created_at', '<=', '$end'],
+            ['where', 'company_name', 'like', '$name'],
+            ['where', 'company_manager_account', 'like', '$account'],
+        ];
+
+        $search_formats = [
+            'name' => '%$name%',
+            'account' => '%$account%',
+        ];
+
+        $search_result = with(new AccessCompanyManager)->search($params, $search_params, $search_formats);
         return $this->api->searchMessage($search_result);
     }
 }

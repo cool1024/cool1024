@@ -15,6 +15,7 @@ class CreateAccessPlatformManager extends Migration
     {
         Schema::create('access_platform_manager', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('platform_manager_name', 45);
             $table->string('platform_manager_account', 30);
             $table->string('platform_manager_mobile', 20);
             $table->string('platform_manager_email', 100);

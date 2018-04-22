@@ -22,6 +22,7 @@ class PlatformManagerController extends Controller
     {
 
         $required = [
+            'platform_manager_name:min:4|max:45',
             'platform_manager_account:min:4|max:30',
             'password:min:4|max:30',
             'is_active:boolean',
@@ -35,9 +36,30 @@ class PlatformManagerController extends Controller
 
         $params = $this->api->camelCaseParams($required, $expected);
 
+        $compay = AccessPlatformManager::where('platform_manager_account', $params['platform_manager_account'])->first();
+
+        if (isset($compay)) {
+            return $this->api->error('账号已经被注册');
+        }
+
         $params['password'] = Crypt::encryptString($params['password']);
 
         return $this->api->createMessage(AccessPlatformManager::create($params));
+    }
+
+    /**
+     * 获取公司详情
+     */
+    public function getPlatformManager()
+    {
+
+        $required = [
+            'platform_manager_id:integer'
+        ];
+
+        $params = $this->api->camelCaseParams($required);
+
+        return $this->api->getMessage(AccessPlatformManager::findOrFail($params['platform_manager_id']));
     }
 
     /**
