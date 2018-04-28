@@ -46,7 +46,7 @@ class ManagerStoreGoodsTypeController extends Controller
      */
     public function deleteGoodsType()
     {
-        $required = ['goods_type_id'];
+        $required = ['goods_type_id:integer'];
         $params = $this->api->camelCaseParams($required);
 
         $goods_type = StoreGoodsType::findOrFail($params['goods_type_id']);
@@ -62,6 +62,47 @@ class ManagerStoreGoodsTypeController extends Controller
      */
     public function saveGoodsType()
     {
-        $required = ['goods_type_id'];
+        $required = [
+            'id:integer',
+            'goods_type_title:max:45',
+            'children:array',
+        ];
+
+        $params = $this->api->camelCaseParams($required);
+
+        // 判断是否是新的
+        if ($params['id'] === 0) {
+            $goods_type = StoreGoodsType::create([
+                'parent_id' => 0,
+                'goods_type_title' => $params['goods_type_title']
+            ]);
+        } else {
+            $goods_type = StoreGoodsType::findOrFail();
+            $goods_type->fill(['goods_type_title' => $params['goods_type_title']])
+                ->save();
+        }
+
+        // 校验数据是否正确
+        $children = [];
+        foreach ($params['children'] as $child) {
+            if (!isset($child['id'], $child['goodsTypeTitle'])) {
+                return $this->api->error('child datas error');
+            }
+            $children[] = [
+                'id' => $params['id'],
+                'goods_type_title' => $child['goodsTypeTitle'],
+            ];
+        }
+
+        // 更新或插入
+        foreach ($children as $type) {
+            $child = $type['id'] === 0 ? new StoreGoodsType : StoreGoodsType::findOrFail($type['id']);
+            $child->fill([
+                'parent_id' => $goods_type->id,
+                'goods_type_title' => $type['goods_type_title'],
+            ])->save();
+        }
+
+        return $this->api->success();
     }
 }

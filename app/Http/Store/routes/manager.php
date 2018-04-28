@@ -27,3 +27,5 @@ $router->get('/user/level/options', 'ManagerStoreUserController@getUserLevelOpti
 $router->get('/goodstype/list', 'ManagerStoreGoodsTypeController@listGoodsType');
 // 删除指定的商品分类
 $router->delete('/goodstype/delete', 'ManagerStoreGoodsTypeController@deleteGoodsType');
+// 保存分类组
+$router->put('/goodstype/save', 'ManagerStoreGoodsTypeController@saveGoodsType');
