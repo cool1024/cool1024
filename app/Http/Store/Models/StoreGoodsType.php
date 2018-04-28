@@ -10,13 +10,18 @@
 namespace App\Http\Store\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Api\Traits\Orm\SearchTrait;
+use App\Api\Traits\Orm\DataGroupTrait;
 
 class StoreGoodsType extends Model
 {
-    use SearchTrait;
+    use DataGroupTrait;
 
     protected $table = 'store_goods_type';
 
     protected $guarded = [];
+
+    protected $groupConfig = [
+        'groupKey' => 'parent_id',
+        'groupParams' => ['id','goods_type_title']
+    ];
 }

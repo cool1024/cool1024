@@ -14,11 +14,16 @@ use App\Api\Contracts\ApiContract;
 |
  */
 
-// 获取指定公司
+// 获取指定用户
 $router->get('/user/get', 'ManagerStoreUserController@getUser');
-// 修改公司
+// 修改指定用户
 $router->put('/user/update', 'ManagerStoreUserController@updateUser');
-// 获取公司列表-分页
+// 获取会员列表-分页
 $router->get('/user/search', 'ManagerStoreUserController@searchUser');
 // 获取会员等级下拉
 $router->get('/user/level/options', 'ManagerStoreUserController@getUserLevelOptions');
+
+// 获取所有商品总类
+$router->get('/goodstype/list', 'ManagerStoreGoodsTypeController@listGoodsType');
+// 删除指定的商品分类
+$router->delete('/goodstype/delete', 'ManagerStoreGoodsTypeController@deleteGoodsType');
