@@ -9,7 +9,6 @@
  */
 namespace App\Http\Store\Controllers;
 
-use Illuminate\Support\Facades\Crypt;
 use App\Http\Store\Models\StoreUser;
 
 class ManagerStoreUserController extends Controller
@@ -29,7 +28,7 @@ class ManagerStoreUserController extends Controller
             'start:date',
             'end:date',
             'nick:max:45',
-            'mobile:max:54',
+            'mobile:max:45',
         ];
 
         $params = $this->api->camelCaseParams($required, $expected);

@@ -29,3 +29,9 @@ $router->get('/goodstype/list', 'ManagerStoreGoodsTypeController@listGoodsType')
 $router->delete('/goodstype/delete', 'ManagerStoreGoodsTypeController@deleteGoodsType');
 // 保存分类组
 $router->put('/goodstype/save', 'ManagerStoreGoodsTypeController@saveGoodsType');
+
+
+// 订单查询
+$router->get('/order/search', 'MangerStoreOrderController@searchOrder');
+// 订单详情
+$router->get('/order/get', 'MangerStoreOrderController@getOrder');

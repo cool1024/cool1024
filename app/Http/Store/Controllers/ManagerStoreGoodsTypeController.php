@@ -9,25 +9,31 @@
  */
 namespace App\Http\Store\Controllers;
 
-use Illuminate\Support\Facades\Crypt;
 use App\Http\Store\Models\StoreGoodsType;
+use App\Api\Traits\Func\ArraySortTrait;
 
 class ManagerStoreGoodsTypeController extends Controller
 {
+
+    use ArraySortTrait;
 
     /**
      * 获取所有分类
      */
     public function listGoodsType()
     {
-        $datas = with(new StoreGoodsType)->groupData();
+        $datas = with(new StoreGoodsType)->groupData([
+            ['op' => 'orderBy', 'params' => ['id', 'asc']]
+        ]);
 
         $parent = [];
         $children = [];
         foreach ($datas as $value) {
             if ($value['parent_id'] === 0) {
                 $parents = $value['groups'];
+                $parents = $this->array_sort_params($parents, 'id');
             } else {
+                $value['groups'] = $this->array_sort_params($value['groups'], 'id');
                 $children[] = $value;
             }
         }
@@ -36,8 +42,8 @@ class ManagerStoreGoodsTypeController extends Controller
             'parents' => $parents,
             'children' => $children,
         ];
-        $datas = json_decode(json_encode($datas, JSON_NUMERIC_CHECK));
 
+        $datas = json_decode(json_encode($datas, JSON_NUMERIC_CHECK));
         return $this->api->getMessage($datas);
     }
 
@@ -77,7 +83,7 @@ class ManagerStoreGoodsTypeController extends Controller
                 'goods_type_title' => $params['goods_type_title']
             ]);
         } else {
-            $goods_type = StoreGoodsType::findOrFail();
+            $goods_type = StoreGoodsType::findOrFail($params['id']);
             $goods_type->fill(['goods_type_title' => $params['goods_type_title']])
                 ->save();
         }
@@ -89,7 +95,7 @@ class ManagerStoreGoodsTypeController extends Controller
                 return $this->api->error('child datas error');
             }
             $children[] = [
-                'id' => $params['id'],
+                'id' => $child['id'],
                 'goods_type_title' => $child['goodsTypeTitle'],
             ];
         }
