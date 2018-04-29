@@ -1,5 +1,5 @@
 
-import { RequestService } from './request';
+import { RequestService } from '../utils/request';
 declare const window: any;
 export interface PageController {
     request: RequestService;

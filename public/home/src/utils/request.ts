@@ -1,4 +1,4 @@
-import { AppConfig } from './config/app.config';
+import { AppConfig } from '../config/app.config';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/dom/ajax';
 import 'rxjs/add/operator/map';
