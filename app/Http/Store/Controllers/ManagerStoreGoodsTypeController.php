@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 商品类型管理管理控制器
+ * 商品类型管理控制器
  * 
  * @file   ManagerStoreGoodsTypeController.php
  * @author xiaojian

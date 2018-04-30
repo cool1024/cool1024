@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 会员管理管理控制器
+ * 订单管理控制器
  * 
  * @file   MangerStoreOrderController.php
  * @author xiaojian

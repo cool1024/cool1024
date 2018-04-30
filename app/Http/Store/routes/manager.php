@@ -35,3 +35,10 @@ $router->put('/goodstype/save', 'ManagerStoreGoodsTypeController@saveGoodsType')
 $router->get('/order/search', 'MangerStoreOrderController@searchOrder');
 // 订单详情
 $router->get('/order/get', 'MangerStoreOrderController@getOrder');
+
+// 查询商品-分页
+$router->get('/goods/search', 'MangerStoreGoodsController@searchGoods');
+// 获取商品详情
+$router->get('/goods/get', 'MangerStoreGoodsController@getGoods');
+// 获取商品下拉选项
+$router->get('/goods/type/options', 'MangerStoreGoodsController@getGoodsTypeOptions');
