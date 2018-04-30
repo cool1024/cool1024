@@ -9,13 +9,11 @@ class IndexController extends PageServiceController {
     content: string;
 
     onInit() {
-        $('.form-control').keyup(event => {
-            this.content = event.target.value;
-        });
+
     }
 
     fillView() {
-        $('#pad').html(this.content);
+
     }
 }
 Page.create(new IndexController);   

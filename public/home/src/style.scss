@@ -24,3 +24,7 @@
 @import "~bootstrap/scss/media";
 @import "~bootstrap/scss/close";
 @import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/alert";
+.btn-white{
+    border-color:$gray-400;
+}

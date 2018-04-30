@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins: [
         extractSass,
-        new UglifyJsPlugin(),
+        // new UglifyJsPlugin(),
     ],
     externals: {
         jquery: 'jQuery'
