@@ -12,7 +12,7 @@ module.exports = {
         index: __dirname + '/src/index.ts',
         // home: './src/home.ts'
     },
-    devtool: 'inline-source-map',
+    // devtool: 'inline-source-map',
     output: {
         path: __dirname + '/build',
         filename: '[name].js'
@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins: [
         extractSass,
-        // new UglifyJsPlugin(),
+        new UglifyJsPlugin(),
     ],
     externals: {
         jquery: 'jQuery'
