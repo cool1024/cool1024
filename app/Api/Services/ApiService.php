@@ -63,6 +63,11 @@ class ApiService implements ApiContract
         return $this->message(true, 'get datas success', $datas);
     }
 
+    public function saveMessage($message)
+    {
+        return $this->message(true, 'get datas success');
+    }
+
     public function deleteMessage($result)
     {
         return $this->delete_message($result);

@@ -40,5 +40,15 @@ $router->get('/order/get', 'MangerStoreOrderController@getOrder');
 $router->get('/goods/search', 'MangerStoreGoodsController@searchGoods');
 // 获取商品详情
 $router->get('/goods/get', 'MangerStoreGoodsController@getGoods');
+// 保存商品规格
+$router->put('goods/specification/update', 'MangerStoreGoodsController@saveGoodsSpecification');
 // 获取商品下拉选项
 $router->get('/goods/type/options', 'MangerStoreGoodsController@getGoodsTypeOptions');
+// 添加商品
+$router->post('goods/insert', 'MangerStoreGoodsController@insertGoods');
+// 保存商品
+$router->put('goods/update', 'MangerStoreGoodsController@updateGoods');
+// 删除商品
+$router->delete('goods/delete', 'MangerStoreGoodsController@deleteGoods');
+// 商品图片上传授权
+$router->get('goods/image/access', 'MangerStoreGoodsController@ossUpload');
