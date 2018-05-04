@@ -15,5 +15,12 @@
     "exclude": [
         "node_modules",
         "src",
-    ]
+    ],
+    "lib": [
+        "es2017",
+        "dom"
+    ],
+    "ignoreRules": {
+        "TS2307": true
+    }
 }

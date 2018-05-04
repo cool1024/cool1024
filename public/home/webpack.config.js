@@ -44,6 +44,10 @@ module.exports = {
                     fallback: "style-loader"
                 })
             },
+            {
+                test: /\.text$/,
+                use: 'raw-loader'
+            },
             { test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ },
         ]
     },
