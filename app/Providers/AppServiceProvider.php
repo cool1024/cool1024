@@ -13,6 +13,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('App\Providers\TestConcat', 'App\Providers\MyService');
+    }
+}
+
+interface TestConcat
+{
+    function setData($data);
+
+    function getData();
+}
+
+class MyService
+{
+    private $data;
+
+    function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    function getData()
+    {
+        return $data;
     }
 }
