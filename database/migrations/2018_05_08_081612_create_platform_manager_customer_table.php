@@ -33,7 +33,7 @@ class CreatePlatformManagerCustomerTable extends Migration
             // 客户生日
             $table->date('customer_birthday');
             // 客户标签
-            $table->unsignedTinyInteger('customer_labels', 1000);
+            $table->string('customer_labels',1000);
 
             $table->timestamps();
         });

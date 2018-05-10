@@ -22,9 +22,9 @@ class CreatePlatformCustomerRewardTable extends Migration
             // 客户UID         
             $table->unsignedInteger('uid');
             // 打赏礼物ID         
-            $table->unsignedInteger('gift_id', 45);
+            $table->unsignedInteger('gift_id');
             // 评分一般为数字1-5（多少颗星星）
-            $table->unsignedTinyInteger('customer_labels', 1000);
+            $table->unsignedTinyInteger('start_num');
 
             $table->timestamps();
         });

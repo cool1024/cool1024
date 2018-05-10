@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreRoomTable extends Migration
+class CreatePlatformStoreRoomSpecificationsTable extends Migration
 {
     /**
      * KTV 包厢/间规格，一般为大包，中包，小包

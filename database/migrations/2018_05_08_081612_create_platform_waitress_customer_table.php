@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformWaotressCustomerTable extends Migration
+class CreatePlatformWaitressCustomerTable extends Migration
 {
     /**
      * 服务员客户列表
@@ -30,7 +30,7 @@ class CreatePlatformWaotressCustomerTable extends Migration
             // 客户生日
             $table->date('customer_birthday');
             // 客户标签
-            $table->unsignedTinyInteger('customer_labels', 1000);
+            $table->string('customer_labels', 1000);
 
             $table->timestamps();
         });

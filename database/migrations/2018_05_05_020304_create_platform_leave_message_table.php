@@ -18,7 +18,7 @@ class CreatePlatformLeaveMessageTable extends Migration
             // 留言唯一编号
             $table->increments('id');
             // 留言所属店铺
-            $table->unsignedInteger('id');
+            $table->unsignedInteger('store_id');
             // 留言来源对象-这是uid
             $table->unsignedInteger('from_id');
             // 留言通知对象-这是uid

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesReportTable extends Migration
+class CreatePlatformGoodsSalesReportTable extends Migration
 {
     /**
      * 出品汇报
