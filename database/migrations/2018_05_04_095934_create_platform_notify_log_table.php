@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 class CreatePlatformNotifyLogTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 服务通知
      *
      * @return void
      */
@@ -16,21 +16,21 @@ class CreatePlatformNotifyLogTable extends Migration
         Schema::create('platform_notify_log', function (Blueprint $table) {
             $table->increments('id');
 
-            // 发布的平台管理员id
-            $table->unsignedInteger('platform_manager_id');
+            // 通知来源店铺
+            $table->unsignedInteger('store_id');
+            // 通知对象-这个是uid
+            $table->unsignedInteger('receiver_id');
             // 通知标题
             $table->string('notify_title', 45);
             // 通知图片
-            $table->string('notify_thumb', 45);
+            $table->string('notify_thumb', 100);
             // 通知链接
-            $table->string('notify_url', 45);            
+            $table->string('notify_url', 100);            
             // 通知内容
             $table->string('notify_content', 255);
-            // 通知范围
-            $table->string('notify_where', 1000);
-            // 通知类型 0.默认通知 1.模板消息 2.其他消息
+            // 通知类型
             $table->unsignedTinyInteger('notify_type');
-            // 通知状态 0.草稿 1.已经发布
+            // 通知状态 0.等待通知 1.已经发送 2.已经阅读
             $table->unsignedTinyInteger('notify_status');
 
             $table->timestamps();

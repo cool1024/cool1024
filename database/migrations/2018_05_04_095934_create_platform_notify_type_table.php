@@ -4,20 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreServiceTable extends Migration
+class CreatePlatformNotifyLogTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 通知类型
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('platform_store_service', function (Blueprint $table) {
+        Schema::create('platform_notify_type', function (Blueprint $table) {
+
             $table->increments('id');
 
-            // 服务所属店铺
-            $table->unsignedBigInteger('store_id');
+            // 通知类型名称
+            $table->unsignedInteger('notify_type_name');
+            // 通知触发条件
+            $table->unsignedInteger('notify_where');
 
             $table->timestamps();
         });
@@ -30,6 +33,6 @@ class CreateStoreServiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platform_store_service');
+        Schema::dropIfExists('platform_notify_type');
     }
 }

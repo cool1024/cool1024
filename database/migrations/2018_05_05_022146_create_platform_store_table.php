@@ -7,15 +7,16 @@ use Illuminate\Database\Migrations\Migration;
 class CreatePlatformOwnerTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 商家、KTV
      *
      * @return void
      */
     public function up()
     {
         Schema::create('platform_store', function (Blueprint $table) {
-            $table->increments('id');
 
+            // 店铺唯一编号，对应store_id
+            $table->increments('id');
             // 店铺名称
             $table->string('store_name', 100);
             // 店铺头像
@@ -32,7 +33,7 @@ class CreatePlatformOwnerTable extends Migration
             $table->string('store_manager_mobile', 20);
             // 是否启用店铺
             $table->unsignedTinyInteger('is_active');
-
+            // 时间戳
             $table->timestamps();
         });
     }

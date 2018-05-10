@@ -14,7 +14,10 @@ class CreateWechatUserTable extends Migration
     public function up()
     {
         Schema::create('wechat_user', function (Blueprint $table) {
+
             $table->increments('id');
+
+            // 微信信息
             $table->string('openid', 45);
             $table->string('realname', 45);
             $table->string('mobile', 45);
@@ -25,6 +28,12 @@ class CreateWechatUserTable extends Migration
             $table->string('city', 45);
             $table->string('country', 45);
             $table->string('province', 45);
+
+            // 商户唯一编号,用户所属商户
+            $table->unsignedInteger('store_id');
+            // 唯一员工号-没有员工号的是普通用户（老板，经理，服务人员都有）
+            $table->unsignedInteger('woker_id');
+
             $table->timestamps();
         });
     }

@@ -7,13 +7,14 @@ use Illuminate\Database\Migrations\Migration;
 class CreatePlatformMessageLogTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 平台公告
      *
      * @return void
      */
     public function up()
     {
         Schema::create('platform_message_log', function (Blueprint $table) {
+
             $table->increments('id');
 
             // 发布的平台管理员id
@@ -23,9 +24,9 @@ class CreatePlatformMessageLogTable extends Migration
             // 消息标题
             $table->string('message_title', 45);
             // 消息图片
-            $table->string('message_thumb', 45);
+            $table->string('message_thumb', 100);
             // 消息链接
-            $table->string('message_url', 45);            
+            $table->string('message_url', 100);            
             // 消息内容
             $table->string('message_content', 255);
 

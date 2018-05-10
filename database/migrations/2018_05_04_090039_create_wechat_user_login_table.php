@@ -14,9 +14,17 @@ class CreateWechatUserLoginTable extends Migration
     public function up()
     {
         Schema::create('wechat_user_login', function (Blueprint $table) {
+            
+            // 记录编号
             $table->increments('id');
-            $table->unsignedInteger()('uid');
+            // 用户唯一编号
+            $table->unsignedInteger('uid');
+            // 登入令牌
             $table->string('token', 255);
+            // 商户唯一编号,用户所属商户
+            $table->unsignedInteger('store_id');
+            // 唯一员工号-没有员工号的是普通用户（老板，经理，服务人员都有）
+            $table->unsignedInteger('work_id');
             $table->timestamps();
         });
     }

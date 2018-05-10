@@ -14,10 +14,11 @@ class CreateStoreActiveGoodsTable extends Migration
     public function up()
     {
         Schema::create('platform_store_active_goods', function (Blueprint $table) {
+
+            // 活动商品唯一编号
             $table->increments('id');
-            
             // 商品所属店铺
-            $table->unsignedBigInteger('store_id');
+            $table->unsignedInteger('store_id');
             // 商品名称
             $table->string('goods_name', 200);
             // 商品缩略图
@@ -26,8 +27,10 @@ class CreateStoreActiveGoodsTable extends Migration
             $table->string('goods_images', 1000);
             // 商品价格
             $table->unsignedDecimal('goods_price', 10, 2);
-            // 商品数量
-            $table->unsignedInteger('goods_stock', 1000);
+            // 商品总数量--库存
+            $table->unsignedInteger('goods_stock');
+            // 商品销售数量
+            $table->unsignedInteger('goods_sales');
             // 开始时间
             $table->date('opened_at');
             // 结束时间
