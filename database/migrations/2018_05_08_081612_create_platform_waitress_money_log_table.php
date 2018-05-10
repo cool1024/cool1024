@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformWaitressMoneyLogTable extends Migration
 {
     /**
      * 服务员收支记录，提现，被打赏都会记录

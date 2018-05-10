@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformCustomerLabelTable extends Migration
 {
     /**
      * 客户标签（收集一些服务员添加的标签，方便快速使用）
@@ -13,7 +13,7 @@ class CreatePlatformStoreSalesManagerTable extends Migration
      */
     public function up()
     {
-        Schema::create('platform_customer_labe', function (Blueprint $table) {
+        Schema::create('platform_customer_label', function (Blueprint $table) {
 
             // 标签唯一编号
             $table->increments('id');
@@ -33,6 +33,6 @@ class CreatePlatformStoreSalesManagerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platform_customer_labe');
+        Schema::dropIfExists('platform_customer_label');
     }
 }

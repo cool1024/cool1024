@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformChatLogTable extends Migration
 {
     /**
      * 员工内部聊天记录

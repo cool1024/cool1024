@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformCustomerConsumTable extends Migration
 {
     /**
      * 客户消费记录，由服务员添加

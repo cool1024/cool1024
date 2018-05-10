@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformStoreWaitressTable extends Migration
 {
     /**
      * KTV/店铺服务员表，申请在表中，状态为 0

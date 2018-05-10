@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformStoreSalesManagerTable extends Migration
+class CreatePlatformWorkerTable extends Migration
 {
     /**
      * 平台员工表（老板，经理，服务员都需要在这个表中有一个唯一员工号，默认就是id）

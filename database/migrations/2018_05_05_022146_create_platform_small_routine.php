@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformOwnerTable extends Migration
+class CreatePlatformSmallRoutineTable extends Migration
 {
     /**
      * 商家、KTV 小程序配置，每一个商户都有自己对应的一个小程序

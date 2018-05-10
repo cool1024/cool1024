@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformNotifyLogTable extends Migration
+class CreatePlatformNotifyTypeTable extends Migration
 {
     /**
      * 通知类型
@@ -20,7 +20,7 @@ class CreatePlatformNotifyLogTable extends Migration
             // 通知类型名称
             $table->unsignedInteger('notify_type_name');
             // 通知触发条件
-            $table->unsignedInteger('notify_where');
+            $table->string('notify_where',1000);
 
             $table->timestamps();
         });
