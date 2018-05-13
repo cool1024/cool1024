@@ -1,0 +1,21 @@
+{
+    "title": "微信模块",
+    "forms": [
+        {
+            "title": "微信授权登入-code换曲accesstoken",
+            "description": "测试请求参数校验服务",
+            "url": "/wechatauth/auth/token",
+            "method": "post",
+            "inputs": [
+                {
+                    "name": "code",
+                    "description": "小程序授权code"
+                },
+                {
+                    "name": "appid",
+                    "description": "小程序appid"
+                }
+            ]
+        }
+    ]
+}
