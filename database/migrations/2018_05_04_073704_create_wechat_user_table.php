@@ -21,8 +21,8 @@ class CreateWechatUserTable extends Migration
             $table->string('openid', 45);
             $table->string('realname', 45);
             $table->string('mobile', 45);
-            $table->string('nickname', 45);
-            $table->string('headimgurl', 255);
+            $table->string('nick_name', 45);
+            $table->string('avatar_url', 255);
             $table->string('address', 45);
             $table->unsignedTinyInteger('gender');
             $table->string('city', 45);

@@ -21,6 +21,8 @@ class CreateWechatUserLoginTable extends Migration
             $table->unsignedInteger('uid');
             // 登入令牌
             $table->string('token', 255);
+            // 会话编号
+            $table->string('session_key', 45);
             // 商户唯一编号,用户所属商户
             $table->unsignedInteger('store_id');
             // 唯一员工号-没有员工号的是普通用户（老板，经理，服务人员都有）

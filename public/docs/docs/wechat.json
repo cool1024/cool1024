@@ -12,7 +12,7 @@
           "description": "小程序授权code"
         },
         {
-          "name": "appId",
+          "name": "appid",
           "description": "小程序appid"
         }
       ]
@@ -24,7 +24,7 @@
       "method": "post",
       "inputs": [
         {
-          "name": "appId",
+          "name": "appid",
           "description": "小程序appid"
         },
         {
@@ -32,8 +32,8 @@
           "description": "小程序session_key"
         },
         {
-          "name": "openId",
-          "description": "用户openId"
+          "name": "openid",
+          "description": "用户openid"
         },
         {
           "name": "avatarUrl",
@@ -68,12 +68,12 @@
       "method": "post",
       "inputs": [
         {
-          "name": "appId",
+          "name": "appid",
           "description": "小程序appid"
         },
         {
-          "name": "openId",
-          "description": "用户openId"
+          "name": "openid",
+          "description": "用户openid"
         },
         {
           "name": "avatarUrl",

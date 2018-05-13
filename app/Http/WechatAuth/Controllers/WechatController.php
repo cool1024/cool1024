@@ -38,10 +38,10 @@ class WechatController extends BaseController
         $this->api = $api;
 
         // 尝试获取参数中的
-        $params = $api->camelCaseParams(['app_id']);
+        $params = $api->camelCaseParams(['appid']);
 
         // 尝试获取微信对象
-        $this->wechat = $wechat->getWechatByAppId($params['app_id'], $this->small_routine);
+        $this->wechat = $wechat->getWechatByAppId($params['appid'], $this->small_routine);
         if ($this->wechat === false) {
             abort(401, 'small routine lost');
         }
@@ -58,7 +58,7 @@ class WechatController extends BaseController
         if (isset($session_datas['errcode'])) {
             return $this->api->error($session_datas['errmsg']);
         }
-        WechatLoginSession::create([
+        $session_datas = WechatLoginSession::create([
             'appid' => $this->wechat->getAppId(),
             'openid' => $session_datas['openid'],
             'session_key' => $session_datas['session_key'],
@@ -72,7 +72,7 @@ class WechatController extends BaseController
     public function getAuthToken()
     {
         $required = [
-            'open_id:max:45',
+            'openid:max:45',
             'session_key:max:45',
             'avatar_url:max:1000',
             'nick_name:max:45',
@@ -84,31 +84,32 @@ class WechatController extends BaseController
             'province:max:45'
         ];
 
+
         $params = $this->api->camelCaseParams($required, $expected);
 
         $user = WechatUser::where([
-            'app_id' => $this->small_routine->app_id,
             'store_id' => $this->small_routine->store_id,
-            'open_id' => $params['open_id'],
+            'openid' => $params['openid'],
         ])->first();
 
         if (!isset($user)) {
             $user = new WechatUser();
         }
 
+        unset($params['session_key']);
         $user->fill($params)->save();
 
         $login = WechatUserLogin::where('uid', $user->id)->first();
         if (!isset($login)) {
             $login = new WechatUserLogin();
         }
-        $login::fill([
+        $login->fill([
             'uid' => $user->id,
             'store_id' => $user->store_id,
             'token' => md5($user->id) . sha1(uniqid()),
         ]);
 
-        return $this->getMessage($login);
+        return $this->api->getMessage($login);
     }
 
     /**
@@ -117,7 +118,7 @@ class WechatController extends BaseController
     public function updateUserInfo()
     {
         $required = [
-            'open_id:max:1000',
+            'openid:max:1000',
             'avatar_url:max:1000',
             'nick_name:max:45',
             'gender:integer|min:0|max:2'

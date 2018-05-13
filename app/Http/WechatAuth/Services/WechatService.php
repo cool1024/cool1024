@@ -57,8 +57,8 @@ class WechatService implements WechatContract
     {
         $config = [
             'app_id' => $this->config->appId,
-            'mch_id' => $this->config->appId,
-            'secret_key' => $this->config->appId,
+            'mch_id' => $this->config->mchId,
+            'secret_key' => $this->config->appSecret,
             'notify_url' => $this->config->notifyUrl,
             'return_url' => $this->config->returnUrl,
             'pre_pay_url' => $this->config->prePayUrl,
