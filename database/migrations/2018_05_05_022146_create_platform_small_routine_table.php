@@ -17,6 +17,8 @@ class CreatePlatformSmallRoutineTable extends Migration
 
             // 小程序唯一编号
             $table->increments('id');
+            // 小程序appid
+            $table->string('app_id', 45);
             // 小程序所属店铺
             $table->unsignedInteger('store_id');
             // 小程序状态,是否可用

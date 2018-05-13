@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 微信用户模型
+ * 平台商户，KTV
  * 
- * @file   WechatUser.php
+ * @file   PlatformStore.php
  * @author xiaojian
  * @date   2018-04-27
  */
@@ -12,12 +12,12 @@ namespace App\Http\WechatAuth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * WechatUser Class Model
+ * PlatformStore Class Model
  */
-class WechatUser extends Model
+class PlatformStore extends Model
 {
 
-    protected $table = 'wechat_user';
+    protected $table = 'platform_store';
 
     protected $guarded = [];
 }

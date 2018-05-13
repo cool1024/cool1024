@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 微信用户模型
+ * 小程序模型
  * 
- * @file   WechatUser.php
+ * @file   SmallRoutine.php
  * @author xiaojian
  * @date   2018-04-27
  */
@@ -12,12 +12,12 @@ namespace App\Http\WechatAuth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * WechatUser Class Model
+ * SmallRoutine Class Model
  */
-class WechatUser extends Model
+class SmallRoutine extends Model
 {
 
-    protected $table = 'wechat_user';
+    protected $table = 'platform_small_routine';
 
     protected $guarded = [];
 }

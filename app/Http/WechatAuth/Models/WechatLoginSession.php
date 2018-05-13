@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 微信用户模型
+ * 微信登入会话
  * 
- * @file   WechatUser.php
+ * @file   WechatLoginSession.php
  * @author xiaojian
  * @date   2018-04-27
  */
@@ -12,12 +12,12 @@ namespace App\Http\WechatAuth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * WechatUser Class Model
+ * WechatLoginSession Class Model
  */
-class WechatUser extends Model
+class WechatLoginSession extends Model
 {
 
-    protected $table = 'wechat_user';
+    protected $table = 'wechat_login_session';
 
     protected $guarded = [];
 }
