@@ -4,6 +4,8 @@ namespace App\Api\Contracts;
 
 interface ApiContract
 {
+    // try to get request headers
+    public function headers($header);
 
     // try to get a file obj
     public function file($key);

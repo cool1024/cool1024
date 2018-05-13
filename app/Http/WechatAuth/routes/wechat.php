@@ -16,13 +16,19 @@ use App\Http\WechatAuth\Classes\WechatPay;
  */
 
 
-// 微信登入第二步
-$router->post('/auth/token', 'WechatController@getSessionKey');
+// 小程序登入第一步
+$router->post('/session', 'WechatController@getSessionKey');
+
+// 小程序登入第二步
+$router->post('/signin', 'WechatController@getAuthToken');
 
 $router->group(['middleware' => 'wechat'], function ($router) {
 
+    // 更新我的个人信息
+    $router->post('/update', 'WechatController@updateUserInfo');
+
     // 获取我的个人信息
-    $router->get('/user/info', function (ApiContract $api, AuthContract $auth) {
+    $router->get('/info', function (ApiContract $api, AuthContract $auth) {
         return $api->getMessage($auth->user);
     });
 

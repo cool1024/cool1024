@@ -17,6 +17,7 @@ use App\Http\WechatAuth\Models\WechatUserLogin;
 use App\Http\WechatAuth\Services\AuthContract;
 use App\Http\WechatAuth\Models\SmallRoutine;
 use App\Http\WechatAuth\Models\WechatLoginSession;
+use App\Http\WechatAuth\Services\WechatContract;
 
 /**
  * WechatController Class Controller
@@ -28,11 +29,22 @@ class WechatController extends BaseController
 
     private $api;
 
-    public function __construct(ApiContract $api)
+    private $small_routine;
+
+    private $store;
+
+    public function __construct(ApiContract $api, WechatContract $wechat)
     {
         $this->api = $api;
-        // SmallRoutine::where('app_id')
-        $this->wechat = new Wechat('wxdf65835c38ed456b', '7e68fd7551f9fe873ebf4ee9a25adf5e');
+
+        // 尝试获取参数中的
+        $params = $api->camelCaseParams(['app_id']);
+
+        // 尝试获取微信对象
+        $this->wechat = $wechat->getWechatByAppId($params['app_id'], $this->small_routine);
+        if ($this->wechat === false) {
+            abort(401, 'small routine lost');
+        }
     }
 
     /**
@@ -60,9 +72,10 @@ class WechatController extends BaseController
     public function getAuthToken()
     {
         $required = [
+            'open_id:max:45',
             'session_key:max:45',
-            'avatarUrl:max:1000',
-            'nickName:max:45',
+            'avatar_url:max:1000',
+            'nick_name:max:45',
             'gender:integer|min:0|max:2'
         ];
         $expected = [
@@ -70,16 +83,57 @@ class WechatController extends BaseController
             'country:max:45',
             'province:max:45'
         ];
-        $this->api->camelCaseParams($required, $expected);
 
+        $params = $this->api->camelCaseParams($required, $expected);
+
+        $user = WechatUser::where([
+            'app_id' => $this->small_routine->app_id,
+            'store_id' => $this->small_routine->store_id,
+            'open_id' => $params['open_id'],
+        ])->first();
+
+        if (!isset($user)) {
+            $user = new WechatUser();
+        }
+
+        $user->fill($params)->save();
+
+        $login = WechatUserLogin::where('uid', $user->id)->first();
+        if (!isset($login)) {
+            $login = new WechatUserLogin();
+        }
+        $login::fill([
+            'uid' => $user->id,
+            'store_id' => $user->store_id,
+            'token' => md5($user->id) . sha1(uniqid()),
+        ]);
+
+        return $this->getMessage($login);
     }
 
     /**
-     * 用户信息更新，用平台token和用户信息来更新用户信息
+     * 用户信息更新
      */
     public function updateUserInfo()
     {
+        $required = [
+            'open_id:max:1000',
+            'avatar_url:max:1000',
+            'nick_name:max:45',
+            'gender:integer|min:0|max:2'
+        ];
 
+        $expected = [
+            'city:max:45',
+            'country:max:45',
+            'province:max:45'
+        ];
+
+        $params = $this->api->camelCaseParams($required, $expected);
+
+        $this->auth->fill($params)->save();
+
+        return $this->getMessage();
     }
 
 }

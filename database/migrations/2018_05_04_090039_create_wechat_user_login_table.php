@@ -25,6 +25,7 @@ class CreateWechatUserLoginTable extends Migration
             $table->unsignedInteger('store_id');
             // 唯一员工号-没有员工号的是普通用户（老板，经理，服务人员都有）
             $table->unsignedInteger('work_id');
+            // 时间戳
             $table->timestamps();
         });
     }

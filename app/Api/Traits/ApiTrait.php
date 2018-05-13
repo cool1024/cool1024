@@ -15,6 +15,17 @@ use Illuminate\Support\Facades\Validator;
 trait ApiTrait
 {
 
+    public function headers($headers)
+    {
+        $values = [];
+        foreach ($headers as $header) {
+            if (!isset($values[$header])) {
+                return false;
+            }
+        }
+        return $values;
+    }
+
     public function file($key)
     {
         return Request::file($key);

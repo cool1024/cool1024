@@ -10,6 +10,12 @@ interface WechatContract
      */
     public function loadConfig($config);
 
+
+    /**
+     * 通过appid获取微信对象
+     */
+    public function getWechatByAppId($app_id, &$small_routine);
+
     /**
      * 获取微信对象-提供了微信登入方法
      */

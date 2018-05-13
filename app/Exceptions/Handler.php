@@ -52,6 +52,9 @@ class Handler extends ExceptionHandler
             if ($fe->getStatusCode() === 201) {
                 return response()->json(json_decode($e->getMessage(), true));
             }
+            if ($fe->getStatusCode() === 401) {
+                return response()->json(['result' => false, 'message' => $fe->getMessage()]);
+            }
             if ($fe->getStatusCode() === 404) {
                 return response()->json(['result' => false, 'message' => '请求的接口不存在~']);
             }

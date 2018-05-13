@@ -1,21 +1,105 @@
 {
-    "title": "微信模块",
-    "forms": [
+  "title": "微信模块",
+  "forms": [
+    {
+      "title": "微信授权登入-code换session",
+      "description": "测试请求参数校验服务",
+      "url": "/wechatauth/session",
+      "method": "post",
+      "inputs": [
         {
-            "title": "微信授权登入-code换曲accesstoken",
-            "description": "测试请求参数校验服务",
-            "url": "/wechatauth/auth/token",
-            "method": "post",
-            "inputs": [
-                {
-                    "name": "code",
-                    "description": "小程序授权code"
-                },
-                {
-                    "name": "appid",
-                    "description": "小程序appid"
-                }
-            ]
+          "name": "code",
+          "description": "小程序授权code"
+        },
+        {
+          "name": "appId",
+          "description": "小程序appid"
         }
-    ]
+      ]
+    },
+    {
+      "title": "微信授权登入-session换token",
+      "description": "测试请求参数校验服务",
+      "url": "/wechatauth/signin",
+      "method": "post",
+      "inputs": [
+        {
+          "name": "appId",
+          "description": "小程序appid"
+        },
+        {
+          "name": "sessionKey",
+          "description": "小程序session_key"
+        },
+        {
+          "name": "openId",
+          "description": "用户openId"
+        },
+        {
+          "name": "avatarUrl",
+          "description": "用户头像"
+        },
+        {
+          "name": "nickName",
+          "description": "用户昵称"
+        },
+        {
+          "name": "gender",
+          "description": "性别"
+        },
+        {
+          "name": "country",
+          "description": "国家"
+        },
+        {
+          "name": "province",
+          "description": "省份"
+        },
+        {
+          "name": "city",
+          "description": "城市"
+        }
+      ]
+    },
+    {
+      "title": "用户信息更新",
+      "description": "每次用户进入小程序后更新用户的个人信息",
+      "url": "/wechatauth/update",
+      "method": "post",
+      "inputs": [
+        {
+          "name": "appId",
+          "description": "小程序appid"
+        },
+        {
+          "name": "openId",
+          "description": "用户openId"
+        },
+        {
+          "name": "avatarUrl",
+          "description": "用户头像"
+        },
+        {
+          "name": "nickName",
+          "description": "用户昵称"
+        },
+        {
+          "name": "gender",
+          "description": "性别"
+        },
+        {
+          "name": "country",
+          "description": "国家"
+        },
+        {
+          "name": "province",
+          "description": "省份"
+        },
+        {
+          "name": "city",
+          "description": "城市"
+        }
+      ]
+    }
+  ]
 }
