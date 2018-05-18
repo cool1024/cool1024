@@ -1,3 +1,3 @@
 ## run 
-`npm run _serve`
+`npm run serve-dev`
 http://localhost:8080/webpack-dev-server
