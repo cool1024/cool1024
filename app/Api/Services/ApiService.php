@@ -58,7 +58,7 @@ class ApiService implements ApiContract
         return $this->create_message($create_obj);
     }
 
-    public function getMessage($datas)
+    public function getMessage($datas = '')
     {
         return $this->message(true, 'get datas success', $datas);
     }
