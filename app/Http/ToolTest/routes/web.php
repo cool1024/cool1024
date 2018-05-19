@@ -2,6 +2,7 @@
 
 use App\Api\Contracts\ApiContract;
 use App\Api\Contracts\FileContract;
+use App\Api\Contracts\FormContract;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,15 @@ $router->get('format/view', function (ApiContract $api) {
 $router->post('upload', function (FileContract $file, ApiContract $api) {
     return ['uploaded' => 1, 'url' => 'http://192.168.1.197/' . $file->saveFileByMd5('upload', 'upload')];
     // return $api->datas($file->saveFileByMd5('file', 'upload'));
+});
+
+// 使用FormService校验表单数据
+$router->get('form', function (FormContract $form) {
+
+    $rules = [
+        ['a', 'required|integer|max:45'],
+        ['b', 'required|integer|max:45'],
+    ];
+
+    return $form->checkFormOrFail($rules);
 });

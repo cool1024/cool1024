@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        // 拦截404错误，统一处理
+        // Http响应异常处理
         if ($e instanceof HttpException) {
             $fe = FlattenException::create($e);
             if ($fe->getStatusCode() === 201) {
@@ -61,8 +61,20 @@ class Handler extends ExceptionHandler
             if ($fe->getStatusCode() === 405) {
                 return response()->json(['result' => false, 'message' => '请求的方式错误~']);
             }
-        } else if ($e instanceof ModelNotFoundException) {
+        } 
+        // 模型查询异常处理
+        else if ($e instanceof ModelNotFoundException) {
             return response()->json(['result' => false, 'message' => '请求的数据不存在~']);
+        }
+        // 表单校验异常处理
+        else if ($e instanceof ValidationException) {
+            return response()->json(
+                [
+                    'result' => false,
+                    'message' => $e->validator->messages()
+                ],
+                $e->status
+            );
         }
         return parent::render($request, $e);
     }
