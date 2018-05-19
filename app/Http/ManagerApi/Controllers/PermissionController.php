@@ -52,7 +52,7 @@ class PermissionController extends Controller
         $required = ['permission_group_id:integer'];
         $params = $this->api->camelCaseParams($required);
         $result = SystemPermissionGroup::findOrFail($params['permission_group_id'])->delete();
-        SystemPermission::where($params['permission_group_id'])->delete();
+        SystemPermission::where($params)->delete();
         return $this->api->deleteMessage($result);
     }
 
@@ -68,10 +68,10 @@ class PermissionController extends Controller
     {
         $required = [
             'id:integer',
-            'permission_group_name:integer',
+            'permission_group_name:max:45',
         ];
         $params = $this->api->camelCaseParams($required);
-        $result = SystemPermissionGroup::findOrFail($params['permission_group_id'])
+        $result = SystemPermissionGroup::findOrFail($params['id'])
             ->fill(['permission_group_name' => $params['permission_group_name']])
             ->save();
         return $this->api->updateMessage($result);
@@ -87,7 +87,7 @@ class PermissionController extends Controller
         ];
         $params = $this->api->camelCaseParams($required);
         SystemPermissionGroup::findOrFail($params['permission_group_id']);
-        $result = SystemPermission::findOrFail($params['permission_group_id'])
+        $result = SystemPermission::findOrFail($params['id'])
             ->fill($params)
             ->save();
         return $this->api->updateMessage($result);
