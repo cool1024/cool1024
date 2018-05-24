@@ -3,7 +3,7 @@
 use App\Api\Contracts\ApiContract;
 use App\Api\Contracts\FileContract;
 use App\Api\Contracts\FormContract;
-
+use App\Sdk\IdCardReader;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -41,14 +41,22 @@ $router->post('upload', function (FileContract $file, ApiContract $api) {
     // return $api->datas($file->saveFileByMd5('file', 'upload'));
 });
 
+<< << <<< HEAD
 // 使用FormService校验表单数据
-$router->get('form', function (FormContract $form) {
+  $router->get('form', function (FormContract   $form) {
 
-    $rules = [
+      $rules = [
         ['a', 'required|integer|max:45'],
         ['b', 'required|integer|max:45'],
         ['c', 'max:45'],
     ];
 
-    return $form->checkFormOrFail($rules);
+    return   $form->checkFormOrFail(  $rules);
+=======
+// 使用身份证识别
+  $router->get('idcard', function (ApiContract   $api) {
+      $reader = new IdCardReader('6b0c12cf6b1386344dba1a61c6433db1', '0199ab7f344e4ad083cdae2444e7f261');
+      $result =   $reader->readFile('/home/xiaojian/桌面/timg.jpeg');
+    return   $result === false ?   $api->error('接口调用失败') :   $result;
+>>>>>>> be86692853b665a4cc1930f9099fb7746095d9ce
 });
