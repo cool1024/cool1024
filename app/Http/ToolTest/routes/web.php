@@ -47,6 +47,7 @@ $router->get('form', function (FormContract $form) {
     $rules = [
         ['a', 'required|integer|max:45'],
         ['b', 'required|integer|max:45'],
+        ['c', 'max:45'],
     ];
 
     return $form->checkFormOrFail($rules);

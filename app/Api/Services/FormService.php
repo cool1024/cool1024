@@ -33,7 +33,9 @@ class FormService implements FormContract
             $result['validator'] = $validator;
         } else {
             foreach ($rules as $key => $value) {
-                $result['datas'][$key] = Request::input($key);
+                if (Request::has($key)) {
+                    $result['datas'][$key] = Request::input($key);
+                }
             }
             $result['result'] = true;
         }
@@ -46,7 +48,7 @@ class FormService implements FormContract
         if ($result['result'] === false) {
             throw new ValidationException($result['validator']);
         }
-        return $result;
+        return $result['datas'];
     }
 
     /**

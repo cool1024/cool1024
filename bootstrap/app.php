@@ -59,17 +59,10 @@ $app->singleton(
 |
  */
 
-// $app->routeMiddleware([
-//     'format' => 'App\Core\Middlewares\FormatMiddleware',
-// ]);
-
 $app->middleware([
-    App\Core\Middlewares\FormatMiddleware::class
+    App\Core\Middlewares\FormatMiddleware::class,
+    App\Core\Middlewares\TransformsRequest::class,
 ]);
-
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
 
 /*
 |--------------------------------------------------------------------------
