@@ -20,7 +20,6 @@ class FormatMiddleware
         $datas = $this->camelCase($datas);
         $datas = json_encode($datas);
         $response->setContent($datas);
-
         return $response;
     }
 
