@@ -2,7 +2,7 @@
 
 use App\Api\Contracts\ApiContract;
 use App\Api\Contracts\FileContract;
-
+use App\Sdk\IdCardReader;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -38,4 +38,11 @@ $router->get('format/view', function (ApiContract $api) {
 $router->post('upload', function (FileContract $file, ApiContract $api) {
     return ['uploaded' => 1, 'url' => 'http://192.168.1.197/' . $file->saveFileByMd5('upload', 'upload')];
     // return $api->datas($file->saveFileByMd5('file', 'upload'));
+});
+
+// 使用身份证识别
+$router->get('idcard', function (ApiContract $api) {
+    $reader = new IdCardReader('6b0c12cf6b1386344dba1a61c6433db1', '0199ab7f344e4ad083cdae2444e7f261');
+    $result = $reader->readFile('/home/xiaojian/桌面/timg.jpeg');
+    return $result === false ? $api->error('接口调用失败') : $result;
 });
