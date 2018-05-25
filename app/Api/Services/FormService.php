@@ -10,6 +10,56 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FormService implements FormContract
 {
+
+    private $successMessage = '成功';
+    private $failMessage = '失败';
+
+    /**
+     * 数据创建结果响应
+     * 
+     * @param Model 创建返回的ORM实例
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function createMessage($object, $name = '')
+    {
+        $result = isset($object);
+        $message = $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, $object);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 创建一个JsonResponse实例
+     * 
+     * @param array $apiData
+     * @return JsonResponse
+     */
+    private function jsonResponse($apiData)
+    {
+        return response()->json($apiData);
+    }
+
+    /**
+     * 创建一个响应数据
+     * 
+     * @param bool $result
+     * @param string $message
+     * @param any $datas
+     */
+    private function apiData($result, $message, $datas)
+    {
+        return [
+            'result' => $result,
+            'message' => $message,
+            'datas' => $datas,
+        ];
+    }
+    private function message($result)
+    {
+        return $result ? $this->successMessage : $this->failMessage;
+    }
+
     /**
      * 校验表单数据
      * 

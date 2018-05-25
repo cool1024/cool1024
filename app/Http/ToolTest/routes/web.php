@@ -47,16 +47,26 @@ $router->get('form', function (FormContract $form) {
     $rules = [
         ['a_b', 'required|integer|max:100'],
         ['b_c_d', 'required|string|max:45'],
+        // 没有required的参数是可选参数
         ['c', 'max:45'],
     ];
 
-    // $formats = [
-    //     'a' => 'abort_a',
-    //     'b' => function ($key, $value) {
-    //         return $key . $value;
-    //     }
-    // ];
-    return dd($form->camelFormOrFail($rules, false));
+    $formats = [
+        // 将会把参数a变为abort_a
+        'a' => 'abort_a',
+        // $key为原来参数名‘b’,$value为参数的值，这个返回值$key.$value为新的参数名称替换掉'b'
+        'b' => function ($key, $value) {
+            return $key . $value;
+        }
+    ];
+
+    // 使用checkForm系列的方法可以自定义参数名称格式化
+    // $params = $form->chekFormOrFail($rules, $formats);
+
+    // 使用camelForm系列的方法将会强制要求参数为小驼峰，而方法返回值依旧可以保持之前的下划线
+    $params = $form->camelFormOrFail($rules);
+
+    return $params;
 });
 
 // 使用身份证识别
