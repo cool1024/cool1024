@@ -13,6 +13,10 @@ class FormService implements FormContract
 
     private $successMessage = '成功';
     private $failMessage = '失败';
+    private $createMessage = '创建';
+    private $saveMessage = '保存';
+    private $deleteMessgae = '删除';
+    private $updateMessage = '更新';
 
     /**
      * 数据创建结果响应
@@ -24,8 +28,89 @@ class FormService implements FormContract
     public function createMessage($object, $name = '')
     {
         $result = isset($object);
-        $message = $name . $this->message($result);
+        $message = $this->createMessage . $name . $this->message($result);
         $apiData = $this->apiData($result, $message, $object);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 数据保存结果响应
+     * 
+     * @param int $saveResult 受影响的行数
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function saveMessage($saveResult, $name = '')
+    {
+        $result = !empty($saveResult);
+        $message = $this->saveMessage . $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, $object);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 数据更新结果响应
+     * 
+     * @param int $updateResult 受影响的行数
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function updateMessage($updateResult, $name = '')
+    {
+        $result = !empty($updateResult);
+        $message = $this->updateMessage . $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, $object);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 数据删除结果响应
+     * 
+     * @param int $deleteResult 受影响的行数
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function deleteMessage($deleteResult, $name = '')
+    {
+        $result = !empty($deleteResult);
+        $message = $this->deleteMessage . $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, $object);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 获取一个错误消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function error($message)
+    {
+        $apiData = $this->apiData(false, $message, null);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 获取一个成功消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function success($message)
+    {
+        $apiData = $this->apiData(true, $message, null);
+        return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 获取一个数据消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function datas($datas, $message = 'get datas success')
+    {
+        $apiData = $this->apiData(true, $message, $datas);
         return $this->jsonResponse($apiData);
     }
 

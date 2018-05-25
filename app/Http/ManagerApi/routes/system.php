@@ -40,3 +40,8 @@ $router->put('/menu/update', 'MenuController@updateMenu');
 $router->delete('/menu/delete', 'MenuController@deleteMenu');
 // 权限下拉
 $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
+
+/**
+ * 系统登入部分
+ */
+$router->get('/signin', 'AuthController@getPermissionToken');

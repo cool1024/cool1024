@@ -3,6 +3,7 @@
 namespace App\Http\ManagerApi\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
+use App\Api\Contracts\FormContract;
 use App\Api\Contracts\ApiContract;
 
 class Controller extends BaseController
