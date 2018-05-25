@@ -36,13 +36,13 @@ class FormService implements FormContract
     /**
      * 数据保存结果响应
      * 
-     * @param int $saveResult 受影响的行数
+     * @param bool $saveResult 保存结果
      * @param string $name 模型名称（如‘商品’）
      * @return JsonResponse
      */
     public function saveMessage($saveResult, $name = '')
     {
-        $result = !empty($saveResult);
+        $result = $saveResult;
         $message = $this->saveMessage . $name . $this->message($result);
         $apiData = $this->apiData($result, $message, $object);
         return $this->jsonResponse($apiData);
@@ -51,7 +51,7 @@ class FormService implements FormContract
     /**
      * 数据更新结果响应
      * 
-     * @param int $updateResult 受影响的行数
+     * @param int|bool $updateResult 受影响的行数|更新结果
      * @param string $name 模型名称（如‘商品’）
      * @return JsonResponse
      */
@@ -66,7 +66,7 @@ class FormService implements FormContract
     /**
      * 数据删除结果响应
      * 
-     * @param int $deleteResult 受影响的行数
+     * @param bool|null $deleteResult 删除结果|null
      * @param string $name 模型名称（如‘商品’）
      * @return JsonResponse
      */
@@ -76,6 +76,17 @@ class FormService implements FormContract
         $message = $this->deleteMessage . $name . $this->message($result);
         $apiData = $this->apiData($result, $message, $object);
         return $this->jsonResponse($apiData);
+    }
+
+    /**
+     * 获取一个数据消息
+     * 
+     * @param mixed $datas 获取的数据
+     * @return JsonResponse
+     */
+    public function getMessage($datas, $message = 'get datas success')
+    {
+        return $this->datas($datas, $message);
     }
 
     /**

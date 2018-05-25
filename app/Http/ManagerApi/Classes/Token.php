@@ -2,43 +2,72 @@
 
 namespace App\Http\ManagerApi\Classes;
 
-use App\Api\Contracts\TokenContract;
+use App\Http\ManagerApi\Models\SystemToken;
+use App\Core\Contracts\TokenContract;
+use Carbon\Carbon;
 
 class Token implements TokenContract
 {
 
+    // 当前令牌实例
     private $token;
+
+    // 数据库令牌字段名称
+    private $tokenField = 'token';
+
+    // 令牌过期时间0为永不过期
+    private $tokenLostTime = 15;
 
     /**
      * 注入令牌
-     * @param Model $user 用户登入令牌记录模型
+     * @param any $tokenParams 令牌校验需要的参数
      */
-
-    public function init($token)
+    public function init($tokenParams = [])
     {
-        $this->token = $token;
+        $this->token = SystemToken::where($tokenParams)->first();
     }
 
     /**
      * 更新令牌
-     * 
+     * @param array $appenParams 附加参数，如果需要在插入新令牌的时候添加额外的参数
      * @return string|array 新令牌数据
      */
-    public function updateToken()
+    public function updateToken($appendParams = [])
     {
-        // $newToken = sh
-        if (isset($this->token)) {
-            $this->token->token =
-        }
+        $appendParams[$this->tokenField] = base64_encode(sha1(uniqid()) . md5(time()));
+        $this->token = isset($this->token) ? $this->token : new SystemToken();
+        $this->token->fill($appendParams)->save();
+        return $this->token;
     }
 
     /**
      * 令牌校验
-     * @param any $token
+     * @param array $tokenParams 令牌校验需要的参数
      * @return bool 校验结果
      */
-    public function checkToken($token)
+    public function checkToken($tokenParams = [])
     {
 
+        // 令牌不存在
+        if (!isset($this->token)) {
+            return false;
+        }
+
+        // 令牌是否匹配
+        $fields = $this->token->toArray();
+        foreach ($tokenParams as $field => $value) {
+            if ($fields[$field] != $value) {
+                return false;
+            }
+        }
+        // 令牌是否过期
+        if ($this->tokenLostTime > 0) {
+            $lost = $this->token->updated_at->addDay($this->tokenLostTime);
+            $now = Carbon::now();
+            // 失效时间大于或等于现在时间，那么这个令牌还有效
+            return $lost->greaterThanOrEqualTo($now);
+        }
+
+        return true;
     }
 }

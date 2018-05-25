@@ -4,6 +4,75 @@ namespace App\Api\Contracts;
 
 interface FormContract
 {
+
+    /**
+     * 数据创建结果响应
+     * 
+     * @param Model 创建返回的ORM实例
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function createMessage($object, $name = '');
+
+    /**
+     * 数据保存结果响应
+     * 
+     * @param bool $saveResult 保存结果
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function saveMessage($saveResult, $name = '');
+
+    /**
+     * 数据更新结果响应
+     * 
+     * @param int|bool $updateResult 受影响的行数|更新结果
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function updateMessage($updateResult, $name = '');
+
+    /**
+     * 数据删除结果响应
+     * 
+     * @param bool|null $deleteResult 删除结果|null
+     * @param string $name 模型名称（如‘商品’）
+     * @return JsonResponse
+     */
+    public function deleteMessage($deleteResult, $name = '');
+
+    /**
+     * 获取一个数据消息
+     * 
+     * @param mixed $datas 获取的数据
+     * @return JsonResponse
+     */
+    public function getMessage($datas, $message = 'get datas success');
+
+    /**
+     * 获取一个错误消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function error($message);
+
+    /**
+     * 获取一个成功消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function success($message);
+
+    /**
+     * 获取一个数据消息
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function datas($datas, $message = 'get datas success');
+
     /**
      * 校验表单数据
      * 

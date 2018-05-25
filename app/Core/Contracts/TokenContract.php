@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Api\Contracts;
+namespace App\Core\Contracts;
 
 interface TokenContract
 {
     /**
      * 注入令牌
-     * @param Model $user 用户登入令牌记录模型
+     * @param any $tokenParams 令牌校验需要的参数
      */
+    public function init($tokenParams = []);
 
-    public function init($token);
     /**
      * 更新令牌
      * 
+     * @param array $appenParams 附加参数，如果需要在插入新令牌的时候添加额外的参数
      * @return string|array 新令牌数据
      */
-    public function updateToken();
+    public function updateToken($appendParams = []);
 
     /**
      * 令牌校验
-     * @param any $token
+     * @param array $tokenParams 令牌校验需要的参数
      * @return bool 校验结果
      */
-    public function checkToken($token);
+    public function checkToken($tokenParams = []);
 }

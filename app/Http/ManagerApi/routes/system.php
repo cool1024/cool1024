@@ -44,4 +44,8 @@ $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
 /**
  * 系统登入部分
  */
-$router->get('/signin', 'AuthController@getPermissionToken');
+
+ // 用户登入
+$router->post('/signin', 'AuthController@getAuthToken');
+// 用户注册
+$router->post('/signup', 'AuthController@signup');
