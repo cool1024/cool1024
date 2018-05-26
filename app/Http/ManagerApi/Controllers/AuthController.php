@@ -104,11 +104,16 @@ class AuthController extends BaseController
     public function removeAuthToken()
     {
         $rules = [
-            ['id', 'required|integer|min:1'],
-            ['platform', 'required|max:45'],
-            ['token', 'required|max:100'],
+            ['ng-params-one', 'required|integer|min:1'],
+            ['ng-params-two', 'required|max:50'],
+            ['ng-params-three', 'required|max:45'],
         ];
-        $params = $this->form->checkFormOrFail($rules);
+        $formats = [
+            'ng-params-one' => 'id',
+            'ng-params-two' => 'token',
+            'ng-params-three' => 'platform',
+        ];
+        $params = $this->form->checkFormOrFail($rules, $formats);
 
         // 注入令牌
         $this->tokenService->init($params);
@@ -125,11 +130,16 @@ class AuthController extends BaseController
     public function checkAuthToken()
     {
         $rules = [
-            ['id', 'required|integer|min:1'],
-            ['platform', 'required|max:45'],
-            ['token', 'required|max:100'],
+            ['ng-params-one', 'required|integer|min:1'],
+            ['ng-params-two', 'required|max:100'],
+            ['ng-params-three', 'required|max:45'],
         ];
-        $params = $this->form->checkFormOrFail($rules);
+        $formats = [
+            'ng-params-one' => 'id',
+            'ng-params-two' => 'token',
+            'ng-params-three' => 'platform',
+        ];
+        $params = $this->form->checkFormOrFail($rules, $formats);
 
         // 注入令牌
         $this->tokenService->init($params);

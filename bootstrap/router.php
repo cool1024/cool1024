@@ -11,7 +11,7 @@
  */
 
 $router->get('/', function () use ($router) {
-    return redirect('/home/index.html');
+    return redirect('/ng');
 });
 
 $router->get('/randomkey', function () {

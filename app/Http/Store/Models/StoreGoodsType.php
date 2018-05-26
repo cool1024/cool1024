@@ -22,6 +22,6 @@ class StoreGoodsType extends Model
 
     protected $groupConfig = [
         'groupKey' => 'parent_id',
-        'groupParams' => ['id','goods_type_title']
+        'groupParams' => ['id', 'goods_type_title', 'created_at']
     ];
 }

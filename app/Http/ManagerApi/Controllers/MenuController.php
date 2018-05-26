@@ -71,6 +71,7 @@ class MenuController extends Controller
             [
                 'menu_icon:max:45',
                 'menu_url:max:100',
+                'menu_image',
                 'permission_id:integer',
             ]
         );
@@ -90,6 +91,7 @@ class MenuController extends Controller
         ], [
             'menu_icon:max:45',
             'menu_url:max:100',
+            'menu_image',
             'permission_id:integer',
         ]);
         $result = SystemMenu::findOrFail($params['id'])
@@ -116,5 +118,43 @@ class MenuController extends Controller
     public function getPermissionOptions()
     {
         return $this->api->getMessage(SystemPermission::all());
+    }
+
+    /**
+     * 获取我的菜单
+     */
+    public function getAuthMenu()
+    {
+        $models = [];
+        $groups = SystemMenuGroup::all();
+        foreach ($groups as $group) {
+            $model = [
+                'title' => $group->menu_group_name,
+                'menus' => [],
+            ];
+            $mainMenus = SystemMenu::where([
+                ['menu_group_id', '=', $group->id],
+                ['menu_parent_id', '=', 0],
+            ])->get();
+            foreach ($mainMenus as $main) {
+                $mainMenu = [
+                    'icon' => $main->menu_icon,
+                    'title' => $main->menu_title,
+                    'image' => $main->menu_image,
+                    'children' => []
+                ];
+                $childMenus = SystemMenu::where('menu_parent_id', '=', $main->id)->get();
+                foreach ($childMenus as $child) {
+                    $childMenu = [
+                        'title' => $child->menu_title,
+                        'url' => $child->menu_url,
+                    ];
+                    $mainMenu['children'][] = $childMenu;
+                }
+                $model['menus'][] = $mainMenu;
+            }
+            $models[] = $model;
+        }
+        return $this->api->getMessage($models);
     }
 }
