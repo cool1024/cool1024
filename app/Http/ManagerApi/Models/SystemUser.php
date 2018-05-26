@@ -9,4 +9,6 @@ class SystemUser extends Model
     protected $table = 'system_user';
 
     protected $guarded = [];
+
+    protected $hidden = ['password'];
 }

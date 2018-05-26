@@ -55,7 +55,7 @@ interface FormContract
      * @param string $message
      * @return JsonResponse
      */
-    public function error($message);
+    public function error($message = 'error');
 
     /**
      * 获取一个成功消息
@@ -63,7 +63,7 @@ interface FormContract
      * @param string $message
      * @return JsonResponse
      */
-    public function success($message);
+    public function success($message = 'success');
 
     /**
      * 获取一个数据消息

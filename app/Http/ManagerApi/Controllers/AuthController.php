@@ -103,7 +103,20 @@ class AuthController extends BaseController
      */
     public function removeAuthToken()
     {
+        $rules = [
+            ['id', 'required|integer|min:1'],
+            ['platform', 'required|max:45'],
+            ['token', 'required|max:100'],
+        ];
+        $params = $this->form->checkFormOrFail($rules);
 
+        // 注入令牌
+        $this->tokenService->init($params);
+
+        // 销毁令牌
+        $result = $this->tokenService->removeToken();
+
+        return $result ? $this->form->success() : $this->form->error('令牌错误或已经销毁');
     }
 
     /**
@@ -111,6 +124,26 @@ class AuthController extends BaseController
      */
     public function checkAuthToken()
     {
+        $rules = [
+            ['id', 'required|integer|min:1'],
+            ['platform', 'required|max:45'],
+            ['token', 'required|max:100'],
+        ];
+        $params = $this->form->checkFormOrFail($rules);
 
+        // 注入令牌
+        $this->tokenService->init($params);
+
+        // 校验令牌
+        $result = $this->tokenService->checkToken();
+        if ($result === false) {
+            $this->form->error('令牌错误或已经失效');
+        }
+
+        // 获取用户详情
+        $this->userService->init($this->tokenService->getToken()->uid);
+        $detail = $this->userService->detail();
+
+        return $this->form->getMessage($detail);
     }
 }

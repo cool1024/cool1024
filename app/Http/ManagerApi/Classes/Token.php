@@ -70,4 +70,22 @@ class Token implements TokenContract
 
         return true;
     }
+
+    /**
+     * 移除当前令牌（如果存在的话）
+     * @return bool|null
+     */
+    public function removeToken()
+    {
+        return isset($this->token) ? $this->token->delete() : false;
+    }
+
+    /**
+     * 获取当前令牌
+     * @return Model 令牌实例
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
 }

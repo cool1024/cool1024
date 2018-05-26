@@ -95,7 +95,7 @@ class FormService implements FormContract
      * @param string $message
      * @return JsonResponse
      */
-    public function error($message)
+    public function error($message = 'error')
     {
         $apiData = $this->apiData(false, $message, null);
         return $this->jsonResponse($apiData);
@@ -107,7 +107,7 @@ class FormService implements FormContract
      * @param string $message
      * @return JsonResponse
      */
-    public function success($message)
+    public function success($message = 'success')
     {
         $apiData = $this->apiData(true, $message, null);
         return $this->jsonResponse($apiData);

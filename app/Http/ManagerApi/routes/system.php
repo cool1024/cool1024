@@ -45,7 +45,11 @@ $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
  * 系统登入部分
  */
 
- // 用户登入
+// 用户登入
 $router->post('/signin', 'AuthController@getAuthToken');
-// 用户注册
+// 用户注册--开发时使用的测试接口，上线必须移除
 $router->post('/signup', 'AuthController@signup');
+// 检查令牌信息
+$router->post('/check', 'AuthController@checkAuthToken');
+// 销毁令牌
+$router->post('/signout', 'AuthController@removeAuthToken');

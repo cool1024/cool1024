@@ -6,8 +6,7 @@ interface UserContract
 {
     /**
      * 注入用户
-     * 
-     * @param Model|any $user 用户模型或其他需要的参数
+     * @param mixed $userParams 用户模型或其他需要的参数
      */
     public function init($user);
 

@@ -24,4 +24,16 @@ interface TokenContract
      * @return bool 校验结果
      */
     public function checkToken($tokenParams = []);
+
+    /**
+     * 移除当前令牌（如果存在的话）
+     * @return bool|null
+     */
+    public function removeToken();
+
+    /**
+     * 获取当前令牌
+     * @return Model 令牌实例
+     */
+    public function getToken();
 }
