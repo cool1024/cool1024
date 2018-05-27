@@ -29,7 +29,7 @@ class MenuController extends Controller
 
     public function insertMenuGroup()
     {
-        $params = $this->api->camelCaseParams(['menu_group_name:max:45 ']);
+        $params = $this->api->camelCaseParams(['menu_group_name:max:45']);
         $group = SystemMenuGroup::where($params)->first();
         if (isset($group)) {
             return $this->api->error('请不要添加重复的分组');

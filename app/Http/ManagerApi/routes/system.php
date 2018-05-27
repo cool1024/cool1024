@@ -44,6 +44,13 @@ $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
 $router->get('/menu', 'MenuController@getAuthMenu');
 
 /**
+ * 角色管理部分
+ */
+
+// 获取授权菜单
+$router->get('/role/all', 'RoleController@getAllRole');
+
+/**
  * 系统登入部分
  */
 

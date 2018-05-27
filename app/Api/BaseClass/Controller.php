@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\ManagerApi\Controllers;
+namespace App\Api\BaseClass;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Api\Contracts\FormContract;
-use App\Api\Contracts\ApiContract;
 
 class Controller extends BaseController
 {
@@ -16,8 +15,8 @@ class Controller extends BaseController
      *
      * @return void
      */
-    public function __construct(ApiContract $api)
+    public function __construct(FormContract $form)
     {
-        $this->api = $api;
+        $this->form = $form;
     }
 }

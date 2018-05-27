@@ -9,23 +9,20 @@
  */
 namespace App\Http\ManagerApi\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
-use App\Api\Contracts\FormContract;
+use App\Api\BaseClass\Controller;
 use App\Http\ManagerApi\Models\SystemUser;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\ManagerApi\Classes\User;
 use App\Http\ManagerApi\Classes\Token;
 
-class AuthController extends BaseController
+class AuthController extends Controller
 {
 
-    private $form;
     private $userService;
     private $tokenService;
 
-    public function __construct(FormContract $form)
+    public function __construct()
     {
-        $this->form = $form;
         $this->userService = new User();
         $this->tokenService = new Token();
     }
