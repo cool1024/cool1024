@@ -47,8 +47,14 @@ $router->get('/menu', 'MenuController@getAuthMenu');
  * 角色管理部分
  */
 
-// 获取授权菜单
+// 获取所有角色
 $router->get('/role/all', 'RoleController@getAllRole');
+// 添加角色
+$router->post('/role/insert', 'RoleController@insertRole');
+// 更新角色
+$router->put('/role/update', 'RoleController@updateRole');
+// 删除角色
+$router->delete('/role/delete', 'RoleController@deleteRole');
 
 /**
  * 系统登入部分

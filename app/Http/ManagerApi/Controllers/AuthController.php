@@ -10,6 +10,7 @@
 namespace App\Http\ManagerApi\Controllers;
 
 use App\Api\BaseClass\Controller;
+use App\Api\Contracts\FormContract;
 use App\Http\ManagerApi\Models\SystemUser;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\ManagerApi\Classes\User;
@@ -23,6 +24,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->userService = new User();
         $this->tokenService = new Token();
     }
