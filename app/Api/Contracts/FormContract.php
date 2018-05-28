@@ -108,4 +108,10 @@ interface FormContract
      * @return array
      */
     public function camelFormOrFail($rules = [], $reback = true);
+
+    /**
+     * 获取所有表单数据
+     * @return array
+     */
+    public function allParams();
 }

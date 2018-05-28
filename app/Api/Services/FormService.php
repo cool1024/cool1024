@@ -11,12 +11,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class FormService implements FormContract
 {
 
-    private $successMessage = '成功';
-    private $failMessage = '失败';
-    private $createMessage = '创建';
-    private $saveMessage = '保存';
-    private $deleteMessgae = '删除';
-    private $updateMessage = '更新';
+    private $successMessageStr = '成功';
+    private $failMessageStr = '失败';
+    private $createMessageStr = '创建';
+    private $saveMessageStr = '保存';
+    private $deleteMessageStr = '删除';
+    private $updateMessageStr = '更新';
 
     /**
      * 数据创建结果响应
@@ -28,7 +28,7 @@ class FormService implements FormContract
     public function createMessage($object, $name = '')
     {
         $result = isset($object);
-        $message = $this->createMessage . $name . $this->message($result);
+        $message = $this->createMessageStr . $name . $this->message($result);
         $apiData = $this->apiData($result, $message, $object);
         return $this->jsonResponse($apiData);
     }
@@ -43,8 +43,8 @@ class FormService implements FormContract
     public function saveMessage($saveResult, $name = '')
     {
         $result = $saveResult;
-        $message = $this->saveMessage . $name . $this->message($result);
-        $apiData = $this->apiData($result, $message, $object);
+        $message = $this->saveMessageStr . $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, []);
         return $this->jsonResponse($apiData);
     }
 
@@ -58,7 +58,7 @@ class FormService implements FormContract
     public function updateMessage($updateResult, $name = '')
     {
         $result = !empty($updateResult);
-        $message = $this->updateMessage . $name . $this->message($result);
+        $message = $this->updateMessageStr . $name . $this->message($result);
         $apiData = $this->apiData($result, $message, $object);
         return $this->jsonResponse($apiData);
     }
@@ -73,8 +73,8 @@ class FormService implements FormContract
     public function deleteMessage($deleteResult, $name = '')
     {
         $result = !empty($deleteResult);
-        $message = $this->deleteMessage . $name . $this->message($result);
-        $apiData = $this->apiData($result, $message, $object);
+        $message = $this->deleteMessageStr . $name . $this->message($result);
+        $apiData = $this->apiData($result, $message, []);
         return $this->jsonResponse($apiData);
     }
 
@@ -153,7 +153,7 @@ class FormService implements FormContract
     }
     private function message($result)
     {
-        return $result ? $this->successMessage : $this->failMessage;
+        return $result ? $this->successMessageStr : $this->failMessageStr;
     }
 
     /**
@@ -268,6 +268,16 @@ class FormService implements FormContract
         }
         return $result['datas'];
     }
+
+    /**
+     * 获取所有表单数据
+     * @return array
+     */
+    public function allParams()
+    {
+        return Request::all();
+    }
+
     /**
      * 转化规则数组格式
      * 

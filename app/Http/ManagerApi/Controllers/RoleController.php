@@ -48,16 +48,15 @@ class RoleController extends Controller
         $rules = [
             ['id', 'required|integer'],
             ['role_name', 'required|max:45'],
-            ['permission_ids', 'required|array'],
+            ['permission_ids', 'array'],
         ];
         $params = $this->form->camelFormOrFail($rules);
-
-        $role = SystemRole::findOrFail($params['id'])
+        $result = SystemRole::findOrFail($params['id'])
             ->fill([
                 'role_name' => $params['role_name'],
                 'permission_ids' => json_encode($params['permission_ids']),
             ])->save();
-        return $this->form->saveMessage($role);
+        return $this->form->saveMessage($result);
     }
 
     /**

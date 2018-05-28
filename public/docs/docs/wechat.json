@@ -5,8 +5,13 @@
             "title": "身份证识别",
             "description": "",
             "url": "/tooltest/idcard",
-            "method": "get",
-            "inputs": []
+            "method": "post",
+            "inputs": [
+                {
+                    "name": "base64",
+                    "description": "身份证正面照"
+                }
+            ]
         },
         {
             "title": "微信授权登入-code换session",

@@ -70,8 +70,9 @@ $router->get('form', function (FormContract $form) {
 });
 
 // 使用身份证识别
-$router->get('idcard', function (ApiContract $api) {
+$router->post('idcard', function (ApiContract $api) {
+    $params = $api->checkParams(['base64']);
     $reader = new IdCardReader('6b0c12cf6b1386344dba1a61c6433db1', '0199ab7f344e4ad083cdae2444e7f261');
-    $result = $reader->readFile('/home/xiaojian/桌面/timg.jpeg');
-    return $result === false ? $api->error('接口调用失败') : $result;
+    $result = $reader->readBase64($params['base64']);
+    return $result === false ? $api->error('接口调用失败') : $api->datas($result);
 });
