@@ -49,23 +49,46 @@ class Handler extends ExceptionHandler
         // Http响应异常处理
         if ($e instanceof HttpException) {
             $fe = FlattenException::create($e);
-            if ($fe->getStatusCode() === 200) {
-                return response()->json([
-                    'result' => false,
-                    'message' => $e->getMessage()
-                ]);
-            }
-            if ($fe->getStatusCode() === 422) {
-                return response()->json(json_decode($e->getMessage(), true));
-            }
-            if ($fe->getStatusCode() === 401) {
-                return response()->json(['result' => false, 'message' => $fe->getMessage()]);
-            }
-            if ($fe->getStatusCode() === 404) {
-                return response()->json(['result' => false, 'message' => '请求的接口不存在~']);
-            }
-            if ($fe->getStatusCode() === 405) {
-                return response()->json(['result' => false, 'message' => '请求的方式错误~']);
+            switch ($fe->getStatusCode()) {
+
+                // 数据处理中途出现异常，但是不是请求本身，而是来自系统内部的错误，这里依然返回200
+                case 200:
+                    return response()->json([
+                        'result' => false,
+                        'message' => $e->getMessage()
+                    ]);
+                    
+                // 权限令牌错误，需要登入
+                case 401:
+                    return response()->json([
+                        'result' => false,
+                        'message' => $fe->getMessage()
+                    ], 401);
+
+                // 拒绝访问，令牌权限不够
+                case 403:
+                    return response()->json([
+                        'result' => false,
+                        'message' => $fe->getMessage()
+                    ], 403);
+
+                // 请求的资源不存在
+                case 404:
+                    return response()->json([
+                        'result' => false,
+                        'message' => '请求的接口不存在~'
+                    ]);
+
+                // 请求方式错误    
+                case 405:
+                    return response()->json([
+                        'result' => false,
+                        'message' => '请求的方式错误~'
+                    ]);  
+
+                // 请求参数错误                    
+                case 422:
+                    return response()->json(json_decode($e->getMessage(), true));
             }
         } 
         // 模型查询异常处理

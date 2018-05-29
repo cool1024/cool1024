@@ -14,8 +14,6 @@ use App\Http\ManagerApi\Models\SystemMenu;
 use App\Http\ManagerApi\Models\SystemPermission;
 use App\Core\Facades\User;
 
-
-
 class MenuController extends Controller
 {
     public function getAllMenu()

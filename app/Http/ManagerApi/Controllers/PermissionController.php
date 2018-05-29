@@ -12,8 +12,6 @@ namespace App\Http\ManagerApi\Controllers;
 use App\Http\ManagerApi\Models\SystemPermissionGroup;
 use App\Http\ManagerApi\Models\SystemPermission;
 
-
-
 class PermissionController extends Controller
 {
     public function getAllPermissionWithGroup()

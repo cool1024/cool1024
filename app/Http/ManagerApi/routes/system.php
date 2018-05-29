@@ -1,30 +1,37 @@
 <?php
 
 /**
- * 权限管理部分
+ * 系统模块路由
+ * @author xiaojian
+ * @file system.php
+ * @date 2018-5-29
  */
 
-// 获取所有权限
-$router->get('/permission/all', 'PermissionController@getAllPermissionWithGroup');
-// 新增权限组
-$router->post('/permission/group/insert', 'PermissionController@insertPermissionGroup');
-// 更新权限组
-$router->put('/permission/group/update', 'PermissionController@updatePermissionGroup');
-// 删除权限组
-$router->delete('/permission/group/delete', 'PermissionController@deletePermissionGroup');
-
-// 新增权限
-$router->post('/permission/insert', 'PermissionController@insertPermission');
-// 更新权限
-$router->put('/permission/update', 'PermissionController@updatePermission');
-// 删除权限
-$router->delete('/permission/delete', 'PermissionController@deletePermission');
+/**
+ * 权限管理部分
+ */
+$router->group(['middleware' => 'managerapi:permission,permission-manager'], function ($router) {
+    // 获取所有权限
+    $router->get('/permission/all', 'PermissionController@getAllPermissionWithGroup');
+    // 新增权限组
+    $router->post('/permission/group/insert', 'PermissionController@insertPermissionGroup');
+    // 更新权限组
+    $router->put('/permission/group/update', 'PermissionController@updatePermissionGroup');
+    // 删除权限组
+    $router->delete('/permission/group/delete', 'PermissionController@deletePermissionGroup');
+    // 新增权限
+    $router->post('/permission/insert', 'PermissionController@insertPermission');
+    // 更新权限
+    $router->put('/permission/update', 'PermissionController@updatePermission');
+    // 删除权限
+    $router->delete('/permission/delete', 'PermissionController@deletePermission');
+});
 
 /**
  * 菜单管理部分
  */
 
-$router->group(['middleware' => 'managerapi'], function ($router) {
+$router->group(['middleware' => 'managerapi:permission,menu-manager'], function ($router) {
     // 获取所有菜单数据
     $router->get('/menu/all', 'MenuController@getAllMenu');
     // 新增菜单分组
@@ -48,30 +55,18 @@ $router->group(['middleware' => 'managerapi'], function ($router) {
 /**
  * 角色管理部分
  */
-
-// 获取所有角色
-$router->get('/role/all', 'RoleController@getAllRole');
-// 添加角色
-$router->post('/role/insert', 'RoleController@insertRole');
-// 更新角色
-$router->put('/role/update', 'RoleController@updateRole');
-// 删除角色
-$router->delete('/role/delete', 'RoleController@deleteRole');
-// 获取权限选项组
-$router->get('/role/permission/options', 'PermissionController@getAllPermissionWithGroup');
-
-/**
- * 系统登入部分
- */
-
-// 用户登入
-$router->post('/signin', 'AuthController@getAuthToken');
-// 用户注册--开发时使用的测试接口，上线必须移除
-$router->post('/signup', 'AuthController@signup');
-// 检查令牌信息
-$router->post('/check', 'AuthController@checkAuthToken');
-// 销毁令牌
-$router->post('/signout', 'AuthController@removeAuthToken');
+$router->group(['middleware' => 'managerapi:permission,menu-manager'], function ($router) {
+    // 获取所有角色
+    $router->get('/role/all', 'RoleController@getAllRole');
+    // 添加角色
+    $router->post('/role/insert', 'RoleController@insertRole');
+    // 更新角色
+    $router->put('/role/update', 'RoleController@updateRole');
+    // 删除角色
+    $router->delete('/role/delete', 'RoleController@deleteRole');
+    // 获取权限选项组
+    $router->get('/role/permission/options', 'PermissionController@getAllPermissionWithGroup');
+});
 
 /**
  * 用户账户部分
@@ -83,3 +78,16 @@ $router->group(['middleware' => 'managerapi'], function ($router) {
     // 修改个人账户信息
     $router->put('/update', 'UserController@updateUserInfo');
 });
+
+/**
+ * 系统登入部分--公开接口
+ */
+
+// 用户登入
+$router->post('/signin', 'AuthController@getAuthToken');
+// 用户注册--开发时使用的测试接口，上线必须移除
+$router->post('/signup', 'AuthController@signup');
+// 检查令牌信息
+$router->post('/check', 'AuthController@checkAuthToken');
+// 销毁令牌
+$router->post('/signout', 'AuthController@removeAuthToken');

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 令牌类，包含了权限令牌的相关方法
+ * @file   Token.php
+ * @author xiaojian
+ * @date   2018-04-04
+ */
+
 namespace App\Http\ManagerApi\Classes;
 
 use App\Http\ManagerApi\Models\SystemToken;

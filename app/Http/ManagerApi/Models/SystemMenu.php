@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 系统菜单模型
+ * @author xiaojian
+ * @file SystemMenu.php
+ * @date 2018-5-29
+ */
+
 namespace App\Http\ManagerApi\Models;
 
 use Illuminate\Database\Eloquent\Model;

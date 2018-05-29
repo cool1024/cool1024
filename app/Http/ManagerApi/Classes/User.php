@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 用户账户类，提供了用于获取，操作当前用户的相关方法
+ * @file   User.php
+ * @author xiaojian
+ * @date   2018-04-04
+ */
+
 namespace App\Http\ManagerApi\Classes;
 
 use App\Core\Contracts\UserContract;
