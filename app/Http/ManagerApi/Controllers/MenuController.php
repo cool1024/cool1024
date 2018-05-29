@@ -12,6 +12,7 @@ namespace App\Http\ManagerApi\Controllers;
 use App\Http\ManagerApi\Models\SystemMenuGroup;
 use App\Http\ManagerApi\Models\SystemMenu;
 use App\Http\ManagerApi\Models\SystemPermission;
+use App\Core\Facades\User;
 
 
 
@@ -125,6 +126,8 @@ class MenuController extends Controller
      */
     public function getAuthMenu()
     {
+        $permission_ids = User::permissions();
+
         $models = [];
         $groups = SystemMenuGroup::all();
         foreach ($groups as $group) {
@@ -143,7 +146,9 @@ class MenuController extends Controller
                     'image' => $main->menu_image,
                     'children' => []
                 ];
-                $childMenus = SystemMenu::where('menu_parent_id', '=', $main->id)->get();
+                $childMenus = SystemMenu::where('menu_parent_id', '=', $main->id)
+                    ->whereIn('permission_id', $permission_ids)
+                    ->get();
                 foreach ($childMenus as $child) {
                     $childMenu = [
                         'title' => $child->menu_title,
@@ -151,10 +156,15 @@ class MenuController extends Controller
                     ];
                     $mainMenu['children'][] = $childMenu;
                 }
-                $model['menus'][] = $mainMenu;
+                if (count($mainMenu['children']) > 0) {
+                    $model['menus'][] = $mainMenu;
+                }
             }
-            $models[] = $model;
+            if (count($model['menus']) > 0) {
+                $models[] = $model;
+            }
         }
+
         return $this->api->getMessage($models);
     }
 }

@@ -49,7 +49,13 @@ class Handler extends ExceptionHandler
         // Http响应异常处理
         if ($e instanceof HttpException) {
             $fe = FlattenException::create($e);
-            if ($fe->getStatusCode() === 201) {
+            if ($fe->getStatusCode() === 200) {
+                return response()->json([
+                    'result' => false,
+                    'message' => $e->getMessage()
+                ]);
+            }
+            if ($fe->getStatusCode() === 422) {
                 return response()->json(json_decode($e->getMessage(), true));
             }
             if ($fe->getStatusCode() === 401) {

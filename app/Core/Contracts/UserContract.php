@@ -23,4 +23,11 @@ interface UserContract
      * @return array
      */
     public function detail();
+
+    /**
+     * 获取用户的所有权限
+     * 
+     * @return array
+     */
+    public function permissions();
 }

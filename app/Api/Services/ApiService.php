@@ -41,7 +41,7 @@ class ApiService implements ApiContract
         if ($params['result']) {
             return $params['datas'];
         } else {
-            abort(201, json_encode($params));
+            abort(422, json_encode($params));
             return;
         }
     }

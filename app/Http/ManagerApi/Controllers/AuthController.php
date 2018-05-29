@@ -145,7 +145,7 @@ class AuthController extends Controller
         // 校验令牌
         $result = $this->tokenService->checkToken();
         if ($result === false) {
-            $this->form->error('令牌错误或已经失效');
+            return $this->form->error('令牌错误或已经失效');
         }
 
         // 获取用户详情

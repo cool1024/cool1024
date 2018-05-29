@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\ManagerApi\Models\SystemUser;
 use App\Http\ManagerApi\Models\SystemRole;
+use App\Http\ManagerApi\Models\SystemPermission;
 
 class User implements UserContract
 {
 
     private $userModel;
+
+    private $roleModel;
 
     /**
      * 注入用户
@@ -48,7 +51,40 @@ class User implements UserContract
      */
     public function detail()
     {
-        $this->userModel->role = SystemRole::findOrFail($this->userModel->role_id);
+        if (!isset($this->roleModel)) {
+            $this->roleModel = SystemRole::findOrFail($this->userModel->role_id);
+            $this->userModel->role = $this->roleModel;
+        }
         return $this->userModel;
+    }
+
+    /**
+     * 获取用户的所有权限
+     * 
+     * @return array
+     */
+    public function permissions()
+    {
+        $this->detail();
+        $permissions = json_decode($this->roleModel->permission_ids, true);
+        if (!isset($permissions)) {
+            $permissions = [];
+        }
+        return $permissions;
+    }
+
+    /**
+     * 判断用户有没有某个权限
+     * @param mixed $permissionParams
+     * @return bool
+     */
+    public function hasPermission($permissionParams)
+    {
+        $permissions = $this->permissions();
+        $permission = SystemPermission::where('permission_key', $permissionParams)->first(['id']);
+        if (!isset($permission)) {
+            return abort(200, '找不到符合关键词的权限');
+        }
+        return in_array($permission['id'], $permissions);
     }
 }

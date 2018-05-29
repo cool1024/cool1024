@@ -225,7 +225,9 @@ class FormService implements FormContract
         if ($result['result'] === false) {
             throw new ValidationException($result['validator']);
         } else if (count($result['datas']) < $min[0]) {
-            abort(201, $min[1]);
+            $result['result'] = false;
+            $result['message'] = $min[1];
+            abort(422, json_encode($result));
         }
         return $result['datas'];
     }

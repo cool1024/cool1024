@@ -24,24 +24,26 @@ $router->delete('/permission/delete', 'PermissionController@deletePermission');
  * 菜单管理部分
  */
 
-// 获取所有菜单数据
-$router->get('/menu/all', 'MenuController@getAllMenu');
-// 新增菜单分组
-$router->post('/menu/group/insert', 'MenuController@insertMenuGroup');
-// 更新菜单分组
-$router->put('/menu/group/update', 'MenuController@updateMenuGroup');
-// 删除菜单分组
-$router->delete('/menu/group/delete', 'MenuController@deleteMenuGroup');
-// 新增菜单
-$router->post('/menu/insert', 'MenuController@insertMenu');
-// 更新菜单
-$router->put('/menu/update', 'MenuController@updateMenu');
-// 删除菜单
-$router->delete('/menu/delete', 'MenuController@deleteMenu');
-// 权限下拉
-$router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
-// 获取授权菜单
-$router->get('/menu', 'MenuController@getAuthMenu');
+$router->group(['middleware' => 'managerapi'], function ($router) {
+    // 获取所有菜单数据
+    $router->get('/menu/all', 'MenuController@getAllMenu');
+    // 新增菜单分组
+    $router->post('/menu/group/insert', 'MenuController@insertMenuGroup');
+    // 更新菜单分组
+    $router->put('/menu/group/update', 'MenuController@updateMenuGroup');
+    // 删除菜单分组
+    $router->delete('/menu/group/delete', 'MenuController@deleteMenuGroup');
+    // 新增菜单
+    $router->post('/menu/insert', 'MenuController@insertMenu');
+    // 更新菜单
+    $router->put('/menu/update', 'MenuController@updateMenu');
+    // 删除菜单
+    $router->delete('/menu/delete', 'MenuController@deleteMenu');
+    // 权限下拉
+    $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
+    // 获取授权菜单
+    $router->get('/menu', 'MenuController@getAuthMenu');
+});
 
 /**
  * 角色管理部分
