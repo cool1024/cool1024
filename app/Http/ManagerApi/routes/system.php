@@ -55,6 +55,8 @@ $router->post('/role/insert', 'RoleController@insertRole');
 $router->put('/role/update', 'RoleController@updateRole');
 // 删除角色
 $router->delete('/role/delete', 'RoleController@deleteRole');
+// 获取权限选项组
+$router->get('/role/permission/options', 'PermissionController@getAllPermissionWithGroup');
 
 /**
  * 系统登入部分
