@@ -125,7 +125,7 @@ class MenuController extends Controller
     public function getAuthMenu()
     {
         $permission_ids = User::permissions();
-
+        $permission_ids[] = 0;
         $models = [];
         $groups = SystemMenuGroup::all();
         foreach ($groups as $group) {
