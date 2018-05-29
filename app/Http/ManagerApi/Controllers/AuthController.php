@@ -10,7 +10,6 @@
 namespace App\Http\ManagerApi\Controllers;
 
 use App\Api\BaseClass\Controller;
-use App\Api\Contracts\FormContract;
 use App\Http\ManagerApi\Models\SystemUser;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\ManagerApi\Classes\User;
@@ -104,7 +103,7 @@ class AuthController extends Controller
     {
         $rules = [
             ['ng-params-one', 'required|integer|min:1'],
-            ['ng-params-two', 'required|max:50'],
+            ['ng-params-two', 'required|max:100'],
             ['ng-params-three', 'required|max:45'],
         ];
         $formats = [

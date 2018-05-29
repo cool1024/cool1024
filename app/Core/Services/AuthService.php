@@ -10,8 +10,8 @@ use App\Core\Contracts\TokenContract;
 class AuthService implements AuthContract
 {
 
-    private $userService;
-    private $tokenService;
+    public $userService;
+    public $tokenService;
 
     /**
      * 导入用户相关服务
@@ -20,7 +20,7 @@ class AuthService implements AuthContract
      */
     public function initUserService(UserContract $userService)
     {
-        $this->$userService = $userService;
+        $this->userService = $userService;
     }
 
     /**
@@ -30,6 +30,6 @@ class AuthService implements AuthContract
      */
     public function initTokenService(TokenContract $tokenService)
     {
-        $this->$tokenService = $tokenService;
+        $this->tokenService = $tokenService;
     }
 }

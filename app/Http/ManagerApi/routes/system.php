@@ -68,3 +68,14 @@ $router->post('/signup', 'AuthController@signup');
 $router->post('/check', 'AuthController@checkAuthToken');
 // 销毁令牌
 $router->post('/signout', 'AuthController@removeAuthToken');
+
+/**
+ * 用户账户部分
+ */
+$router->group(['middleware' => 'managerapi'], function ($router) {
+    
+    // 获取用户详细信息
+    $router->get('/info', 'UserController@getUserInfo');
+    // 修改个人账户信息
+    $router->put('/update', 'UserController@updateUserInfo');
+});

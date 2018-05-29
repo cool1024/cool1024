@@ -208,7 +208,6 @@ class FormService implements FormContract
             }
 
         }
-
         return $result;
     }
 
@@ -217,13 +216,16 @@ class FormService implements FormContract
      * 
      * @param array $rules
      * @param array $formats
+     * @param array $min 最少参数配置
      * @return array
      */
-    public function checkFormOrFail($rules = [], $formats = [])
+    public function checkFormOrFail($rules = [], $formats = [], $min = [0, 'params must no less than 0'])
     {
         $result = $this->checkForm($rules, $formats);
         if ($result['result'] === false) {
             throw new ValidationException($result['validator']);
+        } else if (count($result['datas']) < $min[0]) {
+            abort(201, $min[1]);
         }
         return $result['datas'];
     }

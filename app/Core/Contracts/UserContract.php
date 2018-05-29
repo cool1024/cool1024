@@ -8,7 +8,7 @@ interface UserContract
      * 注入用户
      * @param mixed $userParams 用户模型或其他需要的参数
      */
-    public function init($user);
+    public function init($userParams);
 
     /**
      * 获取用户的ORM实例

@@ -2,18 +2,6 @@
     "title": "微信模块",
     "forms": [
         {
-            "title": "身份证识别",
-            "description": "",
-            "url": "/tooltest/idcard",
-            "method": "post",
-            "inputs": [
-                {
-                    "name": "base64",
-                    "description": "身份证正面照"
-                }
-            ]
-        },
-        {
             "title": "微信授权登入-code换session",
             "description": "测试请求参数校验服务",
             "url": "/wechatauth/session",

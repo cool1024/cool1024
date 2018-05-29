@@ -6,6 +6,7 @@ use App\Core\Contracts\UserContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\ManagerApi\Models\SystemUser;
+use App\Http\ManagerApi\Models\SystemRole;
 
 class User implements UserContract
 {
@@ -47,6 +48,7 @@ class User implements UserContract
      */
     public function detail()
     {
+        $this->userModel->role = SystemRole::findOrFail($this->userModel->role_id);
         return $this->userModel;
     }
 }

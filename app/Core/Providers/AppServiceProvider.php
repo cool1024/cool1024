@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('AuthService', function () {
+        $this->app->singleton('App\Core\Contracts\AuthContract', function () {
             return new AuthService();
         });
     }

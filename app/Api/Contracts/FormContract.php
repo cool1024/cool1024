@@ -87,9 +87,10 @@ interface FormContract
      * 
      * @param array $rules
      * @param array $formats
+     * @param array $min 最少参数配置
      * @return bool|array
      */
-    public function checkFormOrFail($rules = [], $formats = []);
+    public function checkFormOrFail($rules = [], $formats = [], $min = [0, 'params must no less than']);
 
     /**
      * 校验表单数据,自动转化匹配参数为小驼峰，如要匹配a_b将会变为匹配aB

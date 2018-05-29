@@ -3,9 +3,11 @@
     "title": "测试版 API-DOCS",
     "headers": [
         "ng-params-one",
-        "ng-params-two"
+        "ng-params-two",
+        "ng-params-three"
     ],
     "docs": [
-        "wechat.json"
+        "wechat.json",
+        "test.json"
     ]
 }
