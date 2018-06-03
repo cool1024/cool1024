@@ -1,7 +1,5 @@
 <?php
-/*
- * 多级管理
- */
+
 namespace App\Sdk;
 
 class OssSdk

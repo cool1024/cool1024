@@ -240,7 +240,7 @@ class MangerStoreGoodsController extends Controller
         // 示例化OssSdk
         $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
         // 生成文件保存地址
-        $file_path = 'upload/goods' . date('Ymdhis') . uniqid();
+        $file_path = 'upload/goods/' . date('Ymdhis') . uniqid();
         // 5000k设置
         return $this->api->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
     }
