@@ -59,6 +59,13 @@ class MenuController extends Controller
         return $this->api->deleteMessage($result);
     }
 
+    public function sortMenuGroup()
+    {
+        $params = $this->api->camelCaseParams(['ids:array']);
+        with(new SystemMenuGroup)->sort($params['ids'], 'level');
+        return $this->api->success('排序成功～');
+    }
+
     public function insertMenu()
     {
         $params = $this->api->camelCaseParams(
@@ -127,7 +134,7 @@ class MenuController extends Controller
         $permission_ids = User::permissions();
         $permission_ids[] = 0;
         $models = [];
-        $groups = SystemMenuGroup::all();
+        $groups = SystemMenuGroup::orderBy('level')->get();
         foreach ($groups as $group) {
             $model = [
                 'title' => $group->menu_group_name,
@@ -136,7 +143,7 @@ class MenuController extends Controller
             $mainMenus = SystemMenu::where([
                 ['menu_group_id', '=', $group->id],
                 ['menu_parent_id', '=', 0],
-            ])->get();
+            ])->orderBy('level')->get();
             foreach ($mainMenus as $main) {
                 $mainMenu = [
                     'icon' => $main->menu_icon,
@@ -146,6 +153,7 @@ class MenuController extends Controller
                 ];
                 $childMenus = SystemMenu::where('menu_parent_id', '=', $main->id)
                     ->whereIn('permission_id', $permission_ids)
+                    ->orderBy('level')
                     ->get();
                 foreach ($childMenus as $child) {
                     $childMenu = [

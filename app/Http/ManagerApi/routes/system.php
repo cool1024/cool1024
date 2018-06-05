@@ -38,12 +38,16 @@ $router->group(['middleware' => 'managerapi:permission,menu-manager'], function 
     $router->post('/menu/group/insert', 'MenuController@insertMenuGroup');
     // 更新菜单分组
     $router->put('/menu/group/update', 'MenuController@updateMenuGroup');
+    // 排序菜单分组
+    $router->put('/menu/group/sort', 'MenuController@sortMenuGroup');
     // 删除菜单分组
     $router->delete('/menu/group/delete', 'MenuController@deleteMenuGroup');
     // 新增菜单
     $router->post('/menu/insert', 'MenuController@insertMenu');
     // 更新菜单
     $router->put('/menu/update', 'MenuController@updateMenu');
+    // 排序菜单
+    $router->put('/menu/sort', 'MenuController@sortMenu');
     // 删除菜单
     $router->delete('/menu/delete', 'MenuController@deleteMenu');
     // 权限下拉
