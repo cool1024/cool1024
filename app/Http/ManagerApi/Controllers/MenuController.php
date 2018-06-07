@@ -13,6 +13,7 @@ use App\Http\ManagerApi\Models\SystemMenuGroup;
 use App\Http\ManagerApi\Models\SystemMenu;
 use App\Http\ManagerApi\Models\SystemPermission;
 use App\Core\Facades\User;
+use App\Api\BaseClass\Controller;
 
 class MenuController extends Controller
 {
@@ -23,107 +24,115 @@ class MenuController extends Controller
             'mains' => SystemMenu::where('menu_parent_id', 0)->orderBy('level')->get(),
             'children' => SystemMenu::where('menu_parent_id', '>', 0)->orderBy('level')->get(),
         ];
-        return $this->api->getMessage($datas);
+        return $this->form->getMessage($datas);
     }
 
     public function insertMenuGroup()
     {
-        $params = $this->api->camelCaseParams(['menu_group_name:max:45']);
+        $params = $this->form->camelFormOrFail([
+            ['menu_group_name', 'required|max:45']
+        ]);
         $group = SystemMenuGroup::where($params)->first();
         if (isset($group)) {
-            return $this->api->error('请不要添加重复的分组');
+            return $this->form->error('请不要添加重复的分组');
         }
         $max = SystemMenuGroup::max('level');
         $params['level'] = empty($max) ? 1 : ++$max;
         $group = SystemMenuGroup::create($params);
-        return $this->api->getMessage($group);
+        return $this->form->getMessage($group);
     }
 
     public function updateMenuGroup()
     {
-        $params = $this->api->camelCaseParams([
-            'id:integer',
-            'menu_group_name:max:45',
+        $params = $this->form->camelFormOrFail([
+            ['id', 'required|integer'],
+            ['menu_group_name', 'required|max:45'],
         ]);
         $group = SystemMenuGroup::findOrFail($params['id']);
         $group->menu_group_name = $params['menu_group_name'];
         $result = $group->save();
-        return $this->api->updateMessage($result);
+        return $this->form->updateMessage($result);
     }
 
     public function deleteMenuGroup()
     {
-        $params = $this->api->camelCaseParams(['menu_group_id:integer']);
+        $params = $this->form->camelFormOrFail([
+            ['menu_group_id', 'required|integer']
+        ]);
         $result = SystemMenuGroup::findOrFail($params['menu_group_id'])->delete();
         SystemMenu::where($params)->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     public function sortMenuGroup()
     {
-        $params = $this->api->camelCaseParams(['ids:array']);
+        $params = $this->form->camelFormOrFail([
+            ['ids', 'required|array']
+        ]);
         with(new SystemMenuGroup)->sort($params['ids'], 'level');
-        return $this->api->success('排序成功～');
+        return $this->form->success('排序成功～');
     }
 
     public function insertMenu()
     {
-        $params = $this->api->camelCaseParams(
+        $params = $this->form->camelFormOrFail(
             [
-                'menu_title:max:45',
-                'menu_parent_id:integer',
-                'menu_group_id:integer',
-            ],
-            [
-                'menu_icon:max:45',
-                'menu_url:max:100',
-                'menu_image',
-                'permission_id:integer',
+                ['menu_title', 'required|max:45'],
+                ['menu_parent_id', 'required|integer'],
+                ['menu_group_id', 'required|integer'],
+                ['menu_icon', 'max:45'],
+                ['menu_url', 'max:100'],
+                ['menu_image', 'string'],
+                ['permission_id', 'integer'],
             ]
         );
         $max = SystemMenu::where('menu_parent_id', $params['menu_parent_id'])->max('level');
         $params['level'] = empty($max) ? 1 : ++$max;
         $result = SystemMenu::create($params);
-        return $this->api->createMessage($result);
+        return $this->form->createMessage($result);
     }
 
     public function updateMenu()
     {
-        $params = $this->api->camelCaseParams([
-            'id:integer',
-            'menu_title:max:45',
-            'menu_parent_id:integer',
-            'menu_group_id:integer',
-        ], [
-            'menu_icon:max:45',
-            'menu_url:max:100',
-            'menu_image',
-            'permission_id:integer',
+        $params = $this->form->camelFormOrFail([
+            ['id', 'required|integer'],
+            ['menu_title', 'required|max:45'],
+            ['menu_parent_id', 'required|integer'],
+            ['menu_group_id', 'required|integer'],
+            ['menu_icon', 'max:45'],
+            ['menu_url', 'max:100'],
+            ['menu_image', 'string'],
+            ['permission_id', 'integer'],
         ]);
         $result = SystemMenu::findOrFail($params['id'])
             ->fill($params)
             ->save();
-        return $this->api->saveMessage($result);
+        return $this->form->saveMessage($result);
     }
 
     public function deleteMenu()
     {
-        $params = $this->api->camelCaseParams(['menu_id:integer']);
+        $params = $this->form->camelFormOrFail([
+            ['menu_id', 'required|integer']
+        ]);
         $result = SystemMenu::findOrFail($params['menu_id'])->delete();
         SystemMenu::where('menu_parent_id', $params['menu_id'])->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     public function sortMenu()
     {
-        $params = $this->api->camelCaseParams(['ids:array']);
+
+        $params = $this->form->camelFormOrFail([
+            ['ids', 'required|array']
+        ]);
         with(new SystemMenu)->sort($params['ids'], 'level');
-        return $this->api->success('排序成功～');
+        return $this->form->success('排序成功～');
     }
 
     public function getPermissionOptions()
     {
-        return $this->api->getMessage(SystemPermission::all());
+        return $this->form->getMessage(SystemPermission::all());
     }
 
     /**
@@ -171,6 +180,6 @@ class MenuController extends Controller
             }
         }
 
-        return $this->api->getMessage($models);
+        return $this->form->getMessage($models);
     }
 }

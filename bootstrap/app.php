@@ -78,8 +78,7 @@ $app->middleware([
 $app->register(App\Core\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Api\Providers\HttpServiceProvider::class);
-$app->register(App\Api\Providers\FileServiceProvider::class);
-$app->register(App\Api\Providers\ApiServiceProvider::class);
+$app->register(App\Api\Providers\FormServiceProvider::class);
 
 // 引入文件分析器
 require __DIR__ . '/analyse.php';

@@ -11,11 +11,12 @@ namespace App\Http\ManagerApi\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Api\Traits\Orm\DataSortTrait;
+use App\Api\Traits\Orm\PageTrait;
 
 class SystemMenu extends Model
 {
 
-    use DataSortTrait;
+    use DataSortTrait, PageTrait;
 
     protected $table = 'system_menu';
 

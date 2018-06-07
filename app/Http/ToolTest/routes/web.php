@@ -1,7 +1,6 @@
 <?php
 
 use App\Api\Contracts\ApiContract;
-use App\Api\Contracts\FileContract;
 use App\Api\Contracts\FormContract;
 use App\Sdk\IdCardReader;
 /*
@@ -33,12 +32,6 @@ $router->get('format/array', function (ApiContract $api) {
 // 响应数据格式化中间件测试--返回试图
 $router->get('format/view', function (ApiContract $api) {
     return view('simple', ['name' => 'lumen']);
-});
-
- // 使用文件服务上传文件
-$router->post('upload', function (FileContract $file, ApiContract $api) {
-    return ['uploaded' => 1, 'url' => 'http://192.168.1.197/' . $file->saveFileByMd5('upload', 'upload')];
-    // return $api->datas($file->saveFileByMd5('file', 'upload'));
 });
 
 // 使用FormService校验表单数据

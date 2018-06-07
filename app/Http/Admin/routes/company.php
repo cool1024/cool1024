@@ -1,8 +1,5 @@
 <?php
 
-use App\Api\Contracts\FileContract;
-use App\Api\Contracts\ApiContract;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes

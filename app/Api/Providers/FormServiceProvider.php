@@ -4,7 +4,7 @@ namespace App\Api\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ApiServiceProvider extends ServiceProvider
+class FormServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.

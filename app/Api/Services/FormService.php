@@ -59,7 +59,7 @@ class FormService implements FormContract
     {
         $result = !empty($updateResult);
         $message = $this->updateMessageStr . $name . $this->message($result);
-        $apiData = $this->apiData($result, $message, $object);
+        $apiData = $this->apiData($result, $message, []);
         return $this->jsonResponse($apiData);
     }
 

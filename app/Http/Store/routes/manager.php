@@ -1,8 +1,5 @@
 <?php
 
-use App\Api\Contracts\FileContract;
-use App\Api\Contracts\ApiContract;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -45,10 +42,23 @@ $router->put('goods/specification/update', 'MangerStoreGoodsController@saveGoods
 // 获取商品下拉选项
 $router->get('/goods/type/options', 'MangerStoreGoodsController@getGoodsTypeOptions');
 // 添加商品
-$router->post('goods/insert', 'MangerStoreGoodsController@insertGoods');
+$router->post('/goods/insert', 'MangerStoreGoodsController@insertGoods');
 // 保存商品
-$router->put('goods/update', 'MangerStoreGoodsController@updateGoods');
+$router->put('/goods/update', 'MangerStoreGoodsController@updateGoods');
 // 删除商品
-$router->delete('goods/delete', 'MangerStoreGoodsController@deleteGoods');
+$router->delete('/goods/delete', 'MangerStoreGoodsController@deleteGoods');
 // 商品图片上传授权
-$router->get('goods/image/access', 'MangerStoreGoodsController@ossUpload');
+$router->get('/goods/image/access', 'MangerStoreGoodsController@ossUpload');
+
+// 获取所有幻灯片
+$router->get('/banner/all', 'MangerStoreBannerController@getAllBanner');
+// 添加幻灯片
+$router->post('/banner/insert', 'MangerStoreBannerController@insertBanner');
+// 编辑幻灯片
+$router->put('/banner/update', 'MangerStoreBannerController@updateBanner');
+// s删除幻灯片
+$router->delete('/banner/delete', 'MangerStoreBannerController@deleteBanner');
+// 排序幻灯片
+$router->put('/banner/sort', 'MangerStoreBannerController@sortBanner');
+// 幻灯片上传授权
+$router->get('/banner/access', 'MangerStoreBannerController@ossUpload');

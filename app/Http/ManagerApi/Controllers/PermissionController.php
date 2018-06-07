@@ -11,6 +11,7 @@ namespace App\Http\ManagerApi\Controllers;
 
 use App\Http\ManagerApi\Models\SystemPermissionGroup;
 use App\Http\ManagerApi\Models\SystemPermission;
+use App\Api\BaseClass\Controller;
 
 class PermissionController extends Controller
 {
@@ -18,7 +19,7 @@ class PermissionController extends Controller
     {
         $groups = SystemPermissionGroup::all();
         $permissions = SystemPermission::all();
-        return $this->api->getMessage([
+        return $this->form->getMessage([
             'groups' => $groups,
             'permissions' => $permissions,
         ]);
@@ -26,68 +27,74 @@ class PermissionController extends Controller
 
     public function insertPermissionGroup()
     {
-        $required = ['permission_group_name:max:45'];
-        $params = $this->api->camelCaseParams($required);
+        $required = [
+            ['permission_group_name', 'required|max:45']
+        ];
+        $params = $this->form->camelFormOrFail($required);
         $group = SystemPermissionGroup::create($params);
-        return $this->api->getMessage($group);
+        return $this->form->getMessage($group);
     }
 
     public function insertPermission()
     {
         $required = [
-            'permission_group_id:integer',
-            'permission_name:max:45',
-            'permission_key:max:45'
+            ['permission_group_id', 'required|integer'],
+            ['permission_name', 'required|max:45'],
+            ['permission_key', 'required|max:45']
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($required);
         SystemPermissionGroup::findOrFail($params['permission_group_id']);
         $permission = SystemPermission::create($params);
-        return $this->api->success($permission);
+        return $this->form->success($permission);
     }
 
     public function deletePermissionGroup()
     {
-        $required = ['permission_group_id:integer'];
-        $params = $this->api->camelCaseParams($required);
+        $required = [
+            ['permission_group_id', 'required|integer']
+        ];
+        $params = $this->form->camelFormOrFail($required);
         $result = SystemPermissionGroup::findOrFail($params['permission_group_id'])->delete();
         SystemPermission::where($params)->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     public function deletePermission()
     {
-        $required = ['permission_id:integer'];
-        $params = $this->api->camelCaseParams($required);
+        $required = [
+            ['permission_id', 'required|integer']
+        ];
+        $params = $this->form->camelFormOrFail($required);
         $result = SystemPermission::findOrFail($params['permission_id'])->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     public function updatePermissionGroup()
     {
         $required = [
-            'id:integer',
-            'permission_group_name:max:45',
+            ['id', 'required|integer'],
+            ['permission_group_name', 'required|max:45'],
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($required);
         $result = SystemPermissionGroup::findOrFail($params['id'])
             ->fill(['permission_group_name' => $params['permission_group_name']])
             ->save();
-        return $this->api->updateMessage($result);
+        return $this->form->updateMessage($result);
     }
 
     public function updatePermission()
     {
         $required = [
-            'id:integer',
-            'permission_group_id:integer',
-            'permission_name:max:45',
-            'permission_key:max:45'
+            ['id', 'required|integer'],
+            ['permission_group_id', 'required|integer'],
+            ['permission_name', 'required|max:45'],
+            ['permission_key', 'required|max:45']
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($required);
         SystemPermissionGroup::findOrFail($params['permission_group_id']);
         $result = SystemPermission::findOrFail($params['id'])
             ->fill($params)
             ->save();
-        return $this->api->updateMessage($result);
+        return $this->form->updateMessage($result);
     }
 }

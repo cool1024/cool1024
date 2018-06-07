@@ -16,24 +16,24 @@ trait PageTrait
      * @param array $wheres 查询限制条件 
      * @return array ['total'=>数据总量,'rows'=>[查询结果]]
      */
-    public function pagination(array $params, array $wheres)
+    public function pagination(array $params, array $wheres, array $formats = [])
     {
-        $params = [
-            'limit' => 10,
-            'offset' => 0,
-        ];
-        $wheres = [
-            ['select', ['id', 'name', 'age']],
-            ['where', 'name', 'like', function ($params) {
-                return "%{$params['name']}%";
-            }],
-            ['where', 'name', 'like', '$name'],
-        ];
         // 获取分页必须参数
         $pageLimit = $params['limit'];
         $pageOffset = $params['offset'];
         unset($params['limit'], $params['offset']);
 
+        // 格式化参数
+        foreach ($formats as $paramKey => $format) {
+            if (isset($params[$paramKey])) {
+                if (is_callable($format)) {
+                    $params[$paramKey] = $format($params[$paramKey]);
+                } else if (gettype($format) === 'string') {
+                    $params[$paramKey] = str_replace('$' . $paramKey, $params[$paramKey], $format);
+                }
+            }
+        }
+        dd($params);
         // 过滤无效限制条件
         $activeWheres = [];
         foreach ($wheres as $where) {
@@ -47,8 +47,8 @@ trait PageTrait
                     case 'string':
                         {
                             // 使用变量,那么替换为实际值
-                            if (substr($param, 0, 1) === '$') {
-                                $paramKey = substr($param, 1);
+                            if (substr($value, 0, 1) === '$') {
+                                $paramKey = substr($value, 1);
                                 if (isset($params[$paramKey])) {
                                     $activeWhere['params'][$key] = $params[$paramKey];
                                 } else {
@@ -74,10 +74,26 @@ trait PageTrait
                         }
                 }
             }
-            if (count($activeWhere['params'] <= 0)) {
+            if (count($activeWhere['params']) <= 0) {
                 continue;
             }
             $activeWheres[] = $activeWhere;
         }
+
+        // 执行筛选条件
+        $sql = $this;
+        foreach ($activeWheres as $activeWhere) {
+            $func = $activeWhere['function'];
+            $args = $activeWhere['params'];
+            $sql = $sql->$func(...$args);
+        }
+
+        // 获取统计数据
+        $pageDatas = [
+            'total' => $sql->count(),
+            'rows' => $sql->skip($pageOffset)->take($pageLimit)->get(),
+        ];
+
+        return $pageDatas;
     }
 }

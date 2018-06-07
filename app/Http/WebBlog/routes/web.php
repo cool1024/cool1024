@@ -1,6 +1,5 @@
 <?php
 
-use App\Api\Contracts\FileContract;
 use App\Api\Contracts\ApiContract;
 use App\Http\WebBlog\Models\Article;
 
