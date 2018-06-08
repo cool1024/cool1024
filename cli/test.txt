@@ -1,0 +1,66 @@
+******
+统计开始时间：2018-06-08 15:31
+#带宽的使用情况：#
+2018-06-08 15:31 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:31 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:31 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:31 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:31 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:31 In_Speed_average: 0 Mbps Out_Speed_average: 0 Mbps
+#CPU使用率:#
+Total CPU  is already use: 0%
+#磁盘利用率#
+hard disk has used: 13.04%
+		#磁盘存在目录使用率超过85%报警#
+		over used: 
+
+#内存使用率#
+system memery is already use: .%
+actual memery is already use: .%
+buffer is already used :  M
+cache is already used :  M
+结束本次统计：2018-06-08 15:31
+******
+统计开始时间：2018-06-08 15:32
+#带宽的使用情况：#
+2018-06-08 15:32 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:32 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:32 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:32 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:32 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:32 In_Speed_average: 0 Mbps Out_Speed_average: 0 Mbps
+#CPU使用率:#
+Total CPU  is already use: 0%
+#磁盘利用率#
+hard disk has used: 13.04%
+		#磁盘存在目录使用率超过85%报警#
+		over used: 
+
+#内存使用率#
+system memery is already use: .%
+actual memery is already use: .%
+buffer is already used :  M
+cache is already used :  M
+结束本次统计：2018-06-08 15:32
+******
+统计开始时间：2018-06-08 15:34
+#带宽的使用情况：#
+2018-06-08 15:34 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:34 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:34 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:34 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:34 Now_In_Speed: 0 Mbps Now_OUt_Speed: 0 Mbps
+2018-06-08 15:34 In_Speed_average: 0 Mbps Out_Speed_average: 0 Mbps
+#CPU使用率:#
+Total CPU  is already use: 0%
+#磁盘利用率#
+hard disk has used: 13.04%
+		#磁盘存在目录使用率超过85%报警#
+		over used: 
+
+#内存使用率#
+system memery is already use: .%
+actual memery is already use: .%
+buffer is already used :  M
+cache is already used :  M
+结束本次统计：2018-06-08 15:34

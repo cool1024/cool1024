@@ -61,7 +61,7 @@ class MangerStoreGoodsController extends Controller
         $params = $this->api->camelCaseParams($required);
 
         $goods = StoreGoods::findOrFail($params['goods_id']);
-        // $goods->goods_parent_type = StoreGoodsType::findOrFail($goods->goods_type)->parent_id;
+        $goods->goods_parent_type = StoreGoodsType::findOrFail($goods->goods_type)->parent_id;
 
         $datas = [
             'goods' => $goods,
