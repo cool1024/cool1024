@@ -16,7 +16,7 @@ trait PageTrait
      * @param array $wheres 查询限制条件 
      * @return array ['total'=>数据总量,'rows'=>[查询结果]]
      */
-    public function pagination(array $params, array $wheres, array $formats = [])
+    public function pagination(array $params, array $wheres = [], array $formats = [])
     {
         // 获取分页必须参数
         $pageLimit = $params['limit'];
@@ -33,7 +33,6 @@ trait PageTrait
                 }
             }
         }
-        dd($params);
         // 过滤无效限制条件
         $activeWheres = [];
         foreach ($wheres as $where) {

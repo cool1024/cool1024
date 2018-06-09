@@ -1,6 +1,5 @@
 <?php
 
-use App\Api\Contracts\ApiContract;
 use App\Api\Contracts\FormContract;
 use App\Sdk\IdCardReader;
 /*
@@ -15,22 +14,22 @@ use App\Sdk\IdCardReader;
  */
 
 // 响应数据格式化中间件测试--返回字符串
-$router->get('format/string', function (ApiContract $api) {
+$router->get('format/string', function (FormContract $api) {
     return 'test string datas';
 });
 
 // 响应数据格式化中间件测试--重定向
-$router->get('format/redirect', function (ApiContract $api) {
+$router->get('format/redirect', function (FormContract $api) {
     return redirect('tooltest/format/string');
 });
 
 // 响应数据格式化中间件测试--返回数组
-$router->get('format/array', function (ApiContract $api) {
+$router->get('format/array', function (FormContract $api) {
     return $api->datas(['article_title' => 'test title', 'article_type' => 20]);
 });
 
 // 响应数据格式化中间件测试--返回试图
-$router->get('format/view', function (ApiContract $api) {
+$router->get('format/view', function (FormContract $api) {
     return view('simple', ['name' => 'lumen']);
 });
 
@@ -63,8 +62,8 @@ $router->get('form', function (FormContract $form) {
 });
 
 // 使用身份证识别
-$router->post('idcard', function (ApiContract $api) {
-    $params = $api->checkParams(['base64']);
+$router->post('idcard', function (FormContract $api) {
+    $params = $api->checkFormOrFail(['base64']);
     $reader = new IdCardReader('6b0c12cf6b1386344dba1a61c6433db1', '0199ab7f344e4ad083cdae2444e7f261');
     $result = $reader->readBase64($params['base64']);
     return $result === false ? $api->error('接口调用失败') : $api->datas($result);

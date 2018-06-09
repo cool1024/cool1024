@@ -11,6 +11,7 @@ namespace App\Http\Store\Controllers;
 
 use App\Http\Store\Models\StoreBanner;
 use App\Sdk\OssSdk;
+use App\Api\BaseClass\Controller;
 
 class MangerStoreBannerController extends Controller
 {
@@ -22,7 +23,7 @@ class MangerStoreBannerController extends Controller
     {
         $banners = StoreBanner::orderBy('level')
             ->get(['id', 'banner_src', 'banner_link']);
-        return $this->api->getMessage($banners);
+        return $this->form->getMessage($banners);
     }
 
     /**
@@ -30,40 +31,33 @@ class MangerStoreBannerController extends Controller
      */
     public function updateBanner()
     {
-        $required = [
-            'id:integer',
-            'banner_src:max:200',
+        $rules = [
+            ['id', 'required|integer'],
+            ['banner_src', 'required|max:200'],
+            ['banner_link', 'nullable|max:200']
         ];
-
-        $expected = [
-            'banner_link:max:200'
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
         $banner = StoreBanner::findOrFail($params['id'])
             ->fill($params)
             ->save();
-        return $this->api->saveMessage($banner);
+        return $this->form->saveMessage($banner);
     }
 
     /**
-     * 更新幻灯片
+     * 新增幻灯片
      */
     public function insertBanner()
     {
-        $required = [
-            'banner_src:max:200',
+        $rules = [
+            ['banner_src', 'required|max:200'],
+            ['banner_link', 'max:200']
         ];
 
-        $expected = [
-            'banner_link:max:200'
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
         $max = StoreBanner::max('level');
         $params['level'] = empty($max) ? 1 : ++$max;
         $banner = StoreBanner::create($params);
-        return $this->api->createMessage($banner);
+        return $this->form->createMessage($banner);
     }
 
     /**
@@ -71,12 +65,12 @@ class MangerStoreBannerController extends Controller
      */
     public function deleteBanner()
     {
-        $required = [
-            'banner_id:integer',
+        $rules = [
+            ['banner_id', 'required|integer'],
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
         $result = StoreBanner::findOrFail($params['banner_id'])->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     /**
@@ -84,12 +78,12 @@ class MangerStoreBannerController extends Controller
      */
     public function sortBanner()
     {
-        $required = [
-            'ids:array',
+        $rules = [
+            ['ids', 'required|array'],
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
         with(new StoreBanner)->sort($params['ids'], 'level');
-        return $this->api->success('排序成功');
+        return $this->form->success('排序成功');
     }
 
     /**
@@ -102,6 +96,6 @@ class MangerStoreBannerController extends Controller
         // 生成文件保存地址
         $file_path = 'upload/banner/' . date('Ymdhis') . uniqid();
         // 5000k设置
-        return $this->api->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
+        return $this->form->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
     }
 }

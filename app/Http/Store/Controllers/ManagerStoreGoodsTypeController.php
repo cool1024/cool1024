@@ -10,6 +10,7 @@
 namespace App\Http\Store\Controllers;
 
 use App\Http\Store\Models\StoreGoodsType;
+use App\Api\BaseClass\Controller;
 use App\Api\Traits\Func\ArraySortTrait;
 
 class ManagerStoreGoodsTypeController extends Controller
@@ -44,7 +45,7 @@ class ManagerStoreGoodsTypeController extends Controller
         ];
 
         $datas = json_decode(json_encode($datas, JSON_NUMERIC_CHECK));
-        return $this->api->getMessage($datas);
+        return $this->form->getMessage($datas);
     }
 
     /**
@@ -52,15 +53,17 @@ class ManagerStoreGoodsTypeController extends Controller
      */
     public function deleteGoodsType()
     {
-        $required = ['goods_type_id:integer'];
-        $params = $this->api->camelCaseParams($required);
+        $rules = [
+            ['goods_type_id', 'required|integer']
+        ];
+        $params = $this->form->camelFormOrFail($rules);
 
         $goods_type = StoreGoodsType::findOrFail($params['goods_type_id']);
         if ($goods_type->parent_id > 0) {
             StoreGoodsType::where('parent_id', $goods_type->id)->delete();
         }
         $result = $goods_type->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     /**
@@ -68,13 +71,13 @@ class ManagerStoreGoodsTypeController extends Controller
      */
     public function saveGoodsType()
     {
-        $required = [
-            'id:integer',
-            'goods_type_title:max:45',
-            'children:array',
+        $rules = [
+            ['id', 'required|integer'],
+            ['goods_type_title', 'required|max:45'],
+            ['children', 'required|array'],
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
         // 判断是否是新的
         if ($params['id'] === 0) {
@@ -92,7 +95,7 @@ class ManagerStoreGoodsTypeController extends Controller
         $children = [];
         foreach ($params['children'] as $child) {
             if (!isset($child['id'], $child['goodsTypeTitle'])) {
-                return $this->api->error('child datas error');
+                return $this->form->error('child datas error');
             }
             $children[] = [
                 'id' => $child['id'],
@@ -109,6 +112,6 @@ class ManagerStoreGoodsTypeController extends Controller
             ])->save();
         }
 
-        return $this->api->success();
+        return $this->form->success();
     }
 }

@@ -3,11 +3,11 @@
 namespace App\Http\Admin\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Api\Traits\Orm\SearchTrait;
+use App\Api\Traits\Orm\PageTrait;
 
 class AccessPlatformManager extends Model
 {
-    use SearchTrait;
+    use PageTrait;
 
     protected $table = 'access_platform_manager';
 

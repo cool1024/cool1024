@@ -10,6 +10,7 @@
 namespace App\Http\Store\Controllers;
 
 use App\Http\Store\Models\StoreUser;
+use App\Api\BaseClass\Controller;
 
 class ManagerStoreUserController extends Controller
 {
@@ -19,19 +20,16 @@ class ManagerStoreUserController extends Controller
      */
     public function searchUser()
     {
-        $required = [
-            'limit:integer',
-            'offset:integer',
+        $rules = [
+            ['limit', 'required|integer'],
+            ['offset', 'required|integer'],
+            ['start', 'date'],
+            ['end', 'date'],
+            ['nick', 'max:45'],
+            ['mobile', 'max:45'],
         ];
 
-        $expected = [
-            'start:date',
-            'end:date',
-            'nick:max:45',
-            'mobile:max:45',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $search_params = [
             ['whereDate', 'created_at', '>=', '$start'],
@@ -45,8 +43,8 @@ class ManagerStoreUserController extends Controller
             'mobile' => '%$mobile%',
         ];
 
-        $search_result = with(new StoreUser)->search($params, $search_params, $search_formats);
-        return $this->api->searchMessage($search_result);
+        $search_result = with(new StoreUser)->pagination($params, $search_params, $search_formats);
+        return $this->form->getMessage($search_result);
     }
 
     /**
@@ -55,13 +53,13 @@ class ManagerStoreUserController extends Controller
     public function getUser()
     {
 
-        $required = [
+        $rules = [
             'user_id:integer'
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
-        return $this->api->getMessage(StoreUser::findOrFail($params['user_id']));
+        return $this->form->getMessage(StoreUser::findOrFail($params['user_id']));
     }
 
     /**
@@ -70,7 +68,7 @@ class ManagerStoreUserController extends Controller
     public function updateUser()
     {
 
-        $required = [
+        $rules = [
             'id:integer'
         ];
 
@@ -79,9 +77,9 @@ class ManagerStoreUserController extends Controller
             'vip_level:integer',
         ];
 
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules, $expected);
 
-        return $this->api->updateMessage(StoreUser::findOrFail($params['id'])->update($params));
+        return $this->form->updateMessage(StoreUser::findOrFail($params['id'])->update($params));
     }
 
     /**
@@ -97,6 +95,6 @@ class ManagerStoreUserController extends Controller
             ['value' => 4, 'text' => 'Lv.5'],
         ];
 
-        return $this->api->getMessage($options);
+        return $this->form->getMessage($options);
     }
 }

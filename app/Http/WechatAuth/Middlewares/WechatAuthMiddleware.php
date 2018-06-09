@@ -11,19 +11,16 @@
 namespace App\Http\WechatAuth\Middlewares;
 
 use App\Http\WechatAuth\Services\AuthContract;
-use App\Api\Contracts\ApiContract;
 use Closure;
 
 class WechatAuthMiddleware
 {
 
     private $auth;
-    private $api;
 
-    public function __construct(AuthContract $auth, ApiContract $api)
+    public function __construct(AuthContract $auth)
     {
         $this->auth = $auth;
-        $this->api = $api;
     }
 
     /**

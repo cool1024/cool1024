@@ -1,6 +1,6 @@
 <?php
 
-use App\Api\Contracts\ApiContract;
+use App\Api\Contracts\FormContract;
 use App\Http\WechatAuth\Services\AuthContract;
 use App\Http\WechatAuth\Classes\WechatPay;
 
@@ -28,7 +28,7 @@ $router->group(['middleware' => 'wechat'], function ($router) {
     $router->post('/update', 'WechatController@updateUserInfo');
 
     // 获取我的个人信息
-    $router->get('/info', function (ApiContract $api, AuthContract $auth) {
+    $router->get('/info', function (FormContract $api, AuthContract $auth) {
         return $api->getMessage($auth->user);
     });
 

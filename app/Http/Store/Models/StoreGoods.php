@@ -10,11 +10,11 @@
 namespace App\Http\Store\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Api\Traits\Orm\SearchTrait;
+use App\Api\Traits\Orm\PageTrait;
 
 class StoreGoods extends Model
 {
-    use SearchTrait;
+    use PageTrait;
 
     protected $table = 'store_goods';
 

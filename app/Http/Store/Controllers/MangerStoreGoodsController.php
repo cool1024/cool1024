@@ -14,6 +14,7 @@ use App\Http\Store\Models\StoreGoodsType;
 use App\Http\Store\Models\StoreGoodsSpecification;
 use App\Http\Store\Models\StoreGoodsSpecificationDetail;
 use App\Sdk\OssSdk;
+use App\Api\BaseClass\Controller;
 
 class MangerStoreGoodsController extends Controller
 {
@@ -23,18 +24,15 @@ class MangerStoreGoodsController extends Controller
      */
     public function searchGoods()
     {
-        $required = [
-            'limit:integer',
-            'offset:integer',
+        $rules = [
+            ['limit', 'required|integer'],
+            ['offset', 'required|integer'],
+            ['start', ':date'],
+            ['end', 'date'],
+            ['goods_name', 'max:100'],
         ];
 
-        $expected = [
-            'name:date',
-            'end:date',
-            'sn:max:45',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $search_params = [
             ['whereDate', 'created_at', '>=', '$start'],
@@ -46,8 +44,8 @@ class MangerStoreGoodsController extends Controller
             'name' => '%$name%',
         ];
 
-        $search_result = with(new StoreGoods)->search($params, $search_params, $search_formats);
-        return $this->api->searchMessage($search_result);
+        $search_result = with(new StoreGoods)->pagination($params, $search_params, $search_formats);
+        return $this->form->getMessage($search_result);
     }
 
     /**
@@ -55,10 +53,10 @@ class MangerStoreGoodsController extends Controller
      */
     public function getGoods()
     {
-        $required = [
-            'goods_id:integer',
+        $rules = [
+            ['goods_id', 'required|integer'],
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
         $goods = StoreGoods::findOrFail($params['goods_id']);
         $goods->goods_parent_type = StoreGoodsType::findOrFail($goods->goods_type)->parent_id;
@@ -88,7 +86,7 @@ class MangerStoreGoodsController extends Controller
             ];
         }
 
-        return $this->api->getMessage($datas);
+        return $this->form->getMessage($datas);
     }
 
     /**
@@ -96,12 +94,12 @@ class MangerStoreGoodsController extends Controller
      */
     public function saveGoodsSpecification()
     {
-        $required = [
-            'goods_id:integer',
-            'goods_specifications:array',
-            'goods_specification_details:array',
+        $rules = [
+            ['goods_id', 'required|integer'],
+            ['goods_specifications', 'required|array'],
+            ['goods_specification_details', 'required|array'],
         ];
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
         $goods = StoreGoods::findOrFail($params['goods_id']);
 
@@ -109,7 +107,7 @@ class MangerStoreGoodsController extends Controller
         foreach ($params['goods_specifications'] as $specification) {
             if (!isset($specification['specificationTitle'], $specification['specificationNames'])
                 || gettype($specification['specificationNames']) !== 'array') {
-                return $this->api->error('goods_specifications data error');
+                return $this->form->error('goods_specifications data error');
             }
             $specifications[] = [
                 'goods_id' => $goods->id,
@@ -123,7 +121,7 @@ class MangerStoreGoodsController extends Controller
             if (!isset($detail['specificationTitleIndexs'], $detail['specificationTitles'])
                 || gettype($detail['specificationTitleIndexs']) !== 'array'
                 || gettype($detail['specificationTitles']) !== 'array') {
-                return $this->api->error('goods_specification_details data error');
+                return $this->form->error('goods_specification_details data error');
             }
             $specification_details[] = [
                 'goods_id' => $goods->id,
@@ -146,7 +144,7 @@ class MangerStoreGoodsController extends Controller
             StoreGoodsSpecificationDetail::create($detail);
         }
 
-        return $this->api->getMessage('save success');
+        return $this->form->getMessage('save success');
     }
 
     /**
@@ -154,22 +152,22 @@ class MangerStoreGoodsController extends Controller
      */
     public function insertGoods()
     {
-        $required = [
-            'goods_detail:max:2000',
-            'goods_thumb:max:200',
-            'goods_images:max:1000',
-            'goods_name:max:100',
-            'goods_stocks:integer',
-            'goods_price',
-            'is_active:boolean',
-            'goods_type:integer',
+        $rules = [
+            ['goods_detail', 'required|max:2000'],
+            ['goods_thumb', 'required|max:200'],
+            ['goods_images', 'required|max:1000'],
+            ['goods_name', 'required|max:100'],
+            ['goods_stocks', 'required|integer'],
+            ['goods_price', 'required|numeric|min:0'],
+            ['is_active', 'required|boolean'],
+            ['goods_type', 'required|integer'],
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
         $goods = StoreGoods::create($params);
 
-        return $this->api->getMessage($goods);
+        return $this->form->getMessage($goods);
     }
 
     /**
@@ -177,31 +175,28 @@ class MangerStoreGoodsController extends Controller
      */
     public function updateGoods()
     {
-        $required = [
-            'id:integer',
+        $rules = [
+            ['id', 'required|integer'],
+            ['goods_detail', 'max:2000'],
+            ['goods_thumb', 'max:200'],
+            ['goods_images', 'max:1000'],
+            ['goods_name', 'max:100'],
+            ['goods_stocks', 'integer'],
+            ['goods_price', 'numeric|min:0'],
+            ['is_active', 'boolean'],
+            ['goods_type', 'integer'],
         ];
 
-        $expected = [
-            'goods_detail:max:2000',
-            'goods_thumb:max:200',
-            'goods_images:max:1000',
-            'goods_name:max:100',
-            'goods_stocks:integer',
-            'goods_price',
-            'is_active:boolean',
-            'goods_type:integer',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
         if (count($params) < 2) {
-            return $this->api->error('缺少更新的参数');
+            return $this->form->error('缺少更新的参数');
         }
 
         StoreGoods::findOrFail($params['id'])
             ->fill($params)
             ->save();
 
-        return $this->api->getMessage('save success');
+        return $this->form->getMessage('save success');
     }
 
     /**
@@ -209,12 +204,14 @@ class MangerStoreGoodsController extends Controller
      */
     public function deleteGoods()
     {
-        $required = ['goods_id:integer', ];
-        $params = $this->api->camelCaseParams($required);
+        $rules = [
+            ['goods_id', 'required|integer']
+        ];
+        $params = $this->form->camelFormOrFail($rules);
         $result = StoreGoods::findOrFail($params['goods_id'])->delete();
         StoreGoodsSpecification::where($params)->delete();
         StoreGoodsSpecificationDetail::where($params)->delete();
-        return $this->api->deleteMessage($result);
+        return $this->form->deleteMessage($result);
     }
 
     /**
@@ -229,7 +226,7 @@ class MangerStoreGoodsController extends Controller
                 ->where('parent_id', '>', 0)->get()
         ];
 
-        return $this->api->getMessage($options);
+        return $this->form->getMessage($options);
     }
 
     /**
@@ -240,8 +237,8 @@ class MangerStoreGoodsController extends Controller
         // 示例化OssSdk
         $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
         // 生成文件保存地址
-        $file_path = 'upload/goods/' . date('Ymdhis') . uniqid();
+        $file_path = 'upload/goods/' . date('Ymdhis') . uniqid(md5(microtime(true)), true);
         // 5000k设置
-        return $this->api->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
+        return $this->form->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
     }
 }

@@ -11,25 +11,16 @@
 |
  */
 
-use App\Api\Contracts\ApiContract;
+use App\Api\Contracts\FormContract;
 use App\Sdk\JpushSdk;
 use Carbon\Carbon;
 
 // 简单的极光推送
-$router->get('jpush/simple', function (ApiContract $api) {
+$router->get('jpush/simple', function (FormContract $form) {
     $jpush = new JpushSdk('ef5bd8bf7208cf592ead3e73', '944c79cbe94ca3ac752ba6e8');
     $result = $jpush->simpleSend('测试推送一条简单消息 ' . Carbon::now());
     if ($result === true) {
-        return $api->success('发送成功');
+        return $form->success('发送成功');
     }
-    return $api->error($result);
-});
-
-$router->get('jpush/simple', function (ApiContract $api) {
-    $jpush = new JpushSdk('ef5bd8bf7208cf592ead3e73', '944c79cbe94ca3ac752ba6e8');
-    $result = $jpush->simpleSend('测试推送一条简单消息 ' . Carbon::now());
-    if ($result === true) {
-        return $api->success('发送成功');
-    }
-    return $api->error($result);
+    return $form->error($result);
 });

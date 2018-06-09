@@ -11,11 +11,11 @@
 |
  */
 
-use App\Api\Contracts\ApiContract;
+use App\Api\Contracts\FormContract;
 use App\Sdk\OssSdk;
 
 // oss上传图片授权
-$router->get('oss/access/image', function (ApiContract $api) {
+$router->get('oss/access/image', function (FormContract $form) {
 
     // 示例化OssSdk
     $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
@@ -24,5 +24,5 @@ $router->get('oss/access/image', function (ApiContract $api) {
     $file_path = 'upload/' . date('Ymdhis') . uniqid();
 
     // 800k设置
-    return $api->getMessage($oss->getAccessDatas(1024 * 800, 10, $file_path));
+    return $form->getMessage($oss->getAccessDatas(1024 * 800, 10, $file_path));
 });

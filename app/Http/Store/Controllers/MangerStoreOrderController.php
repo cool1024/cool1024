@@ -10,6 +10,7 @@
 namespace App\Http\Store\Controllers;
 
 use App\Http\Store\Models\StoreOrder;
+use App\Api\BaseClass\Controller;
 
 class MangerStoreOrderController extends Controller
 {
@@ -19,20 +20,20 @@ class MangerStoreOrderController extends Controller
      */
     public function searchOrder()
     {
-        $required = [
-            'limit:integer',
-            'offset:integer',
+        $rules = [
+            ['limit', 'required|integer'],
+            ['offset', 'required|integer'],
         ];
 
         $expected = [
-            'start:date',
-            'end:date',
-            'sn:max:45',
-            'consignee:max:45',
-            'status:integer',
+            ['start', 'date'],
+            ['end', 'date'],
+            ['sn', 'max:45'],
+            ['consignee', 'max:45'],
+            ['status', 'integer'],
         ];
 
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules, $expected);
 
         $search_params = [
             ['with', ['user', 'goodsList']],
@@ -48,8 +49,8 @@ class MangerStoreOrderController extends Controller
             'consignee' => '%$consignee%',
         ];
 
-        $search_result = with(new StoreOrder)->search($params, $search_params, $search_formats);
-        return $this->api->searchMessage($search_result);
+        $search_result = with(new StoreOrder)->pagination($params, $search_params, $search_formats);
+        return $this->form->getMessage($search_result);
     }
 
     /**
@@ -57,14 +58,14 @@ class MangerStoreOrderController extends Controller
      */
     public function getOrder()
     {
-        $required = [
-            'order_id:integer',
+        $rules = [
+            ['order_id', 'required|integer'],
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
         $order = StoreOrder::with(['user', 'goodsList'])->findOrFail($params['order_id']);
 
-        return $this->api->getMessage($order);
+        return $this->form->getMessage($order);
     }
 }

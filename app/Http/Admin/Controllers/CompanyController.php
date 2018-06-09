@@ -11,6 +11,7 @@ namespace App\Http\Admin\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Admin\Models\AccessCompanyManager;
+use App\Api\BaseClass\Controller;
 
 class CompanyController extends Controller
 {
@@ -21,31 +22,28 @@ class CompanyController extends Controller
     public function insertCompany()
     {
 
-        $required = [
-            'company_manager_account:min:4|max:30',
-            'company_name:max:100',
-            'is_active:boolean',
-            'password:min:4|max:20',
+        $rules = [
+            ['company_manager_account', 'required|min:4|max:30'],
+            ['company_name', 'required|max:100'],
+            ['is_active', 'required|boolean'],
+            ['password', 'required|min:4|max:20'],
+            ['company_manager_mobile', 'min:4|max:30'],
+            ['company_manager_email', 'email'],
+            ['company_description', 'max:500'],
+            ['company_logo', 'max:500'],
         ];
 
-        $expected = [
-            'company_manager_mobile:min:4|max:30',
-            'company_manager_email:email',
-            'company_description:max:500',
-            'company_logo:max:500',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $compay = AccessCompanyManager::where('company_manager_account', $params['company_manager_account'])->first();
 
         if (isset($compay)) {
-            return $this->api->error('账号已经被注册');
+            return $this->form->error('账号已经被注册');
         }
 
         $params['password'] = Crypt::encryptString($params['password']);
 
-        return $this->api->createMessage(AccessCompanyManager::create($params));
+        return $this->form->createMessage(AccessCompanyManager::create($params));
     }
 
     /**
@@ -54,13 +52,13 @@ class CompanyController extends Controller
     public function getCompany()
     {
 
-        $required = [
-            'company_id:integer'
+        $rules = [
+            ['company_id', 'required|integer']
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
-        return $this->api->getMessage(AccessCompanyManager::findOrFail($params['company_id']));
+        return $this->form->getMessage(AccessCompanyManager::findOrFail($params['company_id']));
     }
 
     /**
@@ -68,33 +66,29 @@ class CompanyController extends Controller
      */
     public function updateCompany()
     {
-
-        $required = [
-            'id:integer'
+        $rules = [
+            ['id', 'required|integer'],
+            ['company_manager_account', 'min:4|max:30'],
+            ['company_name', 'max:100'],
+            ['is_active', 'boolean'],
+            ['password', 'min:4|max:20'],
+            ['company_manager_mobile', 'min:4|max:30'],
+            ['company_manager_email', 'email'],
+            ['company_description', 'max:500'],
+            ['company_logo', 'max:500'],
         ];
 
-        $expected = [
-            'company_manager_account:min:4|max:30',
-            'company_name:max:100',
-            'is_active:boolean',
-            'password:min:4|max:20',
-            'company_manager_mobile:min:4|max:30',
-            'company_manager_email:email',
-            'company_description:max:500',
-            'company_logo:max:500',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         if (count($params) <= 1) {
-            return $this->api->error('lost update params');
+            return $this->form->error('lost update params');
         }
 
         if (isset($params['password'])) {
             $params['password'] = Crypt::encryptString($params['password']);
         }
 
-        return $this->api->updateMessage(AccessCompanyManager::findOrFail($params['id'])->update($params));
+        return $this->form->updateMessage(AccessCompanyManager::findOrFail($params['id'])->update($params));
     }
 
     /**
@@ -103,12 +97,12 @@ class CompanyController extends Controller
     public function deleteCompany()
     {
 
-        $required = [
-            'company_id:integer'
+        $rules = [
+            ['company_id', 'required|integer']
         ];
 
-        $params = $this->api->camelCaseParams($required);
-        return $this->api->deleteMessage(AccessCompanyManager::findOrFail($params['company_id'])->delete());
+        $params = $this->form->camelFormOrFail($rules);
+        return $this->form->deleteMessage(AccessCompanyManager::findOrFail($params['company_id'])->delete());
     }
 
     /**
@@ -116,19 +110,16 @@ class CompanyController extends Controller
      */
     public function searchCompany()
     {
-        $required = [
-            'limit:integer',
-            'offset:integer',
+        $rules = [
+            ['limit', 'required|integer'],
+            ['offset', 'required|integer'],
+            ['start', 'date'],
+            ['end', 'date'],
+            ['name', 'max:100'],
+            ['account', 'max:30'],
         ];
 
-        $expected = [
-            'start:date',
-            'end:date',
-            'name:max:100',
-            'account:max:30',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $search_params = [
             ['whereDate', 'created_at', '>=', '$start'],
@@ -142,7 +133,7 @@ class CompanyController extends Controller
             'account' => '%$account%',
         ];
 
-        $search_result = with(new AccessCompanyManager)->search($params, $search_params, $search_formats);
-        return $this->api->searchMessage($search_result);
+        $search_result = with(new AccessCompanyManager)->pagination($params, $search_params, $search_formats);
+        return $this->form->getMessage($search_result);
     }
 }

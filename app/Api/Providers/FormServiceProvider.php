@@ -13,7 +13,6 @@ class FormServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Api\Contracts\ApiContract', 'App\Api\Services\ApiService');
         $this->app->bind('App\Api\Contracts\FormContract', 'App\Api\Services\FormService');
     }
 }

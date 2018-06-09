@@ -11,6 +11,7 @@ namespace App\Http\Admin\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Admin\Models\AccessPlatformManager;
+use App\Api\BaseClass\Controller;
 
 class PlatformManagerController extends Controller
 {
@@ -20,30 +21,27 @@ class PlatformManagerController extends Controller
      */
     public function insertPlatformManager()
     {
-
-        $required = [
-            'platform_manager_name:min:4|max:45',
-            'platform_manager_account:min:4|max:30',
-            'password:min:4|max:30',
-            'is_active:boolean',
+        $rules = [
+            ['id', 'required|integer'],
+            ['platform_manager_name', 'required|min:4|max:45'],
+            ['platform_manager_account', 'required|min:4|max:30'],
+            ['is_active', 'required|boolean'],
+            ['password', 'required|min:4|max:20'],
+            ['platform_manager_mobile', 'min:4|max:30'],
+            ['platform_manager_email', 'email'],
         ];
 
-        $expected = [
-            'platform_manager_mobile:min:4|max:30',
-            'platform_manager_email:email',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $compay = AccessPlatformManager::where('platform_manager_account', $params['platform_manager_account'])->first();
 
         if (isset($compay)) {
-            return $this->api->error('账号已经被注册');
+            return $this->form->error('账号已经被注册');
         }
 
         $params['password'] = Crypt::encryptString($params['password']);
 
-        return $this->api->createMessage(AccessPlatformManager::create($params));
+        return $this->form->createMessage(AccessPlatformManager::create($params));
     }
 
     /**
@@ -52,13 +50,13 @@ class PlatformManagerController extends Controller
     public function getPlatformManager()
     {
 
-        $required = [
-            'platform_manager_id:integer'
+        $rules = [
+            ['platform_manager_id', 'required|integer']
         ];
 
-        $params = $this->api->camelCaseParams($required);
+        $params = $this->form->camelFormOrFail($rules);
 
-        return $this->api->getMessage(AccessPlatformManager::findOrFail($params['platform_manager_id']));
+        return $this->form->getMessage(AccessPlatformManager::findOrFail($params['platform_manager_id']));
     }
 
     /**
@@ -67,28 +65,26 @@ class PlatformManagerController extends Controller
     public function updatePlatformManager()
     {
 
-        $required = [
-            'id:integer'
+        $rules = [
+            ['id', 'required|integer'],
+            ['platform_manager_name', 'min:4|max:45'],
+            ['is_active', 'boolean'],
+            ['password', 'min:4|max:20'],
+            ['platform_manager_mobile', 'min:4|max:30'],
+            ['platform_manager_email', 'email'],
         ];
 
-        $expected = [
-            'is_active:boolean',
-            'password:min:4|max:20',
-            'platform_manager_mobile:min:4|max:30',
-            'platform_manager_email:email',
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         if (count($params) <= 1) {
-            return $this->api->error('lost update params');
+            return $this->form->error('lost update params');
         }
 
         if (isset($params['password'])) {
             $params['password'] = Crypt::encryptString($params['password']);
         }
 
-        return $this->api->updateMessage(AccessPlatformManager::findOrFail($params['id'])->update($params));
+        return $this->form->updateMessage(AccessPlatformManager::findOrFail($params['id'])->update($params));
     }
 
     /**
@@ -97,12 +93,12 @@ class PlatformManagerController extends Controller
     public function deletePlatformManager()
     {
 
-        $required = [
-            'platform_manager_id:integer'
+        $rules = [
+            ['platform_manager_id', 'required|integer']
         ];
 
-        $params = $this->api->camelCaseParams($required);
-        return $this->api->deleteMessage(AccessPlatformManager::findOrFail($params['platform_manager_id'])->delete());
+        $params = $this->form->camelFormOrFail($rules);
+        return $this->form->deleteMessage(AccessPlatformManager::findOrFail($params['platform_manager_id'])->delete());
     }
 
     /**
@@ -110,13 +106,27 @@ class PlatformManagerController extends Controller
      */
     public function searchPlatformManager()
     {
-        $required = [
-            'limit:integer',
-            'offset:integer',
+        $rules = [
+            ['limit', 'required|integer'],
+            ['offset', 'required|integer'],
+            ['name', 'string|max:45'],
+            ['account', 'string|max:30'],
         ];
 
-        $params = $this->api->camelCaseParams($required);
-        $search_result = with(new AccessPlatformManager)->search($params);
-        return $this->api->searchMessage($search_result);
+        $wheres = [
+            ['whereDate', 'created_at', '>=', '$start'],
+            ['whereDate', 'created_at', '<=', '$end'],
+            ['where', 'platform_manager_name', 'like', '$name'],
+            ['where', 'platform_manager_account', 'like', '$account'],
+        ];
+
+        $formats = [
+            'name' => '%$name%',
+            'account' => '%$account%',
+        ];
+
+        $params = $this->form->camelFormOrFail($rules);
+        $search_result = with(new AccessPlatformManager)->pagination($params, $wheres, $formats);
+        return $this->form->getMessage($search_result);
     }
 }

@@ -27,18 +27,18 @@ class WechatController extends BaseController
 
     private $wechat;
 
-    private $api;
+    private $form;
 
     private $small_routine;
 
     private $store;
 
-    public function __construct(ApiContract $api, WechatContract $wechat)
+    public function __construct(ApiContract $form, WechatContract $wechat)
     {
-        $this->api = $api;
+        $this->form = $form;
 
         // 尝试获取参数中的
-        $params = $api->camelCaseParams(['appid']);
+        $params = $form->camelFormOrFail([['appid', 'required']]);
 
         // 尝试获取微信对象
         $this->wechat = $wechat->getWechatByAppId($params['appid'], $this->small_routine);
@@ -52,18 +52,18 @@ class WechatController extends BaseController
      */
     public function getSessionKey()
     {
-        $required = ['code:max:45'];
-        $params = $this->api->camelCaseParams($required);
+        $rules = [['code', 'required|max:45']];
+        $params = $this->form->camelFormOrFail($rules);
         $session_datas = $this->wechat->getSmallRoutineSessionKey($params['code']);
         if (isset($session_datas['errcode'])) {
-            return $this->api->error($session_datas['errmsg']);
+            return $this->form->error($session_datas['errmsg']);
         }
         $session_datas = WechatLoginSession::create([
             'appid' => $this->wechat->getAppId(),
             'openid' => $session_datas['openid'],
             'session_key' => $session_datas['session_key'],
         ]);
-        return $this->api->getMessage($session_datas);
+        return $this->form->getMessage($session_datas);
     }
 
     /**
@@ -71,21 +71,18 @@ class WechatController extends BaseController
      */
     public function getAuthToken()
     {
-        $required = [
-            'openid:max:45',
-            'session_key:max:45',
-            'avatar_url:max:1000',
-            'nick_name:max:45',
-            'gender:integer|min:0|max:2'
-        ];
-        $expected = [
-            'city:max:45',
-            'country:max:45',
-            'province:max:45'
+        $rules = [
+            ['openid', 'required|max:45'],
+            ['session_key', 'required|max:45'],
+            ['avatar_url', 'required|max:1000'],
+            ['nick_name', 'required|max:45'],
+            ['gender', 'required|integer|min:0|max:2'],
+            ['city', 'max:45'],
+            ['country', 'max:45'],
+            ['province', 'max:45']
         ];
 
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $user = WechatUser::where([
             'store_id' => $this->small_routine->store_id,
@@ -109,7 +106,7 @@ class WechatController extends BaseController
             'token' => md5($user->id) . sha1(uniqid()),
         ]);
 
-        return $this->api->getMessage($login);
+        return $this->form->getMessage($login);
     }
 
     /**
@@ -117,20 +114,17 @@ class WechatController extends BaseController
      */
     public function updateUserInfo()
     {
-        $required = [
-            'openid:max:1000',
-            'avatar_url:max:1000',
-            'nick_name:max:45',
-            'gender:integer|min:0|max:2'
+        $rules = [
+            ['openid', 'required|max:45'],
+            ['avatar_url', 'required|max:1000'],
+            ['nick_name', 'required|max:45'],
+            ['gender', 'required|integer|min:0|max:2'],
+            ['city', 'max:45'],
+            ['country', 'max:45'],
+            ['province', 'max:45']
         ];
 
-        $expected = [
-            'city:max:45',
-            'country:max:45',
-            'province:max:45'
-        ];
-
-        $params = $this->api->camelCaseParams($required, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $this->auth->fill($params)->save();
 
