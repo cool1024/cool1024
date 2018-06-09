@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 系统状态监视脚本
+ */
+
 class Vmstat
 {
     private $logs;
@@ -65,7 +69,7 @@ class Vmstat
     }
 }
 
-$server = new swoole_websocket_server("192.168.1.166", 8080);
+$server = new swoole_websocket_server("139.129.161.216", 8080);
 
 $server->on('open', function ($server, $req) {
     echo "connection open: {$req->fd}\n";
