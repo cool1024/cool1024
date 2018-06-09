@@ -64,6 +64,7 @@ class Vmstat
         $this->logs = [];
     }
 }
+
 $server = new swoole_websocket_server("192.168.1.166", 8080);
 
 $server->on('open', function ($server, $req) {
@@ -77,12 +78,14 @@ $server->on('message', function ($server, $frame) {
 $server->on('close', function ($server, $fd) {
 });
 
-$server->on('request', function (swoole_http_request $request, swoole_http_response $response) {
+$server->on('request', function (swoole_http_request $request, swoole_http_response $response) use ($server) {
 
     $vmstat = new Vmstat();
     $log = $vmstat->newLog();
     foreach ($server->connections as $fd) {
-        $server->push($fd, json_encode($log));
+        if ($request->fd !== $fd) {
+            $server->push($fd, json_encode($log));
+        }
     }
     return $response->end('push success');
 });
