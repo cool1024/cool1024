@@ -19,12 +19,10 @@ class SmallRoutineMiddleware
 {
 
     private $auth;
-    private $api;
 
-    public function __construct(AuthContract $auth, ApiContract $api, WechatContract $wechat)
+    public function __construct(AuthContract $auth, WechatContract $wechat)
     {
         $this->auth = $auth;
-        $this->api = $api;
     }
 
     /**
