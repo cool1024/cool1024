@@ -1,16 +1,26 @@
 <?php
 
+/**
+ * OSS上传
+ * @file OssSdk.php
+ * @author xiaojian
+ * @date 2018-06-10
+ */
+
 namespace App\Sdk;
 
 class OssSdk
 {
-
-
-    /*--------------------配置参数--------------------------*/
-
     private $oss_id;
     private $oss_key;
     private $oss_host;
+
+    /**
+     * 构造函数
+     * @param string $oss_id
+     * @param string $oss_key
+     * @param string $oss_host
+     */
 
     public function __construct($oss_id, $oss_key, $oss_host)
     {
@@ -19,10 +29,12 @@ class OssSdk
         $this->oss_host = $oss_host;
     }
 
-    /*
-     * exp：     获取上传授权链接
-     * params：  number(size:限制文件大小),number(time:链接有效时间),string(dir:文件保存路径)
-     * return:   string(retult) 
+    /** 
+     * 获取上传授权链接
+     * @param int $size 文件大小（1024为1K）
+     * @param int $time 有效时间（分钟）
+     * @param string $dir 文件保存路径
+     * @return  string
      */
     public function getAccessDatas($size = 10240000, $time = 10, $dir = 'upload')
     {
@@ -63,10 +75,10 @@ class OssSdk
         return $response;
     }
 
-    /*
-     * exp:     时间串格式化-获取失效时间串
-     * params:  number(time:时间串)
-     * return： string
+    /**
+     * 时间串格式化-获取失效时间串
+     * @param string $time 时间串
+     * @return string
      */
     private function gmt_iso8601($time)
     {

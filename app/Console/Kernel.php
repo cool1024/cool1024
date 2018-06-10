@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Core\Commands\CreateCmd::class,
+        \App\Console\Commands\SaveSnapshot::class,
     ];
 
     /**
@@ -24,6 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->command('snapshot:save')->everyMinute();
     }
 }

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 身份证识别
+ * @file IdCardReader.php
+ * @author xiaojian
+ * @date 2018-06-10
+ */
 namespace App\Sdk;
 
 class IdCardReader
@@ -13,8 +19,8 @@ class IdCardReader
     /**
      * 构造函数
      * 
-     * @param {string} $appKey
-     * @param {string} $appCode
+     * @param string $appKey
+     * @param string $appCode
      */
     public function __construct($appKey, $appCode)
     {
@@ -26,9 +32,9 @@ class IdCardReader
     /**
      * 识别base64图片（不能带type之类的格式，必须时一个干净的图片数据）
      * 
-     * @param {string} $base64
-     * @param {string} $side face|back
-     * @return {array|bool} 识别结果，如果返回为false那么识别失败，如果返回array，需要自行判断是否识别成功
+     * @param string $base64
+     * @param string $side face|back
+     * @return array|bool 识别结果，如果返回为false那么识别失败，如果返回array，需要自行判断是否识别成功
      */
     public function readBase64($base64, $side = 'face')
     {
@@ -43,9 +49,9 @@ class IdCardReader
     /**
      * 识别本地图片
      * 
-     * @param {string} $file 文件路径
-     * @param {string} $side face|back
-     * @return {array|bool} 识别结果，如果返回为false那么识别失败，如果返回array，需要自行判断是否识别成功
+     * @param string $file 文件路径
+     * @param string $side face|back
+     * @return array|bool 识别结果，如果返回为false那么识别失败，如果返回array，需要自行判断是否识别成功
      */
     public function readFile($file, $side = 'face')
     {
@@ -63,7 +69,8 @@ class IdCardReader
     /**
      * 发送api请求
      * 
-     * @param {array} $body 请求参数
+     * @param array $body 请求参数
+     * @return array|boolean
      */
     private function sendRequest($body)
     {

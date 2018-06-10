@@ -21,3 +21,28 @@
 ## phpunit
 1. 测试指定方法
 `phpunit --filter AdminTest::testInsertCompany`
+
+## 任务调度
+`php /项目目录/artisan schedule:run >> /dev/null 2>&1`
+### test on mac
+1. 打开控制台，输入 `crontab -e`
+2. 按下 i 进入编辑模式
+3. 任务书写格式如下
+
+```
+* * * * * *
+
+第1个星号表示分钟（0－59）
+第2个星号表示小时（0－23）
+第3个星号表示日期（0－31）
+第4个星号表示月份（0－12）
+第5个星号表示星期几（0－6，0是周日，6是周六）
+第6个星号表示要执行的脚本文件名。
+
+示例：
+0 13 * * * 表示每天下午13点执行
+30 * * * * 表示每30分钟执行
+```
+4. 如下1分钟执行
+`php /Users/anasit/Documents/Git/cool1024/artisan schedule:run >> /dev/null 2>&1`
+5. 保存退出

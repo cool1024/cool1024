@@ -1,33 +1,34 @@
 <?php
 
 /**
- * @exp 短信发送类
+ * 短信发送类
+ * @file ShortMessage.php
  * @author zhaoshiwei
  * @date 2018年3月12日
  */
 
 namespace App\Sdk;
 
-
-// 短信发送类
 class ShortMessage
 {
+    private $apikey; //= '87c1132c1c766fb5e812642ddb10c4c8';
 
+    /**
+     * 构造函数
+     * 修改为您的apikey(https://www.yunpian.com)登陆官网后获取
+     * @param stirng $apiKey
+     */
     public function __construct($api_key)
     {
         $this->apikey = $api_key;
     }
 
-    // 修改为您的apikey(https://www.yunpian.com)登陆官网后获取
-    private $apikey; //= '87c1132c1c766fb5e812642ddb10c4c8';
-
     /**
      * 云片网单发信息发送请求
      * @author zhaoshiwei
-     * @date 2018年3月12日
      * @param string $mobile
      * @param string $content
-     * @return mixed
+     * @return bool 发送结果
      */
     public function singleSend($mobile, $content)
     {

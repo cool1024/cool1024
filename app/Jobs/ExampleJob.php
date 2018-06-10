@@ -2,25 +2,28 @@
 
 namespace App\Jobs;
 
-class ExampleJob extends Job
+class ExampleJob
 {
+
+    private $log_path;
+
     /**
-     * Create a new job instance.
+     * 创建一个任务实例
      *
      * @return void
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
-     * Execute the job.
+     * 执行这个任务
      *
      * @return void
      */
     public function handle()
     {
-        //
+
     }
 }
