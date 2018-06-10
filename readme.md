@@ -40,9 +40,11 @@
 第6个星号表示要执行的脚本文件名。
 
 示例：
+*/1 * * * * 1分钟一次
 0 13 * * * 表示每天下午13点执行
 30 * * * * 表示每30分钟执行
 ```
 4. 如下1分钟执行
 `php /Users/anasit/Documents/Git/cool1024/artisan schedule:run >> /dev/null 2>&1`
+`php /var/www/cool1024/artisan schedule:run >> /dev/null 2>&1`
 5. 保存退出

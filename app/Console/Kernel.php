@@ -26,6 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('snapshot:save')->everyMinute();
+        $schedule->command('snapshot:save')->everyFiveMinutes();
     }
 }
