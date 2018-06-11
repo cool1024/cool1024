@@ -77,6 +77,8 @@ php artisan queue:listen --sleep=5 //没有任务的时候休眠5秒
  
 php artisan queue:listen --tries=3 //失败任务尝试3次
 ```
+7. env文件配置
+`QUEUE_DRIVER=beanstalkd`
 
 ## 事件
 1. 事件需要注册，一个事件可以绑定多个监听器
@@ -84,5 +86,10 @@ php artisan queue:listen --tries=3 //失败任务尝试3次
 2. 事件对象就是一个单纯保存这个事件相关消息的东东
 3. 监听器会在事件触发的时候执行相关的handle方法
 4. 事件时要主动触发的，使用`event(new ExampleEvent)`方法可以发送一个事件
+5. EventServiceProvider服务提供商和其他的不一样，它继承了事件服务提供商（Laravel\Lumen\Providers\EventServiceProvider）
 
 ## ORM观察者
+
+1. orm事件可以在任何服务提商中的boot方法内注册
+2. 不一定非要在服务提供商中注册，只是这个位置比较好
+3. 观察者这个类就是一个简单的类，没有继承其他的任何父类
