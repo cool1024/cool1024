@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
-class ExampleJob
+use Carbon\Carbon;
+
+class ExampleJob extends Job
 {
 
     private $log_path;
@@ -24,6 +26,10 @@ class ExampleJob
      */
     public function handle()
     {
-
+        sleep(10);
+        $path = realpath(__DIR__ . '/../../storage/logs') . '/jobs.log';
+        $snapshot = shell_exec('vm_stat');
+        file_put_contents($path, 'Save snapshot at ' . Carbon::now() . "\n", FILE_APPEND);
+        file_put_contents($path, $snapshot . "\n", FILE_APPEND);
     }
 }

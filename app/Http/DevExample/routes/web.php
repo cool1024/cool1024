@@ -2,6 +2,8 @@
 
 use App\Api\Contracts\FormContract;
 use App\Sdk\IdCardReader;
+use App\Jobs\ExampleJob;
+use Pheanstalk\Pheanstalk;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -67,4 +69,10 @@ $router->post('idcard', function (FormContract $api) {
     $reader = new IdCardReader('6b0c12cf6b1386344dba1a61c6433db1', '0199ab7f344e4ad083cdae2444e7f261');
     $result = $reader->readBase64($params['base64']);
     return $result === false ? $api->error('接口调用失败') : $api->datas($result);
+});
+
+// 添加一个任务到队列
+$router->get('queue', function (FormContract $api) {
+    dispatch(new ExampleJob);
+    return $api->getMessage('推送到任务队列成功');
 });

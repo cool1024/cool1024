@@ -1,5 +1,7 @@
 # cool1024 web code
 
+## composer config
+`composer config -g repo.packagist composer https://packagist.phpcomposer.com`
 ## run app
 `sudo php -S 0.0.0.0:80 -t public`
 
@@ -48,3 +50,30 @@
 `php /Users/anasit/Documents/Git/cool1024/artisan schedule:run >> /dev/null 2>&1`
 `php /var/www/cool1024/artisan schedule:run >> /dev/null 2>&1`
 5. 保存退出
+
+## 任务队列
+1. 运行队列监听
+`php artisan queue:work`
+2. 清空所有队列
+`php artisan queue:flush`
+3. 任务代码修改好要重启队列才能生效
+`php artisan queue:restart`
+4. 安装队列驱动服务
+`OS X:   brew install beanstalkd`
+`Debian: apt-get install`
+5. 运行队列服务
+`beanstalkd -l localhost -p 11300`
+6. 其它指令介绍
+```
+php artisan queue:listen connection_name --queue=queue_name
+ 
+php artisan queue:listen connection //指定连接,也就是不同队列类型,如database,redis,在queue.php中配置
+ 
+php artisan queue:listen --queue=high,low //指定队列优先级,比如有限处理某队列,多个队列用,分割
+ 
+php artisan queue:listen --timeout=60 //每个任务运行最大时间不超过60秒
+ 
+php artisan queue:listen --sleep=5 //没有任务的时候休眠5秒
+ 
+php artisan queue:listen --tries=3 //失败任务尝试3次
+```
