@@ -77,3 +77,12 @@ php artisan queue:listen --sleep=5 //没有任务的时候休眠5秒
  
 php artisan queue:listen --tries=3 //失败任务尝试3次
 ```
+
+## 事件
+1. 事件需要注册，一个事件可以绑定多个监听器
+`App\Core\Providers\EventServiceProvider`
+2. 事件对象就是一个单纯保存这个事件相关消息的东东
+3. 监听器会在事件触发的时候执行相关的handle方法
+4. 事件时要主动触发的，使用`event(new ExampleEvent)`方法可以发送一个事件
+
+## ORM观察者

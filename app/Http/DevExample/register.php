@@ -1,2 +1,3 @@
 <?php
-    //使用 $app 去注册服务，中间件，事件...
+
+$app->register(App\Http\DevExample\Providers\OrmEventProvider::class);

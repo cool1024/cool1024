@@ -4,6 +4,8 @@ use App\Api\Contracts\FormContract;
 use App\Sdk\IdCardReader;
 use App\Jobs\ExampleJob;
 use Pheanstalk\Pheanstalk;
+use App\Events\ExampleEvent;
+use App\Http\Store\Models\StoreUser;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -75,4 +77,30 @@ $router->post('idcard', function (FormContract $api) {
 $router->get('queue', function (FormContract $api) {
     dispatch(new ExampleJob);
     return $api->getMessage('推送到任务队列成功');
+});
+
+// 测试手动触发一个事件
+$router->get('events', function (FormContract $api) {
+    event(new ExampleEvent('事件消息'));
+    return $api->getMessage('传递事件消息成功');
+});
+
+// 测试ORM事件与观察者
+$router->get('observer', function (FormContract $api) {
+    // 测试创建事件
+    $user = StoreUser::create([
+        'uid' => 0,
+        'avatar' => '',
+        'nick' => '',
+        'mobile' => '',
+    ]);
+
+    // 测试更新事件
+    $user->uid = 1;
+    $user->save();
+
+    // 测试删除事件
+    $user->delete();
+
+    return $api->getMessage('测试观察者成功');
 });

@@ -76,7 +76,7 @@ $app->middleware([
  */
 
 $app->register(App\Core\Providers\AppServiceProvider::class);
-$app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Core\Providers\EventServiceProvider::class);
 $app->register(App\Api\Providers\HttpServiceProvider::class);
 $app->register(App\Api\Providers\FormServiceProvider::class);
 
