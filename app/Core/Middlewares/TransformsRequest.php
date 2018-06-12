@@ -8,22 +8,20 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class TransformsRequest
 {
     /**
-     * The additional attributes passed to the middleware.
-     *
-     * @var array
-     */
-    protected $attributes = [];
-    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  array  ...$attributes
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$attributes)
+    public function handle($request, Closure $next)
     {
-        $this->attributes = $attributes;
+        $params = $request->all();
+        foreach ($params as $key => $value) {
+            if ($value == null) {
+                $request->offsetUnset($key);
+            }
+        }
         return $next($request);
     }
 }

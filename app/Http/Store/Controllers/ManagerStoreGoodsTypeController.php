@@ -27,7 +27,7 @@ class ManagerStoreGoodsTypeController extends Controller
             ['op' => 'orderBy', 'params' => ['id', 'asc']]
         ]);
 
-        $parent = [];
+        $parents = [];
         $children = [];
         foreach ($datas as $value) {
             if ($value['parent_id'] === 0) {
@@ -59,9 +59,7 @@ class ManagerStoreGoodsTypeController extends Controller
         $params = $this->form->camelFormOrFail($rules);
 
         $goods_type = StoreGoodsType::findOrFail($params['goods_type_id']);
-        if ($goods_type->parent_id > 0) {
-            StoreGoodsType::where('parent_id', $goods_type->id)->delete();
-        }
+        StoreGoodsType::where('parent_id', $goods_type->id)->delete();
         $result = $goods_type->delete();
         return $this->form->deleteMessage($result);
     }
