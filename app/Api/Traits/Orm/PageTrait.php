@@ -23,6 +23,13 @@ trait PageTrait
         $pageOffset = $params['offset'];
         unset($params['limit'], $params['offset']);
 
+        // 剔除空参数
+        foreach ($params as $key => $value) {
+            if ((string)$value == '') {
+                unset($params[$key]);
+            }
+        }
+
         // 格式化参数
         foreach ($formats as $paramKey => $format) {
             if (isset($params[$paramKey])) {
