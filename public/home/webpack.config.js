@@ -12,6 +12,8 @@ module.exports = {
     entry: {
         index: __dirname + '/src/index.ts',
         zone: __dirname + '/src/pages/zone/zone.ts',
+        type: __dirname + '/src/pages/type/type.ts',
+        docs: __dirname + '/src/pages/docs/docs.ts',
     },
     output: {
         path: __dirname + '/build',

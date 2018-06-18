@@ -104,3 +104,40 @@ $router->get('observer', function (FormContract $api) {
 
     return $api->getMessage('测试观察者成功');
 });
+
+// 测试反射
+$router->get('routes', function () {
+    $source_routes = app()->router->getRoutes();
+    $routes = [];
+
+    // 剔除掉没有控制器的方法
+    foreach ($source_routes as $key => $value) {
+        if (isset($value['action']['uses'])) {
+            $routes[] = $value;
+        }
+    }
+
+    // 对这些控制器进行分析
+    foreach ($routes as $key => $value) {
+        $route = [
+            'method' => $value['method'],
+            'uri' => $value['uri'],
+            'uses' => $value['action']['uses'],
+        ];
+        $args = explode('@', $value['action']['uses']);
+        $method = new ReflectionMethod(...$args);
+        $route['docs'] = $method->getDocComment();
+        $route['vars'] = [];
+        preg_match_all("/@var.*?\n/", $route['docs'], $route['vars']);
+        $vars = array_first($route['vars']);
+        $route['vars'] = count($vars) > 0 ? $vars : [];
+        foreach ($route['vars'] as $key => $var) {
+            $route['vars'][$key] = preg_split('/\s{1,}/', $var);
+        }
+        $routes[$key] = $route;
+    }
+
+    // 格式化为apidocs
+
+    return $routes;
+});

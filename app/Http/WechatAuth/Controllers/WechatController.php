@@ -9,7 +9,6 @@
  */
 namespace App\Http\WechatAuth\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Api\Contracts\ApiContract;
 use App\Sdk\Wechat;
 use App\Http\WechatAuth\Models\WechatUser;
@@ -18,27 +17,26 @@ use App\Http\WechatAuth\Services\AuthContract;
 use App\Http\WechatAuth\Models\SmallRoutine;
 use App\Http\WechatAuth\Models\WechatLoginSession;
 use App\Http\WechatAuth\Services\WechatContract;
+use App\Api\BaseClass\Controller;
 
 /**
  * WechatController Class Controller
  */
-class WechatController extends BaseController
+class WechatController extends Controller
 {
 
     private $wechat;
-
-    private $form;
 
     private $small_routine;
 
     private $store;
 
-    public function __construct(ApiContract $form, WechatContract $wechat)
+    public function __construct(WechatContract $wechat)
     {
-        $this->form = $form;
+        parent::__construct();
 
         // 尝试获取参数中的
-        $params = $form->camelFormOrFail([['appid', 'required']]);
+        $params = $this->form->camelFormOrFail([['appid', 'required']]);
 
         // 尝试获取微信对象
         $this->wechat = $wechat->getWechatByAppId($params['appid'], $this->small_routine);
