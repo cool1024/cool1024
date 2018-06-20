@@ -1,15 +1,19 @@
 var webpack = require('webpack')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const extractSass = new ExtractTextPlugin({
     filename: "[name].css",
     disable: process.env.NODE_ENV === "development"
-});
+})
 
 module.exports = {
     entry: {
         index: __dirname + '/src/index.ts',
+        zone: __dirname + '/src/pages/zone/zone.ts',
+        type: __dirname + '/src/pages/type/type.ts',
+        docs: __dirname + '/src/pages/docs/docs.ts',
     },
     output: {
         path: __dirname + '/build',
@@ -52,6 +56,7 @@ module.exports = {
     plugins: [
         extractSass,
         new UglifyJsPlugin(),
+        new CopyWebpackPlugin([{ from: 'src/pages/*/*.html', to: '[name].html', flatten: true }])
     ],
     externals: {
         jquery: 'jQuery'

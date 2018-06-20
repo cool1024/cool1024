@@ -25,11 +25,11 @@ class User extends Facade
         $instance = static::getFacadeRoot();
 
         if (!$instance) {
-            throw new RuntimeException('A facade root has not been set.');
+            throw new \RuntimeException('A facade root has not been set.');
         }
 
         if (!$instance->userService) {
-            throw new RuntimeException('Function initUserService must be done');
+            throw new \RuntimeException('Function initUserService must be done');
 
         }
 

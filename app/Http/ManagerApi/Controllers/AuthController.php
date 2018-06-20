@@ -30,6 +30,9 @@ class AuthController extends Controller
 
     /**
      * 获取授权令牌
+     * 
+     * @var string account 账号
+     * @var string password 密码
      */
     public function getAuthToken()
     {

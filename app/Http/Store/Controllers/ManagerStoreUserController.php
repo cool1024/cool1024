@@ -54,7 +54,7 @@ class ManagerStoreUserController extends Controller
     {
 
         $rules = [
-            'user_id:integer'
+            ['user_id', 'required|integer']
         ];
 
         $params = $this->form->camelFormOrFail($rules);
