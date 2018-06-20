@@ -15,6 +15,9 @@ use App\Api\BaseClass\Controller;
 
 class PermissionController extends Controller
 {
+    /**
+     * 权限及其分组信息
+     */
     public function getAllPermissionWithGroup()
     {
         $groups = SystemPermissionGroup::all();
@@ -25,6 +28,9 @@ class PermissionController extends Controller
         ]);
     }
 
+    /**
+     * 新增权限组
+     */
     public function insertPermissionGroup()
     {
         $required = [
@@ -35,6 +41,9 @@ class PermissionController extends Controller
         return $this->form->getMessage($group);
     }
 
+    /**
+     * 新增权限
+     */
     public function insertPermission()
     {
         $required = [
@@ -48,6 +57,9 @@ class PermissionController extends Controller
         return $this->form->success($permission);
     }
 
+    /**
+     * 删除权限组
+     */
     public function deletePermissionGroup()
     {
         $required = [
@@ -59,6 +71,9 @@ class PermissionController extends Controller
         return $this->form->deleteMessage($result);
     }
 
+    /**
+     * 删除权限
+     */
     public function deletePermission()
     {
         $required = [
@@ -69,6 +84,9 @@ class PermissionController extends Controller
         return $this->form->deleteMessage($result);
     }
 
+    /**
+     * 更新权限组
+     */
     public function updatePermissionGroup()
     {
         $required = [
@@ -82,6 +100,9 @@ class PermissionController extends Controller
         return $this->form->updateMessage($result);
     }
 
+    /**
+     * 更新权限
+     */
     public function updatePermission()
     {
         $required = [
