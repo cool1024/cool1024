@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ToolsUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>值，变量赋予了值，值具有类型</h1>
+        <p>
+            <code>数组 Array</code> 和其他强类型语言不同，在 JavaScript 中，数组可以容纳任何类型的值，可以是字符串、数字、对象(object )，甚至是其 他数组
+            <pre>
+                const array = [1, '2', {value:3}];
+            </pre>
+        </p>
+        <p>
+            <code>字符串 String</code> 字符串和字符数组有很多相识的地方，但是需要注意的的，字符串值是不可变的，每次使用相关操作方法都是返回了一个新的字符串，原来的字符串是没有变化的
+        </p>
+        <p>
+            <code>数字 number</code>整数，小数都是统一用number类型
+        </p>
+        <p>
+            <code>不是数字的数字 NaN</code>字符串
+        </p>
+        <pre id="codeConsole"></pre>
+        <p>1.parseInt('.fdsfsad') === NaN 或者 parseInt('.fdsfsad') == NaN 成立吗</p>
+        <p>2.数组不是基本类型？</p>
+        <p>3.function(函数)是什么类型？</p>
+        <button id="answerBtn" class="btn btn-success" type="button">查看答案</button>
+        <pre id="answerPad"></pre>
+    </div>
+</body>
+<script src="source/vendor/flat-ui/dist/js/vendor/jquery.min.js"></script>
+<script src="source/js/popper.min.js"></script>
+<script src="source/js/bootstrap.min.js"></script>
+<script src="value.js"></script>
+
+</html>
