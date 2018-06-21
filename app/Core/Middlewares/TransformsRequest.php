@@ -18,7 +18,7 @@ class TransformsRequest
     {
         $params = $request->all();
         foreach ($params as $key => $value) {
-            if ($value == null) {
+            if ($value === null) {
                 $request->offsetUnset($key);
             }
         }

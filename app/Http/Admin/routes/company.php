@@ -21,3 +21,5 @@ $router->put('/company/update', 'CompanyController@updateCompany');
 $router->delete('/company/delete', 'CompanyController@deleteCompany');
 // 获取公司列表-分页
 $router->get('/company/search', 'CompanyController@searchCompany');
+// 公司图片授权上传
+$router->get('/company/image/access', 'CompanyController@ossUpload');

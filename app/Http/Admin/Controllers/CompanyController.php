@@ -12,6 +12,7 @@ namespace App\Http\Admin\Controllers;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Admin\Models\AccessCompanyManager;
 use App\Api\BaseClass\Controller;
+use App\Sdk\OssSdk;
 
 class CompanyController extends Controller
 {
@@ -135,5 +136,18 @@ class CompanyController extends Controller
 
         $search_result = with(new AccessCompanyManager)->pagination($params, $search_params, $search_formats);
         return $this->form->getMessage($search_result);
+    }
+
+    /**
+     * 公司图片上传授权
+     */
+    public function ossUpload()
+    {
+        // 示例化OssSdk
+        $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
+        // 生成文件保存地址
+        $file_path = 'upload/company/' . date('Ymdhis') . uniqid(md5(microtime(true)), true);
+        // 5000k设置
+        return $this->form->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
     }
 }
