@@ -81,6 +81,8 @@ $router->group(['middleware' => 'managerapi'], function ($router) {
     $router->get('/info', 'UserController@getUserInfo');
     // 修改个人账户信息
     $router->put('/update', 'UserController@updateUserInfo');
+    // 上传头像授权
+    $router->get('/avatar/access', 'UserController@ossUpload');
 });
 
 /**

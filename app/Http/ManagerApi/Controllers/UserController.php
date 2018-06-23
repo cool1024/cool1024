@@ -12,6 +12,7 @@ namespace App\Http\ManagerApi\Controllers;
 use App\Api\BaseClass\Controller;
 use App\Core\Contracts\AuthContract;
 use Illuminate\Support\Facades\Crypt;
+use App\Sdk\OssSdk;
 
 class UserController extends Controller
 {
@@ -53,5 +54,18 @@ class UserController extends Controller
             ->fill($params)
             ->save();
         return $this->form->saveMessage($result);
+    }
+
+    /**
+     * 头像上传授权
+     */
+    public function ossUpload()
+    {
+        // 示例化OssSdk
+        $oss = new OssSdk('LTAIJUKgjPNJtHW3', '7R0o8odjGB8eKZm3rrwTC8m9sjYxFh', 'https://hello1024.oss-cn-beijing.aliyuncs.com');
+        // 生成文件保存地址
+        $file_path = 'upload/goods/' . date('Ymdhis') . uniqid(md5(microtime(true)), true);
+        // 5000k设置
+        return $this->form->getMessage($oss->getAccessDatas(1024 * 5000, 10, $file_path));
     }
 }
