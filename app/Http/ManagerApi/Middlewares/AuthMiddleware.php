@@ -52,6 +52,11 @@ class AuthMiddleware
         $userService = new User();
         $userService->init($tokenService->getToken()->uid);
 
+        // 校验用户状态
+        if ($userService->user()->is_active !== 1) {
+            return abort(403, '用户账户被停用');
+        }
+
         // 权限校验
         if (isset($attributes)) {
 
