@@ -38,10 +38,9 @@ $router->get('format/view', function (FormContract $api) {
 });
 
 // 使用FormService校验表单数据
-$router->get('form', function (FormContract $form) {
-
+$router->post('form', function (FormContract $form) {
     $rules = [
-        ['a_b', 'required|integer|max:100'],
+        ['a_b', 'integer|max:100'],
         ['b_c_d', 'required|string|max:45'],
         // 没有required的参数是可选参数
         ['c', 'max:45'],
@@ -49,9 +48,9 @@ $router->get('form', function (FormContract $form) {
 
     $formats = [
         // 将会把参数a变为abort_a
-        'a' => 'abort_a',
+        'a_b' => 'abort_a',
         // $key为原来参数名‘b’,$value为参数的值，这个返回值$key.$value为新的参数名称替换掉'b'
-        'b' => function ($key, $value) {
+        'b_c_d' => function ($key, $value) {
             return $key . $value;
         }
     ];
