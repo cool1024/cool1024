@@ -59,7 +59,9 @@ class MangerStoreGoodsController extends Controller
         $params = $this->form->camelFormOrFail($rules);
 
         $goods = StoreGoods::findOrFail($params['goods_id']);
-        $goods->goods_parent_type = StoreGoodsType::findOrFail($goods->goods_type)->parent_id;
+        // $goods->goods_parent_type = StoreGoodsType::findOrFail($goods->goods_type)->parent_id;
+        $goods_type = StoreGoodsType::find($goods->goods_type);
+        $goods->goods_parent_type = isset($goods_type) ? $goods_type->parent_id : 0;
 
         $datas = [
             'goods' => $goods,
