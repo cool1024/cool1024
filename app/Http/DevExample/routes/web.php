@@ -6,6 +6,7 @@ use App\Jobs\ExampleJob;
 use Pheanstalk\Pheanstalk;
 use App\Events\ExampleEvent;
 use App\Http\Store\Models\StoreUser;
+use App\Sdk\Alipay;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -139,4 +140,19 @@ $router->get('routes', function () {
     // 格式化为apidocs
 
     return $routes;
+});
+
+// 测试支付宝支付
+$router->get('alipay', function () {
+    $alipay = new Alipay();
+    // $price, $title, $body, $ordersn
+    $url = $alipay->initWebOrderData(0.01, '商品支付测试', '测试订单', date('Ymdhis'));
+    // dd($url);
+    return redirect($url);
+});
+
+// 测试支付宝订单查询
+$router->get('alipay/search', function () {
+    $alipay = new Alipay();
+    return $alipay->orderFind('H830203025515852');
 });

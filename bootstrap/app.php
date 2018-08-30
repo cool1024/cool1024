@@ -86,6 +86,9 @@ require __DIR__ . '/analyse.php';
 // 引入注册文件导入器
 require __DIR__ . '/register.php';
 
+// 载入配置文件
+$app->configure('alipay');
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
