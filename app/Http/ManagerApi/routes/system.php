@@ -30,7 +30,6 @@ $router->group(['middleware' => 'managerapi:permission,permission-manager'], fun
 /**
  * 菜单管理部分
  */
-
 $router->group(['middleware' => 'managerapi:permission,menu-manager'], function ($router) {
     // 获取所有菜单数据
     $router->get('/menu/all', 'MenuController@getAllMenu');
@@ -88,11 +87,10 @@ $router->group(['middleware' => 'managerapi'], function ($router) {
 /**
  * 系统登入部分--公开接口
  */
-
 // 用户登入
 $router->post('/signin', 'AuthController@getAuthToken');
 // 用户注册--开发时使用的测试接口，上线必须移除
-$router->post('/signup', 'AuthController@signup');
+// $router->post('/signup', 'AuthController@signup');
 // 检查令牌信息
 $router->post('/check', 'AuthController@checkAuthToken');
 // 销毁令牌
