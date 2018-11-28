@@ -156,3 +156,45 @@ $router->get('alipay/search', function () {
     $alipay = new Alipay();
     return $alipay->orderFind('H830203025515852');
 });
+
+// 本地图片保存
+$router->post('upload/image', function (FormContract $form) {
+
+    $params = $form->camelFormOrFail([
+        ['image', 'required|image']
+    ]);
+
+    // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
+    $path = $form->saveFileTo($params['image'], "upload");
+
+    return $form->getMessage($path);
+});
+
+// 本地文件保存
+$router->post('upload/file', function (FormContract $form) {
+
+    $params = $form->camelFormOrFail([
+        ['file', 'required']
+    ]);
+
+    // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
+    $path = $form->saveFileTo($params['file'], "upload");
+
+    return $form->getMessage($path);
+});
+
+// 本地文件保存
+$router->post('upload/ckeditor', function (FormContract $form) {
+
+    $params = $form->camelFormOrFail([
+        ['upload', 'required']
+    ]);
+
+    // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
+    $path = $form->saveFileTo($params['upload'], "ckeditor");
+    return [
+        'fileName' => $path,
+        'uploaded' =>  1,
+        'url' => env('APP_URL') . '/' . $path
+    ];
+});

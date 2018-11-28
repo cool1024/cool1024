@@ -5,11 +5,14 @@ namespace App\Api\Services;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Api\Contracts\FormContract;
+use App\Api\Traits\Func\LocalFileTrait;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FormService implements FormContract
 {
+
+    use LocalFileTrait;
 
     private $successMessageStr = '成功';
     private $failMessageStr = '失败';
@@ -180,7 +183,9 @@ class FormService implements FormContract
             $result['validator'] = $validator;
         } else {
             foreach ($rules as $key => $value) {
-                if (Request::has($key)) {
+                if(Request::hasFile($key)){
+                    $result['datas'][$key] = Request::file($key);
+                }else if (Request::has($key)) {
                     $result['datas'][$key] = Request::input($key);
                 }
             }
