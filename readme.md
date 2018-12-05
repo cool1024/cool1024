@@ -1,7 +1,8 @@
 # cool1024 web code
 
-## composer config
-`composer config -g repo.packagist composer https://packagist.phpcomposer.com`
+## composer config 【Laravel中国镜像】
+* `composer config -g repo.packagist composer https://packagist.laravel-china.org`
+* 参考文档地址：https://laravel-china.org/composer
 ## run app
 `sudo php -S 0.0.0.0:80 -t public`
 
@@ -93,3 +94,28 @@ php artisan queue:listen --tries=3 //失败任务尝试3次
 1. orm事件可以在任何服务提商中的boot方法内注册
 2. 不一定非要在服务提供商中注册，只是这个位置比较好
 3. 观察者这个类就是一个简单的类，没有继承其他的任何父类
+
+### 部署
+
+1. storage目录需要777权限
+2. nginx指定index.php为唯一可执行php脚本
+```
+location /index.php {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+}
+```
+3. 优雅链接
+```
+# API部署
+location / {
+        try_files $uri $uri/ /index.php?$query_string;
+}
+
+# 后台管理系统
+location /ng/ {
+        try_files $uri /ng/index.html?$query_string;
+
+}
+```
+
