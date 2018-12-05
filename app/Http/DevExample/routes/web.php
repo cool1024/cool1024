@@ -179,9 +179,8 @@ $router->post('upload/file', function (FormContract $form) {
     ]);
 
     // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
-    $path = $form->saveFileTo($params['file'], "upload");
-
-    return $form->getMessage($path);
+    $result = $form->safeSaveFile($params['file'], 'ckeditor');
+    return $result['result'] ? $form->getMessage($result['path']) : $form->error('上传文件失败');
 });
 
 // 本地文件保存
