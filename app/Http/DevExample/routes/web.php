@@ -7,6 +7,7 @@ use Pheanstalk\Pheanstalk;
 use App\Events\ExampleEvent;
 use App\Http\Store\Models\StoreUser;
 use App\Sdk\Alipay;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -185,16 +186,12 @@ $router->post('upload/file', function (FormContract $form) {
 
 // 本地文件保存
 $router->post('upload/ckeditor', function (FormContract $form) {
-
     $params = $form->camelFormOrFail([
-        ['upload', 'required']
+        ['upload', 'required|image']
     ]);
-
     // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
-    $path = $form->saveFileTo($params['upload'], "ckeditor");
-    return [
-        'fileName' => $path,
-        'uploaded' =>  1,
-        'url' => env('APP_URL') . '/' . $path
-    ];
+    $result = $form->safeSaveFile($params['upload'], 'ckeditor');
+    return $result['result'] === true
+        ? ['fileName' => $result['path'], 'uploaded' => 1, 'url' => env('APP_URL') . '/' . $result['path']]
+        : $result;
 });

@@ -38,12 +38,12 @@
         {
             "title": "图片上传",
             "description": "上传一张图片，并获取此图片的url链接",
-            "url": "/devexample/upload/image",
+            "url": "/devexample/upload/ckeditor",
             "method": "post",
             "inputs": [
                 {
                     "type": "file",
-                    "name": "image",
+                    "name": "upload",
                     "description": "选择图片"
                 }
             ]
