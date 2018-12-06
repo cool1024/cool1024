@@ -60,8 +60,8 @@ $app->singleton(
  */
 
 $app->middleware([
-    App\Core\Middlewares\FormatMiddleware::class,
     App\Core\Middlewares\TransformsRequest::class,
+    App\Core\Middlewares\FormatMiddleware::class,
 ]);
 
 /*
