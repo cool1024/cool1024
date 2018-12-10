@@ -5,4 +5,5 @@ Homestead.yaml
 .env
 /public/home/node_modules
 /public/upload
+/public/ng
 .DS_Store
