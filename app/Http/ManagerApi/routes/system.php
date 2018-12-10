@@ -51,8 +51,6 @@ $router->group(['middleware' => 'managerapi:permission,menu-manager'], function 
     $router->delete('/menu/delete', 'MenuController@deleteMenu');
     // 权限下拉
     $router->get('/menu/permission/options', 'MenuController@getPermissionOptions');
-    // 获取授权菜单
-    $router->get('/menu', 'MenuController@getAuthMenu');
 });
 
 /**
@@ -75,13 +73,14 @@ $router->group(['middleware' => 'managerapi:permission,menu-manager'], function 
  * 用户账户部分
  */
 $router->group(['middleware' => 'managerapi'], function ($router) {
-    
     // 获取用户详细信息
     $router->get('/info', 'UserController@getUserInfo');
     // 修改个人账户信息
     $router->put('/update', 'UserController@updateUserInfo');
     // 上传头像授权
     $router->get('/avatar/access', 'UserController@ossUpload');
+    // 获取授权菜单
+    $router->get('/menu', 'MenuController@getAuthMenu');
 });
 
 /**
