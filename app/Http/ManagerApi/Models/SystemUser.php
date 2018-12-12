@@ -10,9 +10,12 @@
 namespace App\Http\ManagerApi\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Api\Traits\Orm\PageTrait;
 
 class SystemUser extends Model
 {
+    use PageTrait;
+
     protected $table = 'system_user';
 
     protected $guarded = [];

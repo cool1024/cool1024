@@ -80,10 +80,12 @@ class AuthController extends Controller
     public function signup()
     {
         $rules = [
+            ['role_id', 'required|integer'],
+            ['avatar', 'required|string'],
             ['account', 'required|max:45'],
             ['password', 'required|max:45'],
         ];
-        $params = $this->form->checkFormOrFail($rules);
+        $params = $this->form->camelFormOrFail($rules);
 
         // 避免重复注册，这里不能完全避免重复注册
         $user = SystemUser::where('account', '=', $params['account'])->first();
@@ -92,7 +94,6 @@ class AuthController extends Controller
         }
         $params = array_merge($params, [
             'is_active' => 1,
-            'role_id' => 1,
             'password' => Crypt::encryptString($params['password']),
         ]);
         $result = SystemUser::create($params);

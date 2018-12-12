@@ -70,6 +70,20 @@ $router->group(['middleware' => 'managerapi:permission,menu-manager'], function 
 });
 
 /**
+ * 帐户管理部分
+ */
+$router->group(['middleware' => 'managerapi:permission,account-manager'], function ($router) {
+    // 获取帐户列表
+    $router->get('/account/search', 'UserController@getUserList'); 
+    // 用户注册-新增帐户
+    $router->post('/signup', 'AuthController@signup');
+    // 修改帐户
+    $router->put('/account/update', 'UserController@changeUserInfoById');
+    // 删除帐户
+    $router->delete('/account/delete', 'UserController@deleteUser');
+});
+
+/**
  * 用户账户部分
  */
 $router->group(['middleware' => 'managerapi'], function ($router) {
@@ -88,8 +102,6 @@ $router->group(['middleware' => 'managerapi'], function ($router) {
  */
 // 用户登入
 $router->post('/signin', 'AuthController@getAuthToken');
-// 用户注册--开发时使用的测试接口，上线必须移除
-// $router->post('/signup', 'AuthController@signup');
 // 检查令牌信息
 $router->post('/check', 'AuthController@checkAuthToken');
 // 销毁令牌
