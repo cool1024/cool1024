@@ -37,7 +37,7 @@ class SmallRoutineMiddleware
         // 判断小程序是否存在
         $small_routine = $this->auth->getActiveSmallRoutine();
         if ($small_routine === false) {
-            return response(json_encode('samll routine not found'), 401);
+            return response(json_encode('small routine not found'), 401);
         }
 
         // 初始化小程序服务

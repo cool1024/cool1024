@@ -312,7 +312,7 @@ function showError(text) {
         text = JSON.parse(text);
         text = JSON.stringify(text, undefined, 2);
         showSuccess(text);
-    } catch{
+    } catch (e) {
         document.getElementById('error-pad').contentWindow.document.body.innerHTML = text;
         $('#myModal-2').modal('show')
     }
