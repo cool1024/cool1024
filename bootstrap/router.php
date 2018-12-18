@@ -22,6 +22,6 @@ $router->get('/pull', function () {
     // 安全密码
     $password = env('GIT_PULL_PASSWORD', '这个是安全密码，需要自己去env文件中设置');
     // 仓库路径
-    $git_path = realpath(__DIR__ . '/../../');
+    $git_path = realpath(__DIR__ . '/..');
     return $_GET['password'] !== $password ? 'ERROR' : $git_path;
 });
