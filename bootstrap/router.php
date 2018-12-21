@@ -61,8 +61,8 @@ $router->get('/phpunit', function () {
                 if (is_file($filePath)) {
                     $logFiles[] = [
                         'name' => $file,
-                        'time' => filemtime($file),
-                        'size' => filesize($file)
+                        'time' => filemtime($filePath),
+                        'size' => filesize($filePath)
                     ];
                 }
             }
