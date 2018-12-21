@@ -28,6 +28,13 @@ $router->get('/pull', function () {
 
 $router->get('/phpunit', function () {
 
+    // 安全密码
+    $password = env('DEV_PASSWORD', '这个是安全密码，需要自己去env文件中设置');
+
+    if ($password != $_GET['password']) {
+        return ['result' => false, 'message' => 'password error'];
+    }
+
     // 日志文件夹路径
     $logDirPath = realpath(__DIR__ . '/../storage/logs/tests');
 
