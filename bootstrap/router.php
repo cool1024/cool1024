@@ -31,33 +31,9 @@ $router->get('/phpunit', function () {
     // 安全密码
     $password = env('DEV_PASSWORD', '这个是安全密码，需要自己去env文件中设置');
 
-    if ($password != $_GET['password']) {
+    if (!isset($_GET['password']) || $password != $_GET['password']) {
         return ['result' => false, 'message' => 'password error'];
     }
-
-    // 日志文件夹路径
-    $logDirPath = realpath(__DIR__ . '/../storage/logs/tests');
-
-    // 获取所有的日志文件
-    $logFiles = [];
-    if (is_dir($logDirPath)) {
-        $fileHandle = opendir($logDirPath);
-        while (($file = readdir($fileHandle)) !== false) {
-            // 跳过上级和当前目录
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-
-            $filePath = realpath($logDirPath . '/' . $file);
-            if (is_file($filePath)) {
-                $logFiles[] = $filePath;
-            }
-        }
-    }
-    return ['result' => true, 'message' => 'success', 'datas' => $logFiles];
-});
-
-$router->get('/phpunit', function () {
 
     // 日志文件夹路径
     $logDirPath = realpath(__DIR__ . '/../storage/logs/tests');
@@ -70,7 +46,6 @@ $router->get('/phpunit', function () {
         } else {
             return ['result' => false, 'message' => '日志文件不存在'];
         }
-
     } else {
         // 获取所有的日志文件
         $logFiles = [];
