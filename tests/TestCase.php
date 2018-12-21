@@ -48,11 +48,16 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
         $this->faker = Factory::create();
     }
 
-    protected function createHtml($name)
+    protected function createHtml($className, $functionName)
     {
         if ($this->response->status() !== 200) {
-            $name = strtolower($name);
-            file_put_contents($this->real_path . '/' . date('Y-m-d') . '-' . $name . '.html', $this->response->getContent());
+            $className = strtolower($className);
+            $dirPath = $this->real_path . '/' . date('Y-m-d');
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath);
+            }
+            file_put_contents($dirPath . '/' . $className . '.html', $this->response->getContent());
+            $this->log('error', $className . '::' . $functionName, [$this->response->getContent()]);
         }
     }
 

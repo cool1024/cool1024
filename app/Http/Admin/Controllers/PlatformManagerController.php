@@ -22,7 +22,7 @@ class PlatformManagerController extends Controller
     public function insertPlatformManager()
     {
         $rules = [
-            ['id', 'required|integer'],
+            ['id', 'required|min:4|max:45'],
             ['platform_manager_name', 'required|min:4|max:45'],
             ['platform_manager_account', 'required|min:4|max:30'],
             ['is_active', 'required|boolean'],
