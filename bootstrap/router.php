@@ -52,14 +52,18 @@ $router->get('/phpunit', function () {
         if (is_dir($logDirPath)) {
             $fileHandle = opendir($logDirPath);
             while (($file = readdir($fileHandle)) !== false) {
-        // 跳过上级和当前目录
+                // 跳过上级和当前目录
                 if ($file == '.' || $file == '..') {
                     continue;
                 }
 
                 $filePath = realpath($logDirPath . '/' . $file);
                 if (is_file($filePath)) {
-                    $logFiles[] = $file;
+                    $logFiles[] = [
+                        'name' => $file,
+                        'time' => filemtime($file),
+                        'size' => filesize($file)
+                    ];
                 }
             }
         }
