@@ -31,6 +31,7 @@ $http->on("request", function ($request, $response) use ($SERVER_URL) {
         return sendResponse($response, '缺少请求参数');
     }
 
+
     $query_string = $request->server['query_string'];
 
     $url = '';
@@ -41,30 +42,16 @@ $http->on("request", function ($request, $response) use ($SERVER_URL) {
 
     try {
         parse_str($query_string, $parr);
-        if (!isset($parr['head']) || !isset($parr['file'])) {
+        if (!isset($parr['url'])) {
             return sendResponse($response, '参数错误');
         }
-        $url = str_replace('$head', $parr['head'], $SERVER_URL);
-        $url = str_replace('$file', $parr['file'], $url);
+        $url = $parr['url'];
     } catch (Exception $e) {
         return sendResponse($response, '参数解析错误');
     }
 
-    if (!isset($request->post)) {
-        return sendResponse($response, 'NO POST PARAMS');
-    }
 
-    if (!isset($request->post['hook'])) {
-        return sendResponse($response, 'NO HOOK PARAMS');
-    }
-
-    $params = json_decode($request->post['hook'], true);
-
-    if (!isset($params) || empty($params)) {
-        return sendResponse($response, 'HOOK PARAMS ERROR');
-    }
-
-    $url = $url . "?password=" . $params['password'];
+    $url = $url . "?password=" . $request->header['x-gitee-token'];
 
     $path = '';
 
@@ -74,11 +61,15 @@ $http->on("request", function ($request, $response) use ($SERVER_URL) {
         return sendResponse($response, 'REQUEST ERROR : ' . $url);
     }
 
+    var_dump($path);
+
     if ($path === ' ERROR ') {
         return sendResponse($response, ' ERROR PASSWORD');
     }
 
     $result = exec("git -C {$path} pull 2>&1");
+
+    var_dump($result);
 
     return sendResponse($response, $result);
 });
