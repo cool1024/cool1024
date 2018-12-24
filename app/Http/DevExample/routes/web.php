@@ -194,3 +194,8 @@ $router->post('upload/ckeditor', function (FormContract $form) {
         ? ['fileName' => $result['path'], 'uploaded' => 1, 'url' => env('APP_URL') . '/' . $result['path']]
         : $result;
 });
+
+// 本地文件保存
+$router->get('china', function (FormContract $form) {
+    return file_get_contents('https://www.cool1024.com/china.json');
+});
