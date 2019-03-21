@@ -20,6 +20,7 @@ use App\Sdk\Alipay;
  */
 
 // 响应数据格式化中间件测试--返回字符串
+
 $router->get('format/string', function (FormContract $api) {
     return 'test string datas';
 });
@@ -42,27 +43,27 @@ $router->get('format/view', function (FormContract $api) {
 // 使用FormService校验表单数据
 $router->post('form', function (FormContract $form) {
     $rules = [
-        ['a_b', 'integer|max:100'],
-        ['b_c_d', 'required|string|max:45'],
+        ['a_b', 'required|integer|max:100'],
+        ['b_c_d', 'required|string|max:10'],
         // 没有required的参数是可选参数
-        ['c', 'max:45'],
+        ['c', 'max:10'],
     ];
 
-    $formats = [
-        // 将会把参数a变为abort_a
-        'a_b' => 'abort_a',
-        // $key为原来参数名‘b’,$value为参数的值，这个返回值$key.$value为新的参数名称替换掉'b'
-        'b_c_d' => function ($key, $value) {
-            return $key . $value;
-        }
-    ];
+    // $formats = [
+    //     // 将会把参数a变为abort_a
+    //     'a_b' => 'abort_a',
+    //     // $key为原来参数名‘b’,$value为参数的值，这个返回值$key.$value为新的参数名称替换掉'b'
+    //     'b_c_d' => function ($key, $value) {
+    //         return $key . $value;
+    //     }
+    // ];
 
     // 使用checkForm系列的方法可以自定义参数名称格式化
-    // $params = $form->chekFormOrFail($rules, $formats);
+    // $params = $form->checkFormOrFail($rules, $formats);
 
     // 使用camelForm系列的方法将会强制要求参数为小驼峰，而方法返回值依旧可以保持之前的下划线
     $params = $form->camelFormOrFail($rules);
-
+    dd($params);
     return $params;
 });
 
@@ -189,13 +190,13 @@ $router->post('upload/ckeditor', function (FormContract $form) {
         ['upload', 'required|image']
     ]);
     // 保存文件需要提供 1.文件对象 2.保存的文件夹名称（upload文件夹)
-    $result = $form->safeSaveFile($params['upload'], 'ckeditor');
+    $result = $form->saveFileResult($params['upload'], 'ckeditor');
     return $result['result'] === true
-        ? ['fileName' => $result['path'], 'uploaded' => 1, 'url' => env('APP_URL') . '/' . $result['path']]
+        ? ['fileName' => $result['path'], 'uploaded' => 1, 'url' => url('/') . '/' . $result['path']]
         : $result;
 });
 
-// 本地文件保存
+// 获取省市区下拉数据
 $router->get('china', function (FormContract $form) {
     return file_get_contents('https://www.cool1024.com/china.json');
 });

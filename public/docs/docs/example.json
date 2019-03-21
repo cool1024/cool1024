@@ -10,15 +10,16 @@
             "inputs": [
                 {
                     "name": "aB",
-                    "description": "最大为100的整数"
+                    "description": "必填|最大为100的整数",
+                    "type": "number"
                 },
                 {
                     "name": "bCD",
-                    "description": "最大为45的整数"
+                    "description": "必填|最大10个字符"
                 },
                 {
                     "name": "c",
-                    "description": "最大长度为45"
+                    "description": "非必填|最大10个字符"
                 }
             ]
         },

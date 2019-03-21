@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        body {
+            background-color: #808080;
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            transform: rotateX(180deg)
+        }
+    </style>
+    <script src="pdf.js"></script>
+    <script src="reconnecting-websocket.js"></script>
+</head>
+
+<body>
+    <canvas id="view"></canvas>
+    <!-- <button onclick="showPrevPage()">上一张</button>
+    <button onclick="showNextPage()">下一张</button> -->
+    <script>
+
+        const session = btoa(JSON.stringify({
+            pdf: 'https://brightteens.anasit.com/pdf_view/1.pdf',
+            session: 'pdf1321318032',
+            socket: 'wss://www.cool1024.com:8000'
+        }));
+        console.log(session);
+
+        let pdfObj, currentPage = 1;
+
+        // 上一页
+        function showPrevPage() {
+            if (pdfObj && currentPage > 1) {
+                showPage(--currentPage);
+            }
+        }
+
+        // 下一页
+        function showNextPage() {
+            if (pdfObj && currentPage < pdfObj.numPages) {
+                showPage(++currentPage);
+            }
+        }
+
+        // 显示指定页面
+        function showPage(index) {
+            if (pdfObj) {
+                pdfObj.getPage(index).then(page => {
+                    const viewport = page.getViewport({ scale: 0.2 });
+                    console.log(viewport);
+                    const canvas = document.getElementById('view');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.viewBox[2];
+                    canvas.height = viewport.viewBox[3];
+                    page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+                });
+            }
+        }
+
+        function init() {
+            const url = window.location.href;
+            let sessionParams = url.split('#')[1];
+            sessionParams = JSON.parse(atob(sessionParams));
+            console.log(sessionParams);
+            initWS(sessionParams.socket, sessionParams.session);
+            initPdf(sessionParams.pdf);
+        }
+
+        function initWS(server, session) {
+            const ws = new ReconnectingWebSocket(server, [session]);
+            ws.addEventListener('message', msg => {
+                if (msg.data) {
+                    const params = JSON.parse(msg.data);
+                    params.page = params ? Number(params.page) : 0;
+                    console.log("执行翻页", params);
+                    if (params.page && Number.isInteger(params.page) && params.page > 0) {
+                        showPage(params.page);
+                    }
+                }
+            });
+        }
+
+        function initPdf(sourceUrl) {
+            const loadingTask = pdfjsLib.getDocument('1.pdf');
+            // 监听加载进度
+            loadingTask.onProgress = (num => {
+                console.log('加载进度：', num.loaded);
+            });
+
+            // 加载完成获取pdf对象
+            loadingTask.promise.then(pdf => {
+                pdfObj = pdf;
+                showPage(currentPage);
+            });
+        }
+
+        init();
+
+    </script>
+</body>
+
+</html>

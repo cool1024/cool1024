@@ -80,7 +80,10 @@ function getModePad(modelJson, index) {
             let inputJson = formJson.inputs[j]
             if (!inputJson.type || inputJson.type == 'text') {
                 inputs += getInputHtml(inputJson.name, inputJson.description)
-            } else if (inputJson.type == 'file') {
+            } else if (inputJson.type == 'number') {
+                inputs += getNumberHtml(inputJson.name, inputJson.description)
+            }
+            else if (inputJson.type == 'file') {
                 inputs += getFileHtml(inputJson.name, inputJson.description, inputJson.multiple || false)
             }
         }
@@ -168,6 +171,17 @@ function getInputHtml(name, description) {
         `
 }
 
+// 获取number的HTML
+function getNumberHtml(name, description) {
+    return `
+        <div class="input-group" style="margin-bottom:10px;">
+            <span class="input-group-addon input-sm">${name}</span>
+            <input class="form-control input-sm" name="${name}" type="number">
+            <span class="input-group-addon input-sm">${description}</span>
+        </div>
+        `
+}
+
 //获取文件INPUT
 function getFileHtml(name, description, multiple = false) {
     return `
@@ -194,7 +208,7 @@ function tryApi(form, ignore) {
     //获取文本元素
     let texts = new Array()
     for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].type == 'text') texts.push(inputs[i])
+        if (inputs[i].type == 'text' || inputs[i].type == 'number') texts.push(inputs[i])
     }
 
     //获取文件元素

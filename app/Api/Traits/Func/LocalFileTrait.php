@@ -16,6 +16,10 @@ trait LocalFileTrait
         $this->filesystem = new Filesystem($adapter);
     }
 
+    /**
+     * 暂不使用 ！！！！！！
+     * 。。。。。。。。。。
+     */
     public function safeSaveFile($file, $dirName, $fileName = '')
     {
         $result = ['result' => false, 'path' => ''];
@@ -36,6 +40,8 @@ trait LocalFileTrait
     /**
      * 保存文件到指定文件夹
      * @param UploadedFile $file 文件对象
+     * @param String $folderName 保存的文件夹地址
+     * @param String $fileName 用于指定保存的名字，如果不填，那么为随机生成
      * @return string 访问路径
      */
     public function saveFileTo($file, $folderName, $fileName = '')
@@ -50,4 +56,12 @@ trait LocalFileTrait
         }
     }
 
+    public function saveFileResult($file, $folderName, $fileName = '')
+    {
+        $result = $this->saveFileTo($file, $folderName, $fileName = '');
+        return [
+            'result' => $result == 'file upload error',
+            'path' => $result
+        ];
+    }
 }
