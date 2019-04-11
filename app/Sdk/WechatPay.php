@@ -1,5 +1,5 @@
 <?php
-//-----------------------------------------------------
+ //-----------------------------------------------------
 // 2018-01-12 15:20:51
 // author xiaojian
 //-----------------------------------------------------
@@ -73,7 +73,7 @@ class WechatPay
         $newPara["notify_url"] = $this->notify_url;
         //交易类型
         $newPara["trade_type"] = 'JSAPI';
-        $newPara["openid"] = $openid;        
+        $newPara["openid"] = $openid;
         //签名
         $newPara["sign"] = $this->produce_wechat_sign($newPara);
         //传参

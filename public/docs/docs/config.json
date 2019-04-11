@@ -2,7 +2,9 @@
     "server": "",
     "title": "测试版 API-DOCS",
     "headers": [
-        "ng-params-one", "ng-params-two"
+        "ng-params-one",
+        "ng-params-two",
+        "ng-params-three"
     ],
     "docs": [
         "example.json",

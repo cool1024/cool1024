@@ -15,6 +15,7 @@ use App\Api\Contracts\FormContract;
 use App\Sdk\OssSdk;
 
 // oss上传图片授权
+
 $router->get('oss/access/image', function (FormContract $form) {
 
     // 示例化OssSdk
@@ -26,3 +27,4 @@ $router->get('oss/access/image', function (FormContract $form) {
     // 800k设置
     return $form->getMessage($oss->getAccessDatas(1024 * 800, 10, $file_path));
 });
+

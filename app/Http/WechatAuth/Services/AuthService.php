@@ -42,30 +42,30 @@ class AuthService implements AuthContract
 
     public function getActiveSmallRoutine()
     {
-        if (!isset($this->$small_routine)) {
-            $this->$small_routine = SmallRoutine::where([
+        if (!isset($this->small_routine)) {
+            $this->small_routine = SmallRoutine::where([
                 'store_id' => $this->user->store_id,
                 'is_active' => 1,
             ])->first();
         }
 
-        if (!isset($this->$small_routine)) {
+        if (!isset($this->small_routine)) {
             return false;
         }
 
-        return $this->$small_routine;
+        return $this->small_routine;
     }
 
     public function getActiveStore()
     {
-        if (!isset($this->$store)) {
-            $this->$store = PlatformStore::find($this->user->store_id);
+        if (!isset($this->store)) {
+            $this->store = PlatformStore::find($this->user->store_id);
         }
 
-        if (!isset($this->$store)) {
+        if (!isset($this->store)) {
             return false;
         }
 
-        return $this->$store;
+        return $this->store;
     }
 }
