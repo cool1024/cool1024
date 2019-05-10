@@ -23,9 +23,6 @@ class MangerStoreOrderController extends Controller
         $rules = [
             ['limit', 'required|integer'],
             ['offset', 'required|integer'],
-        ];
-
-        $expected = [
             ['start', 'date'],
             ['end', 'date'],
             ['sn', 'max:45'],
@@ -33,7 +30,7 @@ class MangerStoreOrderController extends Controller
             ['status', 'integer'],
         ];
 
-        $params = $this->form->camelFormOrFail($rules, $expected);
+        $params = $this->form->camelFormOrFail($rules);
 
         $search_params = [
             ['with', ['user', 'goodsList']],
