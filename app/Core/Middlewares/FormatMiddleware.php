@@ -18,10 +18,10 @@ class FormatMiddleware
         $datas = $response->getContent();
         $datas = json_decode($datas, true);
         $datas = $this->camelCase($datas);
-        $datas = json_encode($datas);
         if (isset($datas['datas'])) {
             $datas['data'] = $datas['datas'];
         }
+        $datas = json_encode($datas);
         $response->setContent($datas);
         return $response;
     }
