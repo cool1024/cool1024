@@ -19,6 +19,9 @@ class FormatMiddleware
         $datas = json_decode($datas, true);
         $datas = $this->camelCase($datas);
         $datas = json_encode($datas);
+        if (isset($datas['datas'])) {
+            $datas['data'] = $datas['datas'];
+        }
         $response->setContent($datas);
         return $response;
     }
@@ -29,7 +32,6 @@ class FormatMiddleware
             return $arr;
         }
         $temp = [];
-        $keys = '';
         foreach ($arr as $key => $value) {
             $temp_key = $this->convertUnderline($key, false);
             $temp_value = $this->camelCase($value);
